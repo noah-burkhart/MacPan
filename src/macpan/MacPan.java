@@ -4,15 +4,10 @@
  */
 package macpan;
 
-/**
- *
- * @author nobur7839
- */
+
 public class MacPan {
 
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String[] args) {
         // TODO code application logic here
         
