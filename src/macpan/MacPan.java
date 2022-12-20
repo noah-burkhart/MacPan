@@ -16,9 +16,7 @@ public class MacPan {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        //this ishere now!
-        
-        //jack smells
+        //push this
     }
     
 }
