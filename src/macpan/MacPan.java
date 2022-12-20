@@ -1,5 +1,5 @@
 /*
- *
+ * 
  */
 package macpan;
 
@@ -14,5 +14,5 @@ public class MacPan {
         //Jack is here
         //noah is here
     }
-    
+
 }
