@@ -4,17 +4,18 @@
  */
 package macpan;
 
-/**
- *
- * @author nobur7839
- */
+import javax.swing.*;
+import java.awt.*;
+
 public class MenuFrame extends javax.swing.JFrame {
 
+    private JPanel HISCORE = new DrawingSurfaceHISCORE();
     /**
      * Creates new form MenuFrame
      */
     public MenuFrame() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -26,21 +27,61 @@ public class MenuFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        btnStart = new javax.swing.JButton();
+        btnInstruct = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        btnHiScore = new javax.swing.JButton();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 840, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 495, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("MACPAN");
+        setBounds(new java.awt.Rectangle(200, 200, 600, 600));
+        setLocation(new java.awt.Point(300, 300));
+        setMinimumSize(new java.awt.Dimension(200, 200));
+        setPreferredSize(new java.awt.Dimension(600, 600));
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnStart.setText("Start");
+        btnStart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStartActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnStart, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, -1, -1));
+
+        btnInstruct.setText("Instructions");
+        btnInstruct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInstructActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnInstruct, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, -1, -1));
+
+        jLabel1.setText("MAC - PAN");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, -1, -1));
+
+        btnHiScore.setText("HI-SCORE");
+        btnHiScore.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHiScoreActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnHiScore, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnStartActionPerformed
+
+    private void btnInstructActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInstructActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnInstructActionPerformed
+
+    private void btnHiScoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHiScoreActionPerformed
+
+    }//GEN-LAST:event_btnHiScoreActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +119,9 @@ public class MenuFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnHiScore;
+    private javax.swing.JButton btnInstruct;
+    private javax.swing.JButton btnStart;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
