@@ -4,8 +4,6 @@
  */
 package macpan;
 
-import javax.swing.*;
-
 public class MenuFrame extends javax.swing.JFrame {
 
     //private JPanel HISCORE = new DrawingSurfaceHIGHSCORE();
