@@ -5,11 +5,10 @@
 package macpan;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class MenuFrame extends javax.swing.JFrame {
 
-    private JPanel HISCORE = new DrawingSurfaceHISCORE();
+    //private JPanel HISCORE = new DrawingSurfaceHIGHSCORE();
     /**
      * Creates new form MenuFrame
      */
