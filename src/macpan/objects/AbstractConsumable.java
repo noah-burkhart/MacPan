@@ -16,21 +16,25 @@ abstract class AbstractConsumable {
     //attributes
     protected Image sprite;
     protected int x, y, points;
+    protected boolean visible;
 
     /**
      * Constructor for a Consumable.
+     *
      * @param x - the x position
      * @param y - the y position;
      */
-    public AbstractConsumable(int x, int y){
+    public AbstractConsumable(int x, int y) {
         this.x = x;
         this.y = y;
         points = 0;
         sprite = null;
+        visible = true;
     }
-    
+
     /**
      * General constructor for all consumable objects.
+     *
      * @param sprite - the sprite
      * @param xPos - the x position
      * @param yPos - the y position
@@ -40,6 +44,7 @@ abstract class AbstractConsumable {
         this(x, y);
         this.sprite = sprite;              //sets values
         this.points = points;
+        visible = true; //all are visible by default
     }
 
     //getters and setters
@@ -115,6 +120,22 @@ abstract class AbstractConsumable {
         this.points = points;
     }
 
+    /**
+     * Will see if it is visible
+     * @return - if its visible
+     */
+    public final boolean isVisible() {
+        return visible;
+    }
+
+    /**
+     * Sets the visibility
+     * @param visible - the new visibility
+     */
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+    
     //behaviours
     /**
      * Eats the item making the space empty
@@ -122,11 +143,8 @@ abstract class AbstractConsumable {
      * @return - the point value of the consumable eaten.
      */
     private int eat() {
-        int value = points; //temporarily stores the point score to be returned
-        sprite = null; //gets rid of the srpite
-        points = 0; //erases  point value
-        //by erasing sprite and point value, it will still occupy the space as a blank space, but adds no point value. Can be overwritten.
-        return value;
+        visible = false;
+        return points;
     }
 
     @Override
@@ -134,7 +152,7 @@ abstract class AbstractConsumable {
      * General to-string method, must add title and ending variables to it.
      */
     public String toString() {
-        return "sprite=" + sprite + ", x=" + x + ", y=" + y + ", points=" + points;
+        return "sprite=" + sprite + ", x=" + x + ", y=" + y + ", points=" + points + ", visible=" + visible;
     }
 
     /**

@@ -5,6 +5,9 @@
  */
 package macpan;
 
+import macpan.objects.Pellet;
+import macpan.objects.Food;                //keep here
+import macpan.objects.PowerPellet;
 /**
  *
  * @author noahb
