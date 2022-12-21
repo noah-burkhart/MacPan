@@ -10,20 +10,21 @@ import java.awt.Image;
  *
  * @author nobur7839
  */
-abstract class  AbstractConsumable {
-    
+abstract class AbstractConsumable {
+
     //attributes
     private Image sprite;
     private int x, y, points;
-    
+
     /**
      * General constructor for all consumable objects.
+     *
      * @param sprite - the sprite
      * @param xPos - the x position
      * @param yPos - the y position
      * @param points - the points value it holds.
      */
-    public AbstractConsumable(Image sprite, int xPos, int yPos, int points){
+    public AbstractConsumable(Image sprite, int xPos, int yPos, int points) {
         this.sprite = sprite;
         x = xPos;
         y = yPos;                  //sets values
@@ -31,9 +32,9 @@ abstract class  AbstractConsumable {
     }
 
     //getters and setters
-    
     /**
      * Gets the Image file of the sprite
+     *
      * @return - the Image
      */
     public Image getSprite() {
@@ -42,6 +43,7 @@ abstract class  AbstractConsumable {
 
     /**
      * Sets the sprite of the object
+     *
      * @param sprite - the new sprite
      */
     public void setSprite(Image sprite) {
@@ -50,6 +52,7 @@ abstract class  AbstractConsumable {
 
     /**
      * Gets the x-position of the object
+     *
      * @return - the x position
      */
     public int getX() {
@@ -58,6 +61,7 @@ abstract class  AbstractConsumable {
 
     /**
      * Sets the x position of the object
+     *
      * @param x - the x position
      */
     public void setX(int x) {
@@ -66,6 +70,7 @@ abstract class  AbstractConsumable {
 
     /**
      * Gets the y position of the object
+     *
      * @return - the y position
      */
     public int getY() {
@@ -74,6 +79,7 @@ abstract class  AbstractConsumable {
 
     /**
      * Sets the y position of the object
+     *
      * @param y - the new y position.
      */
     public void setY(int y) {
@@ -82,6 +88,7 @@ abstract class  AbstractConsumable {
 
     /**
      * Gets the point value
+     *
      * @return - the value
      */
     public int getPoints() {
@@ -90,19 +97,20 @@ abstract class  AbstractConsumable {
 
     /**
      * Sets the point value
+     *
      * @param points - the new point value
      */
     public void setPoints(int points) {
         this.points = points;
     }
-    
+
     //behaviours
-    
     /**
      * Eats the item making the space empty
+     *
      * @return - the point value of the consumable eaten.
      */
-    private int eat(){
+    private int eat() {
         int value = points; //temporarily stores the point score to be returned
         sprite = null; //gets rid of the srpite
         points = 0; //erases  point value
@@ -117,18 +125,14 @@ abstract class  AbstractConsumable {
     public String toString() {
         return "sprite=" + sprite + ", x=" + x + ", y=" + y + ", points=" + points;
     }
-    
+
     /**
      * Compares the point value and sprite to see if they are the same.
+     *
      * @param o - the other object
      * @return - if they are the same
      */
-    public boolean equals(AbstractConsumable o){
+    public boolean equals(AbstractConsumable o) {
         return sprite == o.getSprite() && points == o.points;
     }
-    
-    
-    
-    
-    
 }
