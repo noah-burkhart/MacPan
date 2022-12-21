@@ -1,5 +1,6 @@
 /*
  *N Burkhart
+ * 12/21/2022
  * Abstract class to represent all consumable objects
  */
 package macpan.objects;
@@ -13,21 +14,31 @@ import java.awt.Image;
 abstract class AbstractConsumable {
 
     //attributes
-    private Image sprite;
-    private int x, y, points;
+    protected Image sprite;
+    protected int x, y, points;
 
     /**
+     * Constructor for a Consumable.
+     * @param x - the x position
+     * @param y - the y position;
+     */
+    public AbstractConsumable(int x, int y){
+        this.x = x;
+        this.y = y;
+        points = 0;
+        sprite = null;
+    }
+    
+    /**
      * General constructor for all consumable objects.
-     *
      * @param sprite - the sprite
      * @param xPos - the x position
      * @param yPos - the y position
      * @param points - the points value it holds.
      */
-    public AbstractConsumable(Image sprite, int xPos, int yPos, int points) {
-        this.sprite = sprite;
-        x = xPos;
-        y = yPos;                  //sets values
+    public AbstractConsumable(Image sprite, int x, int y, int points) {
+        this(x, y);
+        this.sprite = sprite;              //sets values
         this.points = points;
     }
 
@@ -37,7 +48,7 @@ abstract class AbstractConsumable {
      *
      * @return - the Image
      */
-    public Image getSprite() {
+    public final Image getSprite() {
         return sprite;
     }
 
@@ -55,7 +66,7 @@ abstract class AbstractConsumable {
      *
      * @return - the x position
      */
-    public int getX() {
+    public final int getX() {
         return x;
     }
 
@@ -73,7 +84,7 @@ abstract class AbstractConsumable {
      *
      * @return - the y position
      */
-    public int getY() {
+    public final int getY() {
         return y;
     }
 
@@ -91,7 +102,7 @@ abstract class AbstractConsumable {
      *
      * @return - the value
      */
-    public int getPoints() {
+    public final int getPoints() {
         return points;
     }
 
