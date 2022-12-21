@@ -4,6 +4,11 @@
  */
 package macpan;
 
+import macpan.objects.Food;
+import macpan.objects.Pellet;
+import macpan.objects.PowerPellet;   //keep here
+ 
+
 public class MenuFrame extends javax.swing.JFrame {
 
     //private JPanel HISCORE = new DrawingSurfaceHIGHSCORE();
@@ -13,6 +18,7 @@ public class MenuFrame extends javax.swing.JFrame {
     public MenuFrame() {
         initComponents();
         setLocationRelativeTo(null);
+        
     }
 
     /**
