@@ -16,7 +16,7 @@ public class InstructionsFrame extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
-        setTitle("Insteructions");
+        setTitle("Instructions");
         mainWindow = m;
     }
 
