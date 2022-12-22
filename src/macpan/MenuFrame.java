@@ -29,43 +29,73 @@ public class MenuFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        backgriundLbl = new javax.swing.JLabel();
+        btnPlay = new javax.swing.JButton();
+        btnInstructions = new javax.swing.JButton();
+        btnHighscore = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/macpan/images/Menu.png"))); // NOI18N
+        backgriundLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/macpan/images/Menu.png"))); // NOI18N
+        jPanel1.add(backgriundLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 6, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        btnPlay.setText("jButton1");
+        btnPlay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPlayActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnPlay, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 280, 230, 70));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        btnInstructions.setText("jButton1");
+        btnInstructions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInstructionsActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnInstructions, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 430, 350, 40));
+
+        btnHighscore.setText("jButton1");
+        btnHighscore.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHighscoreActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnHighscore, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 520, 250, 40));
+
+        btnExit.setText("jButton1");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 660, 110, 40));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayActionPerformed
+        System.out.println("play");
+    }//GEN-LAST:event_btnPlayActionPerformed
+
+    private void btnInstructionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInstructionsActionPerformed
+        System.out.println("instructiions");
+    }//GEN-LAST:event_btnInstructionsActionPerformed
+
+    private void btnHighscoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHighscoreActionPerformed
+        System.out.println("highscore");
+    }//GEN-LAST:event_btnHighscoreActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        System.out.println("Exit");
+    }//GEN-LAST:event_btnExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -103,7 +133,11 @@ public class MenuFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel backgriundLbl;
+    private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnHighscore;
+    private javax.swing.JButton btnInstructions;
+    private javax.swing.JButton btnPlay;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
