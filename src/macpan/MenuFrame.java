@@ -12,11 +12,16 @@ import macpan.objects.PowerPellet;
  */
 public class MenuFrame extends javax.swing.JFrame {
 
+    private InstructionsFrame secondWindow;
+    private HighscoreFrame thirdWindow;
     /**
      * Creates new form MenuFrame
      */
     public MenuFrame() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setTitle("MacPan");
     }
 
     /**
@@ -42,7 +47,7 @@ public class MenuFrame extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         backgriundLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/macpan/images/Menu.png"))); // NOI18N
-        jPanel1.add(backgriundLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 6, -1, -1));
+        jPanel1.add(backgriundLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 6, 1010, -1));
 
         btnPlay.setText("jButton1");
         btnPlay.addActionListener(new java.awt.event.ActionListener() {
@@ -50,7 +55,7 @@ public class MenuFrame extends javax.swing.JFrame {
                 btnPlayActionPerformed(evt);
             }
         });
-        jPanel1.add(btnPlay, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 280, 230, 70));
+        jPanel1.add(btnPlay, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 280, 230, 70));
 
         btnInstructions.setText("jButton1");
         btnInstructions.addActionListener(new java.awt.event.ActionListener() {
@@ -58,7 +63,7 @@ public class MenuFrame extends javax.swing.JFrame {
                 btnInstructionsActionPerformed(evt);
             }
         });
-        jPanel1.add(btnInstructions, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 430, 350, 40));
+        jPanel1.add(btnInstructions, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 430, 350, 40));
 
         btnHighscore.setText("jButton1");
         btnHighscore.addActionListener(new java.awt.event.ActionListener() {
@@ -66,17 +71,19 @@ public class MenuFrame extends javax.swing.JFrame {
                 btnHighscoreActionPerformed(evt);
             }
         });
-        jPanel1.add(btnHighscore, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 520, 250, 40));
+        jPanel1.add(btnHighscore, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 520, 260, 40));
 
         btnExit.setText("jButton1");
+        btnExit.setMinimumSize(new java.awt.Dimension(30, 23));
+        btnExit.setPreferredSize(new java.awt.Dimension(30, 23));
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExitActionPerformed(evt);
             }
         });
-        jPanel1.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 660, 110, 40));
+        jPanel1.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 660, 110, 40));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 0, 1010, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -86,15 +93,23 @@ public class MenuFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPlayActionPerformed
 
     private void btnInstructionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInstructionsActionPerformed
-        System.out.println("instructiions");
+        if (secondWindow == null) {
+            secondWindow = new InstructionsFrame(this);
+        }
+        this.setVisible(false);
+        secondWindow.setVisible(true);
     }//GEN-LAST:event_btnInstructionsActionPerformed
 
     private void btnHighscoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHighscoreActionPerformed
-        System.out.println("highscore");
+       if (thirdWindow == null) {
+            thirdWindow = new HighscoreFrame(this);
+        }
+        this.setVisible(false);
+        thirdWindow.setVisible(true);
     }//GEN-LAST:event_btnHighscoreActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        System.out.println("Exit");
+        System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
 
     /**
