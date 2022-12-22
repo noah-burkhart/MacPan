@@ -8,6 +8,6 @@ package macpan.objects;
  *
  * @author nobur7839
  */
-public class PowerPellet {
+public class PowerPellet extends AbstractConsumable{
     
 }
