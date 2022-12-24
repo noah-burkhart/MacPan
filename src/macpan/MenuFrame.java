@@ -1,24 +1,26 @@
 /*
- * jack is a keg worker
+ * Jack Luhta
+ * December 21, 2023
+ * Menu frame of MacPan
  */
 package macpan;
 
 import macpan.objects.Pellet;
-import macpan.objects.Food;                //keep here
+import macpan.objects.Food;                
 import macpan.objects.PowerPellet;
-/**
- *
- * @author noahb
- */
+
 public class MenuFrame extends javax.swing.JFrame {
 
+    //Variables for the other two frames that will be switched to
     private InstructionsFrame secondWindow;
     private HighscoreFrame thirdWindow;
+    
     /**
-     * Creates new form MenuFrame
+     * Creates the menu frame with the gui builder
      */
     public MenuFrame() {
         initComponents();
+        //Set title of jframe, move frame to centre of screen, and disallow resizing the window
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("MacPan");
@@ -89,26 +91,36 @@ public class MenuFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayActionPerformed
+        //If play button is clicked...
+        //Print out "play" for test
         System.out.println("play");
     }//GEN-LAST:event_btnPlayActionPerformed
 
     private void btnInstructionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInstructionsActionPerformed
+        //If instructions button is clicked...
+        //Open instructions frame
+        //Making sure there is actually an instructions frame
         if (secondWindow == null) {
             secondWindow = new InstructionsFrame(this);
         }
-        this.setVisible(false);
-        secondWindow.setVisible(true);
+        this.setVisible(false); //Set main window to not visible
+        secondWindow.setVisible(true); //Set instructions window to visible
     }//GEN-LAST:event_btnInstructionsActionPerformed
 
     private void btnHighscoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHighscoreActionPerformed
-       if (thirdWindow == null) {
+        //If high score button is clicked...
+        //Open high score frame
+        //Making sure there is actually an high score frame
+        if (thirdWindow == null) {
             thirdWindow = new HighscoreFrame(this);
         }
-        this.setVisible(false);
-        thirdWindow.setVisible(true);
+        this.setVisible(false); //Set main window to not visible
+        thirdWindow.setVisible(true); //Set high score window to visible
     }//GEN-LAST:event_btnHighscoreActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        //If exit button is clicked...
+        //Terminate program
         System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
 

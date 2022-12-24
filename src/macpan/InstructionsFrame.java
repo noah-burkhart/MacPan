@@ -5,15 +5,18 @@
  */
 package macpan;
 
-/**
- *
- * @author noahb
- */
 public class InstructionsFrame extends javax.swing.JFrame {
 
+    //Main window variable
     MenuFrame mainWindow;
+    
+    /**
+     * Creates the instructions frame with gui builder
+     * @param m - the main window
+     */
     public InstructionsFrame(MenuFrame m) {
         initComponents();
+        //Set frame to middle of screen, title, and disallow rezizing
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Instructions");
@@ -61,8 +64,9 @@ public class InstructionsFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        this.setVisible(false);
-        mainWindow.setVisible(true);
+        //If back button is clicked..
+        this.setVisible(false); //Instructionsframe is not visible
+        mainWindow.setVisible(true); //Main window is visible
     }//GEN-LAST:event_btnBackActionPerformed
 
 

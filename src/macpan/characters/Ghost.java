@@ -1,20 +1,11 @@
 /*
-Jack Luhta
-December 22, 2022
-Ghost Interface
+  * Jack Luhta
+  * December 22, 2022
+  * Ghost Interface
  */
 package macpan.characters;
 
 public interface Ghost {
-
-    //Move the vehicle position in the lot
-    public void move(int x, int y);
-
-    //Get x position of vehicle
-    public int getXPos();
-
-    //Get y position of vehicle
-    public int getYPos();
 
     //Get the state the ghost is on, 1-4
     // *Chase mode, goes to pacman, (dependent on type of ghost)
@@ -29,35 +20,25 @@ public interface Ghost {
     // *Scared mode, pac man has eaten power pellet
     // *Eaten mode, goes back to base after being eaten
     public void setState(int state);
-
-    //Get the cost of the vehicle
-    public double getCost();
-
-    //Set the cost of the vehicle
-    //Return false if the cost is not valid
-    public boolean setCost(double cost);
-
-    //Get make of vehicle
-    public String getMake();
-
-    //Set make of vehicle
-    public void setMake(String make);
-
-    //Get model of vehicle
-    public String getModel();
-
-    //Set model of vehicle
-    public void setModel(String model);
-
-    //Get color of vehicle
-    public Color getColor();
-
-    //Set color of vehicle
-    public void setColor(Color c);
-
-    //Draw the vehicle
-    public void draw(StandardPen p);
-
-    //Get a string of all the vehicle information
-    public String toString();
+    
+    //Check if ghost is in spawn box or not
+    public boolean getInBox();
+    
+    //Set the ghost as being in the box or not
+    public void setInBox(boolean box);
+    
+    //Get the x coordinate target point on the gameboard 2d array for the ghost to move to
+    public int getTargetPointX();
+    
+    //Set the x coordinate new target point on the gameboard 2d array for the ghost to move to
+    public void setTargetPointX(int point);
+    
+    //Get the y coordinate target point on the gameboard 2d array for the ghost to move to
+    public int getTargetPointY();
+    
+    //Set the y coordinate new target point on the gameboard 2d array for the ghost to move to
+    public void setTargetPointY(int point);
+    
+    //Output the String representation of the class
+    public String toString(String m);
 }
