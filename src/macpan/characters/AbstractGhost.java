@@ -4,10 +4,8 @@
  */
 package macpan.characters;
 
-/**
- *
- * @author jel3
- */
-public abstract class AbstractGhost {
+import java.awt.Image;
+
+public abstract class AbstractGhost extends AbstractCharacter implements Ghost {
     
 }
