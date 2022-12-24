@@ -5,8 +5,6 @@ Ghost Interface
  */
 package macpan.characters;
 
-import java.awt.Color;
-
 public interface Ghost {
 
     //Move the vehicle position in the lot
@@ -58,7 +56,7 @@ public interface Ghost {
     public void setColor(Color c);
 
     //Draw the vehicle
-    //public void draw(StandardPen p);
+    public void draw(StandardPen p);
 
     //Get a string of all the vehicle information
     public String toString();
