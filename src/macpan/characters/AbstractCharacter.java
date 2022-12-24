@@ -13,7 +13,7 @@ abstract class AbstractCharacter {
     
     //Instance variables
     protected Image sprite;
-    protected int xPos, yPos, xSpeed, ySpeed;
+    protected static int xPos, yPos, xSpeed, ySpeed;
     protected String direction;
     
     /**
@@ -86,7 +86,7 @@ abstract class AbstractCharacter {
      * Get the image sprite of the character
      * @return - Sprite image
      */
-    public int getXPos() {
+    public static int getXPos() {
         return xPos;
     }
     
