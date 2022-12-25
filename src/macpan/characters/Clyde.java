@@ -22,12 +22,31 @@ public class Clyde extends AbstractGhost implements Ghost {
         super(s, x, y, d, iB);
     }
     
-    public int chaseAlgorithmX(int pacmanX) {
-        //if clyde is within an 8 tile radius, set target point ot scatter point, otherwise, same as blinky
+    public double distanceBetween(int pacmanX, int pacmanY) {
+        double distance;
+        distance = (Math.pow((getXPos() - pacmanX), 2)) + (Math.pow((getYPos() - pacmanY), 2));
+        return distance;
     }
     
-    public int chaseAlgorithmY(int pacmanY) {
-        //if clyde is within an 8 tile radius, set target point ot scatter point, otherwise, same as blinky
+    public double angleTo(int pacmanX, int pacmanY) {
+        double angle;
+        double slope = (getYPos() - pacmanY)/(getXPos() - pacmanX);
+        angle = Math.atan(slope);
+        return angle;
+    }
+    
+    public int chaseAlgorithmX(int pacmanX, int pacmanY) {
+        if ((distanceBetween(pacmanX, pacmanY) * Math.cos(angleTo(pacmanX, pacmanY))) < (8 * 18) * Math.cos(angleTo(pacmanX, pacmanY))) {
+            return scatterPointX();
+        }
+        return pacmanX;
+    }
+    
+    public int chaseAlgorithmY(int pacmanY, int pacmanX) {
+        if ((distanceBetween(pacmanX, pacmanY) * Math.cos(angleTo(pacmanX, pacmanY))) < (8 * 18) * Math.cos(angleTo(pacmanX, pacmanY))) {
+            return scatterPointY();
+        }
+        return pacmanY;
     }
     
     public int scatterPointX() {

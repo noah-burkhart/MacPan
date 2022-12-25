@@ -23,16 +23,16 @@ public class Pinky extends AbstractGhost implements Ghost {
     }
     
     public int chaseAlgorithmX(int pacmanX) {
-        //if (Pacman.getDirection().equals("east") || Pacman.getDirection().equals("west")) {
-        //    pacmanX = pacmanX + (4*18);
-        //}
+        if (Pacman.getDirection().equals("east") || Pacman.getDirection().equals("west")) {
+            pacmanX = pacmanX + (4*18);
+        }
         return pacmanX;
     }
     
     public int chaseAlgorithmY(int pacmanY) {
-        //if (Pacman.getDirection().equals("north") || Pacman.getDirection().equals("south")) {
-        //    pacmanY = pacmanY + (4*18);
-        //}
+        if (Pacman.getDirection().equals("north") || Pacman.getDirection().equals("south")) {
+            pacmanY = pacmanY + (4*18);
+        }
         return pacmanY;
     }
     

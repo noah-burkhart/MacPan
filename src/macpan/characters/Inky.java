@@ -7,9 +7,8 @@ package macpan.characters;
 
 import java.awt.Image;
 
-
-
 public class Inky extends AbstractGhost implements Ghost {
+    
     /**
      * Inky must be created with a sprite, a position, a direction, and whether or not they're in the spawn box
      * @param s - Image sprite
@@ -22,24 +21,24 @@ public class Inky extends AbstractGhost implements Ghost {
         super(s, x, y, d, iB);
     }
     
-    public int chaseAlgorithmX(int pacmanX) {
-        //int pivotPointX;
-        //int targetX;
-        //if (Pacman.getDirection().equals("east") || Pacman.getDirection().equals("west")) {
-        //    pivotPointX = pacmanX + (2 * 18);
-        //}
-        //targetX = pivotPointX + (pivotPointX - Blinky.getXPos());
-        //return targetY;
+    public int chaseAlgorithmX(int pacmanX, Blinky b) {
+        int pivotPointX = pacmanX;
+        int targetX;
+        if (Pacman.getDirection().equals("east") || Pacman.getDirection().equals("west")) {
+            pivotPointX += (2 * 18);
+        }
+        targetX = pivotPointX + (pivotPointX - b.getXPos());
+        return targetX;
     }
     
-    public int chaseAlgorithmY(int pacmanY) {
-        //int pivotPointY;
-        //int targetY;
-        //if (Pacman.getDirection().equals("north") || Pacman.getDirection().equals("south")) {
-        //    pivotPointY = pacmanY + (2 * 18);
-        //}
-        //targetY = pivotPointY + (pivotPointY - Blinky.getYPos());
-        //return targetY;
+    public int chaseAlgorithmY(int pacmanY, Blinky b) {
+        int pivotPointY = pacmanY;
+        int targetY;
+        if (Pacman.getDirection().equals("north") || Pacman.getDirection().equals("south")) {
+            pivotPointY += (2 * 18);
+        }
+        targetY = pivotPointY + (pivotPointY - b.getYPos());
+        return targetY;
     }
     
     public int scatterPointX() {

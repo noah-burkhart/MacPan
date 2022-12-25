@@ -86,7 +86,7 @@ abstract class AbstractCharacter {
      * Get the image sprite of the character
      * @return - Sprite image
      */
-    public static int getXPos() {
+    public int getXPos() {
         return xPos;
     }
     
