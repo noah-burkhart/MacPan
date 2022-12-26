@@ -19,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 import javax.imageio.ImageIO;
+import macpan.characters.Blinky;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -26,9 +27,46 @@ public class GamePanel extends JPanel implements Runnable {
     private final int DELAY = 25;
     Block[][] b = new Block[21][19];
 
+    File bImg = new File("src/macpan/images/Ghosts/Blinky/blinky1.png");
+    BufferedImage imgBlinky;
+    File pImg = new File("src/macpan/images/Ghosts/Pinky/pinky1.png");
+    BufferedImage imgPinky;
+    File iImg = new File("src/macpan/images/Ghosts/Inky/inky1.png");
+    BufferedImage imgInky;
+    File cImg = new File("src/macpan/images/Ghosts/Clyde/clyde1.png");
+    BufferedImage imgClyde;
+
+    Blinky blinky;
+    //Pinky pinky;
+    //Inky inky;
+    //Clyde clyde;
+
     // default constructor
     public GamePanel() {
         readFile(b);
+        try {
+            bImg = new File("src/macpan/images/Ghosts/Blinky/blinky1.png");
+            imgBlinky = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
+            imgBlinky = ImageIO.read(bImg);
+            pImg = new File("src/macpan/images/Ghosts/Pinky/pinky1.png");
+            imgPinky = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
+            imgPinky = ImageIO.read(pImg);
+            iImg = new File("src/macpan/images/Ghosts/Inky/inky1.png");
+            imgInky = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
+            imgInky = ImageIO.read(iImg);
+            cImg = new File("src/macpan/images/Ghosts/Clyde/clyde1.png");
+            imgClyde = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
+            imgClyde = ImageIO.read(cImg);
+            System.out.println("Ghost Reading Complete.");
+        } catch (IOException e) {
+            System.out.println("Error: " + e);
+        }
+        blinky = new Blinky(imgBlinky, 250, 200, "east", true);
+        //pinky = new Pinky(imgPinky, 30, 0, "east", true);
+        //inky = new Inky(imgInky, 60, 0, "east", true);
+        //clyde = new Clyde(imgClyde, 90, 0, "east", true);
+        blinky.setXSpeed(1);
+        blinky.setYSpeed(2);
     }
 
     public static void readFile(Block[][] b) {
@@ -51,7 +89,7 @@ public class GamePanel extends JPanel implements Runnable {
                     } catch (IOException e) {
                         System.out.println("Error: " + e);
                     }
-                    b[i][j] = new Block(img, j*27 + 25, i*27 + 100);
+                    b[i][j] = new Block(img, j * 27 + 25, i * 27 + 100);
                 }
             }
 
@@ -70,6 +108,8 @@ public class GamePanel extends JPanel implements Runnable {
                 g2d.drawImage(b[i][j].sprite, b[i][j].xPos, b[i][j].yPos, 27, 27, Color.black, this);
             }
         }
+        g2d.drawImage(blinky.getSprite(), blinky.getXPos(), blinky.getYPos(), 25, 25, Color.black, this);
+
     }
 
     //overrides paintComponent in JPanel class
@@ -100,7 +140,22 @@ public class GamePanel extends JPanel implements Runnable {
         //get the current time
         beforeTime = System.currentTimeMillis();
 
+        int counter = 0;
         while (true) { //this loop runs once ever 25 ms (the DELAY)
+            counter += DELAY;
+            if (counter < 2000) {
+                blinky.setXSpeed(1);
+                blinky.moveRight();
+            } else if (counter < 4000) {
+                blinky.setYSpeed(2);
+                blinky.moveDown();
+            } else if (counter < 6000) {
+                blinky.setXSpeed(3);
+                blinky.moveLeft();
+            } else {
+                blinky.setYSpeed(4);
+                blinky.moveUp();
+            }
             repaint();
 
             //calculate how much time has passed since the last call
