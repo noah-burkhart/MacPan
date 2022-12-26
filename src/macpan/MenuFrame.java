@@ -5,10 +5,6 @@
  */
 package macpan;
 
-import macpan.objects.Pellet;
-import macpan.objects.Food;                
-//import macpan.objects.PowerPellet;
-
 public class MenuFrame extends javax.swing.JFrame {
 
     //Variables for the other two frames that will be switched to
