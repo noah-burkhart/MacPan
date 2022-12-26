@@ -7,11 +7,12 @@ package macpan;
 
 import macpan.objects.Pellet;
 import macpan.objects.Food;                
-import macpan.objects.PowerPellet;
+//import macpan.objects.PowerPellet;
 
 public class MenuFrame extends javax.swing.JFrame {
 
     //Variables for the other two frames that will be switched to
+    private GameFrame firstWindow;
     private InstructionsFrame secondWindow;
     private HighscoreFrame thirdWindow;
     
@@ -36,7 +37,7 @@ public class MenuFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        backgriundLbl = new javax.swing.JLabel();
+        backgroundLbl = new javax.swing.JLabel();
         btnPlay = new javax.swing.JButton();
         btnInstructions = new javax.swing.JButton();
         btnHighscore = new javax.swing.JButton();
@@ -48,8 +49,9 @@ public class MenuFrame extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        backgriundLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/macpan/images/Menu.png"))); // NOI18N
-        jPanel1.add(backgriundLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 6, 1010, -1));
+        backgroundLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/macpan/images/JFrames/Menu.png"))); // NOI18N
+        backgroundLbl.setText("jLabel1");
+        jPanel1.add(backgroundLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1010, 720));
 
         btnPlay.setText("jButton1");
         btnPlay.addActionListener(new java.awt.event.ActionListener() {
@@ -92,8 +94,11 @@ public class MenuFrame extends javax.swing.JFrame {
 
     private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayActionPerformed
         //If play button is clicked...
-        //Print out "play" for test
-        System.out.println("play");
+        if (firstWindow == null) {
+            firstWindow = new GameFrame(this);
+        }
+        this.setVisible(false);
+        firstWindow.setVisible(true);
     }//GEN-LAST:event_btnPlayActionPerformed
 
     private void btnInstructionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInstructionsActionPerformed
@@ -160,7 +165,7 @@ public class MenuFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel backgriundLbl;
+    private javax.swing.JLabel backgroundLbl;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnHighscore;
     private javax.swing.JButton btnInstructions;

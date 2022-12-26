@@ -41,15 +41,16 @@
         <Property name="useNullLayout" type="boolean" value="false"/>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="backgriundLbl">
+        <Component class="javax.swing.JLabel" name="backgroundLbl">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/macpan/images/Menu.png"/>
+              <Image iconType="3" name="/macpan/images/JFrames/Menu.png"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="jLabel1"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="5" y="6" width="1010" height="-1"/>
+              <AbsoluteConstraints x="0" y="0" width="1010" height="720"/>
             </Constraint>
           </Constraints>
         </Component>

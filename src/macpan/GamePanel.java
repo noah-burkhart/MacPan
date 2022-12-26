@@ -13,16 +13,18 @@ import java.awt.Graphics2D;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 
 public class GamePanel extends JPanel implements Runnable {
 
     private Thread animator;
     private final int DELAY = 25;
-    Block[][] b = new Block[32][28];
+    Block[][] b = new Block[21][19];
 
     // default constructor
     public GamePanel() {
@@ -35,16 +37,21 @@ public class GamePanel extends JPanel implements Runnable {
             Scanner s = new Scanner(f); //create scanner for file
 
             String imageLink = "";
-            int x, y;
-            ImageIcon img = null;
+            BufferedImage img = null;
+            File imgF = null;
 
-            for (int i = 0; i < 32; i++) { //Loop the size of the array to fill every spot
-                for (int j = 0; j < 28; j++) {
+            for (int i = 0; i < 21; i++) { //Loop the size of the array to fill every spot
+                for (int j = 0; j < 19; j++) {
                     String imgLink = s.nextLine();
-                    x = Integer.parseInt(s.nextLine());
-                    y = Integer.parseInt(s.nextLine());
-                    img = new ImageIcon(imgLink);
-                    b[i][j] = new Block(img, x, y);
+                    try {
+                        imgF = new File(imgLink); //image file path
+                        img = new BufferedImage(27, 27, BufferedImage.TYPE_INT_ARGB);
+                        img = ImageIO.read(imgF);
+                        System.out.println("Reading complete.");
+                    } catch (IOException e) {
+                        System.out.println("Error: " + e);
+                    }
+                    b[i][j] = new Block(img, j*27 + 25, i*27 + 100);
                 }
             }
 
@@ -58,6 +65,11 @@ public class GamePanel extends JPanel implements Runnable {
         //the Graphics2D class is the class that handles all the drawing
         //must be casted from older Graphics class in order to have access to some newer methods
         Graphics2D g2d = (Graphics2D) g;
+        for (int i = 0; i < 21; i++) {
+            for (int j = 0; j < 19; j++) {
+                g2d.drawImage(b[i][j].sprite, b[i][j].xPos, b[i][j].yPos, 27, 27, Color.black, this);
+            }
+        }
     }
 
     //overrides paintComponent in JPanel class

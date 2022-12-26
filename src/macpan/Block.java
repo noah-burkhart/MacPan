@@ -6,21 +6,21 @@
 
 package macpan;
 
-import javax.swing.ImageIcon;
+import java.awt.Image;
 
 public class Block {
-    ImageIcon sprite;
+    Image sprite;
     int xPos;
     int yPos;
     boolean full;
     
-    public Block(ImageIcon s, int x, int y) {
+    public Block(Image s, int x, int y) {
         sprite = s;
         xPos = x;
         yPos = y;
     }
     
-    public Block(ImageIcon s, int x, int y, boolean f) {
+    public Block(Image s, int x, int y, boolean f) {
         sprite = s;
         xPos = x;
         yPos = y;
