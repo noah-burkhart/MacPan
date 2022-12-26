@@ -18,6 +18,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import macpan.characters.Blinky;
 
@@ -109,7 +111,6 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
         g2d.drawImage(blinky.getSprite(), blinky.getXPos(), blinky.getYPos(), 25, 25, Color.black, this);
-
     }
 
     //overrides paintComponent in JPanel class
@@ -143,17 +144,46 @@ public class GamePanel extends JPanel implements Runnable {
         int counter = 0;
         while (true) { //this loop runs once ever 25 ms (the DELAY)
             counter += DELAY;
-            if (counter < 2000) {
+            if (counter < 2500) {
                 blinky.setXSpeed(1);
+                bImg = new File("src/macpan/images/Ghosts/Blinky/blinky1.png");
+                try {
+                    imgBlinky = ImageIO.read(bImg);
+                } catch (IOException ex) {
+                    Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                blinky.setSprite(imgBlinky);
                 blinky.moveRight();
-            } else if (counter < 4000) {
-                blinky.setYSpeed(2);
+            } else if (counter < 5000) {
+                blinky.setYSpeed(1);
+                bImg = new File("src/macpan/images/Ghosts/Blinky/blinkyDown1.png");
+                try {
+                    imgBlinky = ImageIO.read(bImg);
+                } catch (IOException ex) {
+                    Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                blinky.setSprite(imgBlinky);
                 blinky.moveDown();
-            } else if (counter < 6000) {
-                blinky.setXSpeed(3);
+            } else if (counter < 7500) {
+                blinky.setXSpeed(1);
+                bImg = new File("src/macpan/images/Ghosts/Blinky/blinky1.png");
+                try {
+                    imgBlinky = ImageIO.read(bImg);
+                    
+                } catch (IOException ex) {
+                    Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                blinky.setSprite(imgBlinky);
                 blinky.moveLeft();
-            } else {
-                blinky.setYSpeed(4);
+            } else if (counter < 10000) {
+                blinky.setYSpeed(1);
+                bImg = new File("src/macpan/images/Ghosts/Blinky/blinkyUp1.png");
+                try {
+                    imgBlinky = ImageIO.read(bImg);
+                } catch (IOException ex) {
+                    Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                blinky.setSprite(imgBlinky);
                 blinky.moveUp();
             }
             repaint();
