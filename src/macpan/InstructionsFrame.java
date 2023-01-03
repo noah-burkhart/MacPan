@@ -21,6 +21,38 @@ public class InstructionsFrame extends javax.swing.JFrame {
         setResizable(false);
         setTitle("Instructions");
         mainWindow = m;
+        instructionArea.setText("Instructions:\n" +
+"Eat all of the pellets to clear the entire maze\n" +
+"You have 3 lives at the start\n" +
+"If a ghost catches you, you lose a life\n" +
+"When you lose all your lives, the game is over\n" +
+"\n" +
+"Tips and Tricks:\n" +
+"Power Pellets: \n" +
+"When Pac Man eats the power pellets, he can now eat the ghosts!\n" +
+"But he can only eat them when the ghosts become scared \n" +
+"but this will only last for a limited time so be careful!\n" +
+"Fruit Treats:\n" +
+"Two fruits appear in each maze. \n" +
+"As you complete more levels, the more they are worth\n" +
+"Warp Tunnels:\n" +
+"Go through one end and you will warp out the other end\n" +
+"Use these tunnels to your advantage!\n" +
+"\n" +
+"Scoring:\n" +
+"Pellet: 10 points\n" +
+"Power Pellet: 50 points\n" +
+"Ghosts:\n" +
+"1st Ghost - 200 points\n" +
+"2nd Ghost 400 points\n" +
+"3rd Ghost - 800 points\n" +
+"4th Ghost - 1600 points\n" +
+"Fruit:\n" +
+"Cherry - 100 points\n" +
+"Strawberry - 200 points\n" +
+"Orange - 300 points\n" +
+"Extra Life:\n" +
+"You gain an extra life at every 10,000 points!");
     }
 
     /**
