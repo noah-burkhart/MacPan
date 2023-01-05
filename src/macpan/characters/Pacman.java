@@ -1,13 +1,23 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * V. He
+ * Jan 5th, 2023
  */
 package macpan.characters;
 
-/**
- *
- * @author nobur7839
- */
-public class Pacman {
+import java.awt.Image; 
+
+public class Pacman extends AbstractCharacter{
+    
+    /**
+     * Primary Constructor for PacMan
+     * He must have:
+     * @param s - a sprite
+     * @param x - x position
+     * @param y - y position
+     * @param d - the direction he's facing
+     */
+    public Pacman(Image s, int x, int y, String d) {
+        super(s, x, y, d);
+    }
     
 }
