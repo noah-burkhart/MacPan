@@ -21,38 +21,39 @@ public class InstructionsFrame extends javax.swing.JFrame {
         setResizable(false);
         setTitle("Instructions");
         mainWindow = m;
-        instructionArea.setText("Instructions:\n" +
-"Eat all of the pellets to clear the entire maze\n" +
-"You have 3 lives at the start\n" +
-"If a ghost catches you, you lose a life\n" +
-"When you lose all your lives, the game is over\n" +
-"\n" +
-"Tips and Tricks:\n" +
-"Power Pellets: \n" +
-"When Pac Man eats the power pellets, he can now eat the ghosts!\n" +
-"But he can only eat them when the ghosts become scared \n" +
-"but this will only last for a limited time so be careful!\n" +
-"Fruit Treats:\n" +
-"Two fruits appear in each maze. \n" +
-"As you complete more levels, the more they are worth\n" +
-"Warp Tunnels:\n" +
-"Go through one end and you will warp out the other end\n" +
-"Use these tunnels to your advantage!\n" +
-"\n" +
-"Scoring:\n" +
-"Pellet: 10 points\n" +
-"Power Pellet: 50 points\n" +
-"Ghosts:\n" +
-"1st Ghost - 200 points\n" +
-"2nd Ghost 400 points\n" +
-"3rd Ghost - 800 points\n" +
-"4th Ghost - 1600 points\n" +
-"Fruit:\n" +
-"Cherry - 100 points\n" +
-"Strawberry - 200 points\n" +
-"Orange - 300 points\n" +
-"Extra Life:\n" +
-"You gain an extra life at every 10,000 points!");
+        instructionArea.setText("""
+                                Instructions:
+                                Eat all of the pellets to clear the entire maze
+                                You have 3 lives at the start
+                                If a ghost catches you, you lose a life
+                                When you lose all your lives, the game is over
+                                
+                                Tips and Tricks:
+                                Power Pellets: 
+                                When Pac Man eats the power pellets, he can now eat the ghosts!
+                                But he can only eat them when the ghosts become scared 
+                                but this will only last for a limited time so be careful!
+                                Fruit Treats:
+                                Two fruits appear in each maze. 
+                                As you complete more levels, the more they are worth
+                                Warp Tunnels:
+                                Go through one end and you will warp out the other end
+                                Use these tunnels to your advantage!
+                                
+                                Scoring:
+                                Pellet: 10 points
+                                Power Pellet: 50 points
+                                Ghosts:
+                                1st Ghost - 200 points
+                                2nd Ghost 400 points
+                                3rd Ghost - 800 points
+                                4th Ghost - 1600 points
+                                Fruit:
+                                Cherry - 100 points
+                                Strawberry - 200 points
+                                Orange - 300 points
+                                Extra Life:
+                                You gain an extra life at every 10,000 points!""");
     }
 
     /**
@@ -82,33 +83,35 @@ public class InstructionsFrame extends javax.swing.JFrame {
         instructionArea.setRows(5);
         jScrollPane2.setViewportView(instructionArea);
 
+        jLabel1.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
         jLabel1.setText("INSTRUCTIONS");
+        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnBack)
+                .addGap(164, 164, 164))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnBack)
-                        .addGap(164, 164, 164))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(154, 154, 154))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(121, 121, 121)
+                        .addComponent(jLabel1)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBack)
                 .addContainerGap())
