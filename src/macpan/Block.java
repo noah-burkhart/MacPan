@@ -13,17 +13,28 @@ public class Block {
     int xPos;
     int yPos;
     boolean full;
+    boolean empty;
     
-    public Block(Image s, int x, int y) {
+    public Block(Image s, int x, int y, boolean e) {
         sprite = s;
         xPos = x;
         yPos = y;
+        empty = e;
     }
     
-    public Block(Image s, int x, int y, boolean f) {
+    public Block(Image s, int x, int y, boolean e, boolean f) {
         sprite = s;
         xPos = x;
         yPos = y;
+        empty = e;
         full = f;
+    }
+    
+    public boolean getEmpty() {
+        return empty;
+    }
+    
+    public void setEmpty(boolean e) {
+        empty = e;
     }
 }
