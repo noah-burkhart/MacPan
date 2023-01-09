@@ -22,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import macpan.characters.Blinky;
+import macpan.objects.Block;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -95,7 +96,7 @@ public class GamePanel extends JPanel implements Runnable {
                     } catch (IOException e) {
                         System.out.println("Error: " + e);
                     }
-                    b[i][j] = new Block(img, j * 26, i * 26, empty);
+                    b[i][j] = new Block(img, j * 26, i * 26);
                 }
             }
 
@@ -111,7 +112,7 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2d = (Graphics2D) g;
         for (int i = 0; i < 21; i++) {
             for (int j = 0; j < 19; j++) {
-                g2d.drawImage(b[i][j].sprite, b[i][j].xPos, b[i][j].yPos, 26, 26, Color.black, this);
+                g2d.drawImage(b[i][j].sprite, b[i][j].x, b[i][j].y, 26, 26, Color.black, this);
             }
         }
         g2d.drawImage(blinky.getSprite(), blinky.getXPos(), blinky.getYPos(), 25, 25, Color.black, this);
