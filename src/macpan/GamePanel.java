@@ -33,6 +33,16 @@ public class GamePanel extends JPanel implements Runnable {
     private final int DELAY = 25;
     Thing[][] b = new Thing[21][19];
 
+    File blocks = new File("src/macpan/images/Consumables/pellet.png");
+    BufferedImage imgBlocks;
+    File pellet = new File("src/macpan/images/Consumables/pellet.png");
+    BufferedImage imgPellet;
+    File powerPellet = new File("src/macpan/images/Consumables/powerpellet.png");
+    BufferedImage imgPowerPellet;
+    File food = new File("src/macpan/images/Consumables/food.png");
+    BufferedImage imgFood;
+    
+    
     File bImg = new File("src/macpan/images/Ghosts/Blinky/blinky1.png");
     BufferedImage imgBlinky;
     File pImg = new File("src/macpan/images/Ghosts/Pinky/pinky1.png");
@@ -49,6 +59,18 @@ public class GamePanel extends JPanel implements Runnable {
 
     // default constructor
     public GamePanel() {
+        try {
+            imgBlocks = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
+            imgBlocks = ImageIO.read(blocks);
+            imgPellet = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
+            imgPellet = ImageIO.read(pellet);
+            imgPowerPellet = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
+            imgPowerPellet = ImageIO.read(powerPellet);
+            imgFood = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
+            imgFood = ImageIO.read(food);
+        } catch (IOException ex) {
+            Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         readFile(b);
         try {
             bImg = new File("src/macpan/images/Ghosts/Blinky/blinky1.png");
@@ -93,16 +115,16 @@ public class GamePanel extends JPanel implements Runnable {
                     type = s.nextLine(); //saves the type of 'thing' from the data file
 
                     if (type.equals("block")) { //if it is a block
-                        // b[x][y] = new Block(imgBlock, x, y);  //set to a block
+                        b[x][y] = new Block(imgBlocks, x, y);  //set to a block
 
                     } else if (type.equals("pellet")) { //if it is a pellet 
-                        // b[x][y] = new Pellet(imgPellet, x, y);  //set to pellet
+                        b[x][y] = new Pellet(imgPellet, x, y);  //set to pellet
 
                     } else if (type.equals("powerPellet")) { //if it is a Power pellet 
-                        // b[x][y] = new PowerPellet(imgPowerPellet, x, y);  //set to Power pellet
+                        b[x][y] = new PowerPellet(imgPowerPellet, x, y);  //set to Power pellet
                         
                     }else if(type.equals("food")){ //if it is a Food object 
-                      // b[x][y] = new Food(imgFood, x, y);  //set to Food
+                       b[x][y] = new Food(imgFood, x, y);  //set to Food
                     }
                 }
             }

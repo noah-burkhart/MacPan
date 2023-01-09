@@ -20,6 +20,11 @@ public class Blinky extends AbstractGhost implements Ghost{
         super(s, x, y, d, iB);
     }
     
+    /**
+     * Find the x coordinate blinky should go to when
+     * @param pacmanX
+     * @return 
+     */
     public int chaseAlgorithmX(int pacmanX) {
         return pacmanX;
     }

@@ -17,8 +17,9 @@ public class Pacman extends AbstractCharacter{
      * @param x - x position
      * @param y - y position
      * @param d - the direction he's facing
+     * @param 
      */
-    public Pacman(Image s, int x, int y, String d) {
+    public Pacman(Image s, int x, int y, String d, int l) {
         super(s, x, y, d);
     }
 

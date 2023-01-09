@@ -10,7 +10,7 @@ import java.awt.Image;
 
 public abstract class AbstractGhost extends AbstractCharacter implements Ghost {
     
-    //Instance variables=
+    //Instance variables
     protected int targetPointX, targetPointY, state;
     protected boolean inBox;
     protected long scatterTime, chaseTime, scaredTime, boxTime;
