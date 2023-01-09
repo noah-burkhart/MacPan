@@ -88,10 +88,10 @@ public class GamePanel extends JPanel implements Runnable {
                     type = s.nextLine(); //saves the type of 'thing' from the data file
                     
                     if(type.equals("block")){ //if it is a block
-                        b[x][y] = new Block(imgBlock, x, y);  //set to a block
+                       // b[x][y] = new Block(imgBlock, x, y);  //set to a block
                     
                     }else if(type.equals("pellet")){ //if it is a pellet 
-                       b[x][y] = new Pellet(imgPellet, x, y);  //set to pellet
+                      // b[x][y] = new Pellet(imgPellet, x, y);  //set to pellet
                     }
                 }
             }
