@@ -156,9 +156,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
             blinky.setSprite(imgBlinky);
             if (blinky.getXPos()%26 == 0 && blinky.getYPos()%26 == 0) {
-                if (b[blinky.getXPos()/26 + 1][blinky.getYPos()/26].getEmpty() == false) {
-                    
-                }
+                num = (int)(Math.random() * 4 + 1);
                 
             }
             if (num == 1) {
