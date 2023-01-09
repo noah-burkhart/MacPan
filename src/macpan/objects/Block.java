@@ -8,7 +8,7 @@ package macpan.objects;
 
 import java.awt.Image;
 
-public class Block {
+public class Block implements Thing{
     
     //attributes
     public Image sprite;
