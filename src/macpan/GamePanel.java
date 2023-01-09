@@ -75,6 +75,11 @@ public class GamePanel extends JPanel implements Runnable {
         blinky.setYSpeed(2);
     }
 
+    
+    /**
+     * Reads from the file of game board data and creates the game board.
+     * @param b - the board.
+     */
     public static void readFile(Thing[][] b) {
         String type = "";
 
@@ -86,16 +91,22 @@ public class GamePanel extends JPanel implements Runnable {
                 for (int x = 0; x < 19; x++) { //loops through the x
                     
                     type = s.nextLine(); //saves the type of 'thing' from the data file
-                    
-                    if(type.equals("block")){ //if it is a block
-                       // b[x][y] = new Block(imgBlock, x, y);  //set to a block
-                    
-                    }else if(type.equals("pellet")){ //if it is a pellet 
-                      // b[x][y] = new Pellet(imgPellet, x, y);  //set to pellet
+
+                    if (type.equals("block")) { //if it is a block
+                        // b[x][y] = new Block(imgBlock, x, y);  //set to a block
+
+                    } else if (type.equals("pellet")) { //if it is a pellet 
+                        // b[x][y] = new Pellet(imgPellet, x, y);  //set to pellet
+
+                    } else if (type.equals("powerPellet")) { //if it is a Power pellet 
+                        // b[x][y] = new PowerPellet(imgPowerPellet, x, y);  //set to Power pellet
+                        
+                    }else if(type.equals("food")){ //if it is a Food object 
+                      // b[x][y] = new Food(imgFood, x, y);  //set to Food
                     }
                 }
             }
-
+            
         } catch (FileNotFoundException e) { //cacthes file not found
             System.out.println("Error: " + e);
         }
