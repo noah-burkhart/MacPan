@@ -11,7 +11,7 @@ import java.awt.Image;
  *
  * @author nobur7839
  */
-abstract class AbstractConsumable {
+abstract class AbstractConsumable implements Thing{
 
     //attributes
     protected Image sprite;

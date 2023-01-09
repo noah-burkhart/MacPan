@@ -23,12 +23,15 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import macpan.characters.Blinky;
 import macpan.objects.Block;
+import macpan.objects.Pellet;
+
+import macpan.objects.Thing;
 
 public class GamePanel extends JPanel implements Runnable {
 
     private Thread animator;
     private final int DELAY = 25;
-    Block[][] b = new Block[21][19];
+    Thing[][] b = new Thing[21][19];
 
     File bImg = new File("src/macpan/images/Ghosts/Blinky/blinky1.png");
     BufferedImage imgBlinky;
@@ -72,36 +75,40 @@ public class GamePanel extends JPanel implements Runnable {
         blinky.setYSpeed(2);
     }
 
-    public static void readFile(Block[][] b) {
-        try { //to read the file
-            File f = new File("src/MacPan/blocks.data"); //read in the file
-            Scanner s = new Scanner(f); //create scanner for file
+    
+    /**
+     * Reads from the file of game board data and creates the game board.
+     * @param b - the board.
+     */
+    public static void readFile(Thing[][] b) {
+        String type = "";
 
-            String imageLink = "";
-            BufferedImage img = null;
-            File imgF = null;
-            boolean empty = false;
+        try {
+            File f = new File("src/Blocks.data");
+            Scanner s = new Scanner(f);  //tries to make a file and a scanner
 
-            for (int i = 0; i < 21; i++) { //Loop the size of the array to fill every spot
-                for (int j = 0; j < 19; j++) {
-                    String imgLink = s.nextLine();
-                    if (imgLink.equals("src/macpan/images/JFrames/empty.png")) {
-                        empty = true;
+            for (int y = 0; y < 21; y++) { //Loops through the y axis of the 2D array
+                for (int x = 0; x < 19; x++) { //loops through the x
+                    
+                    type = s.nextLine(); //saves the type of 'thing' from the data file
+
+                    if (type.equals("block")) { //if it is a block
+                        // b[x][y] = new Block(imgBlock, x, y);  //set to a block
+
+                    } else if (type.equals("pellet")) { //if it is a pellet 
+                        // b[x][y] = new Pellet(imgPellet, x, y);  //set to pellet
+
+                    } else if (type.equals("powerPellet")) { //if it is a Power pellet 
+                        // b[x][y] = new PowerPellet(imgPowerPellet, x, y);  //set to Power pellet
+                        
+                    }else if(type.equals("food")){ //if it is a Food object 
+                      // b[x][y] = new Food(imgFood, x, y);  //set to Food
                     }
-                    try {
-                        imgF = new File(imgLink); //image file path
-                        img = new BufferedImage(26, 26, BufferedImage.TYPE_INT_ARGB);
-                        img = ImageIO.read(imgF);
-                        System.out.println("Reading complete.");
-                    } catch (IOException e) {
-                        System.out.println("Error: " + e);
-                    }
-                    b[i][j] = new Block(img, j * 26, i * 26);
                 }
             }
-
-        } catch (FileNotFoundException e) { //if file is not read properly
-            System.out.println(e);
+            
+        } catch (FileNotFoundException e) { //cacthes file not found
+            System.out.println("Error: " + e);
         }
     }
 
@@ -112,7 +119,7 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2d = (Graphics2D) g;
         for (int i = 0; i < 21; i++) {
             for (int j = 0; j < 19; j++) {
-                g2d.drawImage(b[i][j].sprite, b[i][j].x, b[i][j].y, 26, 26, Color.black, this);
+                g2d.drawImage(b[i][j].getSprite(), b[i][j].getX(), b[i][j].getY(), 26, 26, Color.black, this);
             }
         }
         g2d.drawImage(blinky.getSprite(), blinky.getXPos(), blinky.getYPos(), 25, 25, Color.black, this);
@@ -147,7 +154,7 @@ public class GamePanel extends JPanel implements Runnable {
         beforeTime = System.currentTimeMillis();
 
         int num = 2;
-        
+
         while (true) { //this loop runs once ever 25 ms (the DELAY)
             bImg = new File("src/macpan/images/Ghosts/Blinky/blinky1.png");
             try {
@@ -156,9 +163,8 @@ public class GamePanel extends JPanel implements Runnable {
                 Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
             }
             blinky.setSprite(imgBlinky);
-            if (blinky.getXPos()%26 == 0 && blinky.getYPos()%26 == 0) {
-                num = (int)(Math.random() * 4 + 1);
-                
+            if (blinky.getXPos() % 26 == 0 && blinky.getYPos() % 26 == 0) {
+                num = (int) (Math.random() * 4 + 1);
             }
             if (num == 1) {
                 blinky.moveUp();
