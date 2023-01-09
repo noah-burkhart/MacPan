@@ -8,6 +8,8 @@ import java.awt.Image;
 
 public class Pacman extends AbstractCharacter{
     
+    private boolean powerPellet;
+    
     /**
      * Primary Constructor for PacMan
      * He must have:
@@ -19,5 +21,21 @@ public class Pacman extends AbstractCharacter{
     public Pacman(Image s, int x, int y, String d) {
         super(s, x, y, d);
     }
+
+    public boolean isPowerPellet() {
+        return powerPellet;
+    }
+
+    public void setPowerPellet(boolean powerPellet) {
+        this.powerPellet = powerPellet;
+    }
     
+    
+//    public int state(boolean powerPellet) {
+//        if (powerPellet == true) {
+//            return 3;
+//        } else {
+//            return AbstractGhost.getState();
+//        }
+//    }
 }
