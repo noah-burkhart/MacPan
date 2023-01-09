@@ -22,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import macpan.characters.Blinky;
+import macpan.objects.Block;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -63,11 +64,11 @@ public class GamePanel extends JPanel implements Runnable {
         } catch (IOException e) {
             System.out.println("Error: " + e);
         }
-        blinky = new Blinky(imgBlinky, 250, 200, "east", true);
+        blinky = new Blinky(imgBlinky, 156, 156, "east", true);
         //pinky = new Pinky(imgPinky, 30, 0, "east", true);
         //inky = new Inky(imgInky, 60, 0, "east", true);
         //clyde = new Clyde(imgClyde, 90, 0, "east", true);
-        blinky.setXSpeed(1);
+        blinky.setXSpeed(2);
         blinky.setYSpeed(2);
     }
 
@@ -79,19 +80,23 @@ public class GamePanel extends JPanel implements Runnable {
             String imageLink = "";
             BufferedImage img = null;
             File imgF = null;
+            boolean empty = false;
 
             for (int i = 0; i < 21; i++) { //Loop the size of the array to fill every spot
                 for (int j = 0; j < 19; j++) {
                     String imgLink = s.nextLine();
+                    if (imgLink.equals("src/macpan/images/JFrames/empty.png")) {
+                        empty = true;
+                    }
                     try {
                         imgF = new File(imgLink); //image file path
-                        img = new BufferedImage(27, 27, BufferedImage.TYPE_INT_ARGB);
+                        img = new BufferedImage(26, 26, BufferedImage.TYPE_INT_ARGB);
                         img = ImageIO.read(imgF);
                         System.out.println("Reading complete.");
                     } catch (IOException e) {
                         System.out.println("Error: " + e);
                     }
-                    b[i][j] = new Block(img, j * 27 + 25, i * 27 + 100);
+                    b[i][j] = new Block(img, j * 26, i * 26);
                 }
             }
 
@@ -107,7 +112,7 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2d = (Graphics2D) g;
         for (int i = 0; i < 21; i++) {
             for (int j = 0; j < 19; j++) {
-                g2d.drawImage(b[i][j].sprite, b[i][j].xPos, b[i][j].yPos, 27, 27, Color.black, this);
+                g2d.drawImage(b[i][j].sprite, b[i][j].x, b[i][j].y, 26, 26, Color.black, this);
             }
         }
         g2d.drawImage(blinky.getSprite(), blinky.getXPos(), blinky.getYPos(), 25, 25, Color.black, this);
@@ -141,51 +146,30 @@ public class GamePanel extends JPanel implements Runnable {
         //get the current time
         beforeTime = System.currentTimeMillis();
 
-        int counter = 0;
+        int num = 2;
+        
         while (true) { //this loop runs once ever 25 ms (the DELAY)
-            counter += DELAY;
-            if (counter < 2500) {
-                blinky.setXSpeed(1);
-                bImg = new File("src/macpan/images/Ghosts/Blinky/blinky1.png");
-                try {
-                    imgBlinky = ImageIO.read(bImg);
-                } catch (IOException ex) {
-                    Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                blinky.setSprite(imgBlinky);
-                blinky.moveRight();
-            } else if (counter < 5000) {
-                blinky.setYSpeed(1);
-                bImg = new File("src/macpan/images/Ghosts/Blinky/blinkyDown1.png");
-                try {
-                    imgBlinky = ImageIO.read(bImg);
-                } catch (IOException ex) {
-                    Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                blinky.setSprite(imgBlinky);
-                blinky.moveDown();
-            } else if (counter < 7500) {
-                blinky.setXSpeed(1);
-                bImg = new File("src/macpan/images/Ghosts/Blinky/blinky1.png");
-                try {
-                    imgBlinky = ImageIO.read(bImg);
-                    
-                } catch (IOException ex) {
-                    Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                blinky.setSprite(imgBlinky);
-                blinky.moveLeft();
-            } else if (counter < 10000) {
-                blinky.setYSpeed(1);
-                bImg = new File("src/macpan/images/Ghosts/Blinky/blinkyUp1.png");
-                try {
-                    imgBlinky = ImageIO.read(bImg);
-                } catch (IOException ex) {
-                    Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                blinky.setSprite(imgBlinky);
-                blinky.moveUp();
+            bImg = new File("src/macpan/images/Ghosts/Blinky/blinky1.png");
+            try {
+                imgBlinky = ImageIO.read(bImg);
+            } catch (IOException ex) {
+                Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
             }
+            blinky.setSprite(imgBlinky);
+            if (blinky.getXPos()%26 == 0 && blinky.getYPos()%26 == 0) {
+                num = (int)(Math.random() * 4 + 1);
+                
+            }
+            if (num == 1) {
+                blinky.moveUp();
+            } else if (num == 2) {
+                blinky.moveRight();
+            } else if (num == 3) {
+                blinky.moveDown();
+            } else {
+                blinky.moveLeft();
+            }
+
             repaint();
 
             //calculate how much time has passed since the last call
