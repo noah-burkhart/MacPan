@@ -1,6 +1,6 @@
 /*
- * B Cutten
-    May 2022
+ * N Burkhart, J Luhta, V He
+    December 2022 - January 2023
     A class which allows drawing, because it extends JPanel, by way of the 
     Graphics2D class
     This panel is repainted regulary by implementing the Runnable interface and 
@@ -30,7 +30,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     private Thread animator;
     private final int DELAY = 25;
-    Thing[][] b = new Thing[19][21];
+    Thing[][] b = new Thing[19][21]; //the images
+
+    int[][] gridX = new int[19][21]; //parallel to images, holds the position the images are in on the X axis
+    int[][] gridY = new int[19][21]; //parallel to images, holds the position the images are in on the Y axis
 
     //creating image files to be used
     private Image imgPellet, imgPowerPellet, imgFood, imgBlock;
@@ -85,23 +88,27 @@ public class GamePanel extends JPanel implements Runnable {
 
                     type = s.nextLine(); //saves the type of 'thing' from the data file
 
+                    final int size = 26; //the size of each grid space (26x26 px)
+
                     if (type.equals("box")) { //if it is a block
-                        b[x][y] = new Block(imgBlock, x * 26, y * 26);  //set to a block
+                        b[x][y] = new Block(imgBlock, x * size, y * size);  //set to a block
 
                     } else if (type.equals("pellet")) { //if it is a pellet 
-                        b[x][y] = new Pellet(imgPellet, x * 26, y * 26);  //set to pellet
+                        b[x][y] = new Pellet(imgPellet, x * size, y * size);  //set to pellet
 
                     } else if (type.equals("powerPellet")) { //if it is a Power pellet 
                         b[x][y] = new PowerPellet(imgPowerPellet, x, y);  //set to Power pellet
 
                     } else if (type.equals("food")) { //if it is a Food object 
                         b[x][y] = new Food(imgFood, x, y);  //set to Food
-                    } else {
-                        b[x][y] = new Block(null, x * 26, y * 26);
+
+                    } else { //if not food, it is empty
+                        b[x][y] = new Block(null, x * size, y * size);
                     }
+                    gridX[x][y] = x * size; //stores the x cooridnate at the image position
+                    gridY[x][y] = y * size; //stores the y coordinate at the image position (both used for pacman interaction)
                 }
             }
-
         } catch (FileNotFoundException e) { //cacthes file not found
             System.out.println("Error: " + e);
         }
@@ -111,7 +118,7 @@ public class GamePanel extends JPanel implements Runnable {
     private void doDrawing(Graphics g) {
         //the Graphics2D class is the class that handles all the drawing
         //must be casted from older Graphics class in order to have access to some newer methods
-        
+
         Graphics2D g2d = (Graphics2D) g;
         for (int i = 0; i < 19; i++) {
             for (int j = 0; j < 21; j++) {
@@ -152,7 +159,7 @@ public class GamePanel extends JPanel implements Runnable {
         int num = 2;
 
         while (true) { //this loop runs once ever 25 ms (the DELAY)
-           
+
             if (blinky.getXPos() % 26 == 0 && blinky.getYPos() % 26 == 0) {
                 num = (int) (Math.random() * 4 + 1);
             }
