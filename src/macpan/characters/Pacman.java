@@ -9,19 +9,45 @@ import java.awt.Image;
 public class Pacman extends AbstractCharacter{
     
     private boolean powerPellet;
+    private int lives;
     
     /**
-     * Primary Constructor for PacMan
+     * Primary Constructor for PacMan (from AbstractCharacter)
      * He must have:
      * @param s - a sprite
      * @param x - x position
      * @param y - y position
      * @param d - the direction he's facing
-     * @param 
      */
-    public Pacman(Image s, int x, int y, String d, int l) {
+    public Pacman(Image s, int x, int y, String d) {
         super(s, x, y, d);
     }
+
+    /**
+     * Secondary Constructor for PacMan
+     * @param lives - number of lives 
+     * @param s - pacman sprite
+     * @param x - x position
+     * @param y - y position
+     * @param d - direction he is facing
+     */
+    public Pacman(int lives, Image s, int x, int y, String d) {
+        super(s, x, y, d);
+        this.lives = lives;
+    }
+
+    /**
+     * Accessor 
+     * @return 
+     */
+    public int getLives() {
+        return lives;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+    
 
     public boolean isPowerPellet() {
         return powerPellet;
