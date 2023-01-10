@@ -27,7 +27,7 @@ import macpan.objects.Empty;
 
 import macpan.objects.Thing;
 
-public class GamePanel extends JPanel implements Runnable {
+public final class GamePanel extends JPanel implements Runnable {
 
     private Thread animator;
     private final int DELAY = 25, BUFFER_X = 50, BUFFER_Y = 50;
