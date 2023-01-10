@@ -49,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel() {
         loadImage();
         loadBoard();
-
+        setBackground(Color.black);
         blinky = new Blinky(imgBlinky, 156, 156, "east", true);
         //pinky = new Pinky(imgPinky, 30, 0, "east", true);
         //inky = new Inky(imgInky, 60, 0, "east", true);
