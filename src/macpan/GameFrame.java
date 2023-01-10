@@ -23,7 +23,7 @@ public class GameFrame extends JFrame {
     //create the custom JFrame
     private void initUI() {        
         //set title of the JFrame
-        setTitle("MACPAN");
+        setTitle("MACPAN");      
         //add a custom JPanel to draw on
         add(new GamePanel());
         //set the size of the window
