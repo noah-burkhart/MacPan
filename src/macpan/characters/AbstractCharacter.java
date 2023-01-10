@@ -55,10 +55,7 @@ abstract class AbstractCharacter {
      * Move the character left based on it's current x speed
      */
     public void moveLeft(int size) {
-        for (int i = 0; i < size/xSpeed; i++) {
-       
         xPos = xPos - xSpeed;
-        }
     }
     
     /**

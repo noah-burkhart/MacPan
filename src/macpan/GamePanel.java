@@ -55,8 +55,8 @@ public final class GamePanel extends JPanel implements Runnable {
         //pinky = new Pinky(imgPinky, 30, 0, "east", true);
         //inky = new Inky(imgInky, 60, 0, "east", true);
         //clyde = new Clyde(imgClyde, 90, 0, "east", true);
-        blinky.setXSpeed(13);
-        blinky.setYSpeed(13);
+        blinky.setXSpeed(1);
+        blinky.setYSpeed(1);
     }
 
     /**
