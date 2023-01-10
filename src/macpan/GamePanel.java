@@ -36,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable {
     int[][] gridY = new int[19][21]; //parallel to images, holds the position the images are in on the Y axis
 
     //creating image files to be used
-    private Image imgPellet, imgPowerPellet, imgFood, imgBlock;
+    private Image imgPellet, imgPowerPellet, imgFood, imgBlock, imgEmpty;
     private Image imgBlinky, imgPinky, imgInky, imgClyde;
 
     Blinky blinky;
@@ -63,6 +63,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void loadImage() {
         //loads images that are unchanging
         imgBlock = new ImageIcon("src/macpan/images/JFrames/box.png").getImage();
+        imgEmpty = new ImageIcon("src/macpan/images/JFrames/empty.png").getImage();
         imgPellet = new ImageIcon("src/macpan/images/Consumables/smallPellet.png").getImage();
         imgPowerPellet = new ImageIcon("src/macpan/images/Consumables/powerPellet.png").getImage();
         imgFood = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
@@ -122,10 +123,10 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2d = (Graphics2D) g;
         for (int i = 0; i < 19; i++) {
             for (int j = 0; j < 21; j++) {
-                g2d.drawImage(b[i][j].getSprite(), b[i][j].getX(), b[i][j].getY(), 26, 26, Color.black, this);
+                g2d.drawImage(b[i][j].getSprite(), b[i][j].getX() + BUFFER_X, b[i][j].getY() + BUFFER_Y, 26, 26, Color.black, this);
             }
         }
-        g2d.drawImage(blinky.getSprite(), blinky.getXPos(), blinky.getYPos(), 25, 25, Color.black, this);
+        g2d.drawImage(blinky.getSprite(), blinky.getXPos() + BUFFER_X, blinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
     }
 
     //overrides paintComponent in JPanel class
@@ -165,15 +166,23 @@ public class GamePanel extends JPanel implements Runnable {
             }
             switch (num) {
                 case 1:
+                    imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyUp1.png").getImage();
+                    blinky.setSprite(imgBlinky);
                     blinky.moveUp();
                     break;
                 case 2:
+                    imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinky1.png").getImage();
+                    blinky.setSprite(imgBlinky);
                     blinky.moveRight();
                     break;
                 case 3:
+                    imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyDown1.png").getImage();
+                    blinky.setSprite(imgBlinky);
                     blinky.moveDown();
                     break;
                 default:
+                    imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyBack1.png").getImage();
+                    blinky.setSprite(imgBlinky);
                     blinky.moveLeft();
                     break;
             }
