@@ -5,6 +5,8 @@
  */
 package macpan;
 
+import java.awt.Color;
+
 public class InstructionsFrame extends javax.swing.JFrame {
 
     //Main window variable
@@ -20,6 +22,7 @@ public class InstructionsFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Instructions");
+        getContentPane().setBackground(Color.BLACK);
         mainWindow = m;
         instructionArea.setText("""
                                 Instructions:
@@ -30,7 +33,7 @@ public class InstructionsFrame extends javax.swing.JFrame {
                                 
                                 Tips and Tricks:
                                 Power Pellets: 
-                                When Pac Man eats the power pellets, he can now eat the ghosts!
+                                When PacMan eats power pellets, he can now eat the ghosts!
                                 But he can only eat them when the ghosts become scared 
                                 but this will only last for a limited time so be careful!
                                 Fruit Treats:
@@ -79,11 +82,19 @@ public class InstructionsFrame extends javax.swing.JFrame {
             }
         });
 
+        instructionArea.setBackground(new java.awt.Color(0, 0, 0));
         instructionArea.setColumns(20);
+        instructionArea.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 12)); // NOI18N
+        instructionArea.setForeground(new java.awt.Color(255, 222, 9));
+        instructionArea.setLineWrap(true);
         instructionArea.setRows(5);
+        instructionArea.setAutoscrolls(false);
+        instructionArea.setBorder(null);
+        instructionArea.setSelectionColor(new java.awt.Color(0, 0, 0));
         jScrollPane2.setViewportView(instructionArea);
 
         jLabel1.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 222, 9));
         jLabel1.setText("INSTRUCTIONS");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
@@ -91,19 +102,19 @@ public class InstructionsFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBack)
-                .addGap(164, 164, 164))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addComponent(jLabel1)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnBack)
+                        .addGap(164, 164, 164))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(120, 120, 120))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
