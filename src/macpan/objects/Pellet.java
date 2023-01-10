@@ -1,5 +1,5 @@
 /*
- *N Burkhart
+ * N Burkhart
  * 12/21/2022
  * Class to represent a pellet object.
  */
