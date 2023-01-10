@@ -13,14 +13,11 @@ import java.awt.Graphics2D;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.Color;
-import java.awt.image.BufferedImage;
+import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import macpan.characters.Blinky;
 import macpan.objects.Block;
 import macpan.objects.Pellet;
@@ -35,23 +32,9 @@ public class GamePanel extends JPanel implements Runnable {
     private final int DELAY = 25;
     Thing[][] b = new Thing[19][21];
 
-    File blocks = new File("src/macpan/images/JFrames/box.png");
-    BufferedImage imgBlocks;
-    File pellet = new File("src/macpan/images/Consumables/smallPellet.png");
-    BufferedImage imgPellet;
-    File powerPellet = new File("src/macpan/images/Consumables/powerPellet.png");
-    BufferedImage imgPowerPellet;
-    File food = new File("src/macpan/images/Consumables/cherry.png");
-    BufferedImage imgFood;
-
-    File bImg = new File("src/macpan/images/Ghosts/Blinky/blinky1.png");
-    BufferedImage imgBlinky;
-    File pImg = new File("src/macpan/images/Ghosts/Pinky/pinky1.png");
-    BufferedImage imgPinky;
-    File iImg = new File("src/macpan/images/Ghosts/Inky/inky1.png");
-    BufferedImage imgInky;
-    File cImg = new File("src/macpan/images/Ghosts/Clyde/clyde1.png");
-    BufferedImage imgClyde;
+    //creating image files to be used
+    private Image imgPellet, imgPowerPellet, imgFood, imgBlock;
+    private Image imgBlinky, imgPinky, imgInky, imgClyde;
 
     Blinky blinky;
     //Pinky pinky;
@@ -72,35 +55,16 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void loadImage() {
-        try {
-            blocks = new File("src/macpan/images/JFrames/box.png");
-            imgBlocks = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
-            imgBlocks = ImageIO.read(blocks);
-            pellet = new File("src/macpan/images/Consumables/smallPellet.png");
-            imgPellet = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
-            imgPellet = ImageIO.read(pellet);
-            powerPellet = new File("src/macpan/images/Consumables/powerPellet.png");
-            imgPowerPellet = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
-            imgPowerPellet = ImageIO.read(powerPellet);
-            File food = new File("src/macpan/images/Consumables/cherry.png");
-            imgFood = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
-            imgFood = ImageIO.read(food);
+        //loads images that are unchanging
+        imgBlock = new ImageIcon("src/macpan/images/JFrames/box.png").getImage();
+        imgPellet = new ImageIcon("src/macpan/images/Consumables/smallPellet.png").getImage();
+        imgPowerPellet = new ImageIcon("src/macpan/images/Consumables/powerPellet.png").getImage();
+        imgFood = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
 
-            bImg = new File("src/macpan/images/Ghosts/Blinky/blinky1.png");
-            imgBlinky = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
-            imgBlinky = ImageIO.read(bImg);
-            pImg = new File("src/macpan/images/Ghosts/Pinky/pinky1.png");
-            imgPinky = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
-            imgPinky = ImageIO.read(pImg);
-            iImg = new File("src/macpan/images/Ghosts/Inky/inky1.png");
-            imgInky = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
-            imgInky = ImageIO.read(iImg);
-            cImg = new File("src/macpan/images/Ghosts/Clyde/clyde1.png");
-            imgClyde = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
-            imgClyde = ImageIO.read(cImg);
-        } catch (IOException ex) {
-            Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinky1.png").getImage();
+        imgPinky = new ImageIcon("src/macpan/images/Ghosts/Pinky/pinky1.png").getImage();
+        imgInky = new ImageIcon("src/macpan/images/Ghosts/Inky/inky1.png").getImage();
+        imgClyde = new ImageIcon("src/macpan/images/Ghosts/Clyde/clyde1.png").getImage();
     }
 
     /**
@@ -119,7 +83,7 @@ public class GamePanel extends JPanel implements Runnable {
                     type = s.nextLine(); //saves the type of 'thing' from the data file
 
                     if (type.equals("box")) { //if it is a block
-                        b[x][y] = new Block(imgBlocks, x * 26, y * 26);  //set to a block
+                        b[x][y] = new Block(imgBlock, x * 26, y * 26);  //set to a block
 
                     } else if (type.equals("pellet")) { //if it is a pellet 
                         b[x][y] = new Pellet(imgPellet, x * 26, y * 26);  //set to pellet
@@ -184,6 +148,7 @@ public class GamePanel extends JPanel implements Runnable {
         int num = 2;
 
         while (true) { //this loop runs once ever 25 ms (the DELAY)
+            /*
             bImg = new File("src/macpan/images/Ghosts/Blinky/blinky1.png");
             try {
                 imgBlinky = ImageIO.read(bImg);
@@ -191,17 +156,23 @@ public class GamePanel extends JPanel implements Runnable {
                 Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
             }
             blinky.setSprite(imgBlinky);
+             */
             if (blinky.getXPos() % 26 == 0 && blinky.getYPos() % 26 == 0) {
                 num = (int) (Math.random() * 4 + 1);
             }
-            if (num == 1) {
-                blinky.moveUp();
-            } else if (num == 2) {
-                blinky.moveRight();
-            } else if (num == 3) {
-                blinky.moveDown();
-            } else {
-                blinky.moveLeft();
+            switch (num) {
+                case 1:
+                    blinky.moveUp();
+                    break;
+                case 2:
+                    blinky.moveRight();
+                    break;
+                case 3:
+                    blinky.moveDown();
+                    break;
+                default:
+                    blinky.moveLeft();
+                    break;
             }
 
             repaint();
