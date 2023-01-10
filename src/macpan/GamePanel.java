@@ -99,10 +99,10 @@ public final class GamePanel extends JPanel implements Runnable {
                         b[x][y] = new Pellet(imgPellet, x * size, y * size);  //set to pellet
 
                     } else if (type.equals("powerPellet")) { //if it is a Power pellet 
-                        b[x][y] = new PowerPellet(imgPowerPellet, x, y);  //set to Power pellet
+                        b[x][y] = new PowerPellet(imgPowerPellet, x * size, y * size);  //set to Power pellet
 
                     } else if (type.equals("food")) { //if it is a Food object 
-                        b[x][y] = new Food(imgFood, x, y);  //set to Food
+                        b[x][y] = new Food(imgFood, x* size, y * size);  //set to Food
 
                     } else { //if not food, it is empty
                         b[x][y] = new Empty(imgEmpty, x * size, y * size);

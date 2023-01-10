@@ -11,9 +11,9 @@ import java.awt.Image;
 public class Empty implements Thing{
     
     //attributes
-    public Image sprite;
-    public int x;
-    public int y;
+    private Image sprite;
+    private int x;
+    private int y;
     
     /**
      * General constructor for an empty
