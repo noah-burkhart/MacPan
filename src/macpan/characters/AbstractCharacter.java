@@ -33,29 +33,32 @@ abstract class AbstractCharacter {
     /**
      * Move the character up based on it's current y speed
      */
-    public void moveUp() {
+    public void moveUp(int size) {
         yPos = yPos - ySpeed;
     }
     
     /**
      * Move the character down based on it's current y speed
      */
-    public void moveDown() {
+    public void moveDown(int size) {
         yPos = yPos + ySpeed;
     }
     
     /**
      * Move the character right based on it's current x speed
      */
-    public void moveRight() {
+    public void moveRight(int size) {
         xPos = xPos + xSpeed;
     }
     
     /**
      * Move the character left based on it's current x speed
      */
-    public void moveLeft() {
+    public void moveLeft(int size) {
+        for (int i = 0; i < size/xSpeed; i++) {
+       
         xPos = xPos - xSpeed;
+        }
     }
     
     /**

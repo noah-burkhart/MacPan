@@ -32,6 +32,7 @@ public final class GamePanel extends JPanel implements Runnable {
     private Thread animator;
     private final int DELAY = 25, BUFFER_X = 48, BUFFER_Y = 41;
     Thing[][] b = new Thing[19][21]; //the images
+    final int size = 26; //the size of each grid space (26x26 px)
 
     int[][] gridX = new int[19][21]; //parallel to images, holds the position the images are in on the X axis
     int[][] gridY = new int[19][21]; //parallel to images, holds the position the images are in on the Y axis
@@ -50,12 +51,12 @@ public final class GamePanel extends JPanel implements Runnable {
         loadImage();
         loadBoard();
         setBackground(Color.black);
-        blinky = new Blinky(imgBlinky, 156, 156, "east", true);
+        blinky = new Blinky(imgBlinky, 26*18, 26*9, "east", true);
         //pinky = new Pinky(imgPinky, 30, 0, "east", true);
         //inky = new Inky(imgInky, 60, 0, "east", true);
         //clyde = new Clyde(imgClyde, 90, 0, "east", true);
-        blinky.setXSpeed(2);
-        blinky.setYSpeed(2);
+        blinky.setXSpeed(13);
+        blinky.setYSpeed(13);
     }
 
     /**
@@ -90,8 +91,6 @@ public final class GamePanel extends JPanel implements Runnable {
 
                     type = s.nextLine(); //saves the type of 'thing' from the data file
 
-                    final int size = 26; //the size of each grid space (26x26 px)
-
                     if (type.equals("box")) { //if it is a block
                         b[x][y] = new Block(imgBlock, x * size, y * size);  //set to a block
 
@@ -102,7 +101,7 @@ public final class GamePanel extends JPanel implements Runnable {
                         b[x][y] = new PowerPellet(imgPowerPellet, x * size, y * size);  //set to Power pellet
 
                     } else if (type.equals("food")) { //if it is a Food object 
-                        b[x][y] = new Food(imgFood, x* size, y * size);  //set to Food
+                        b[x][y] = new Food(imgFood, x * size, y * size);  //set to Food
 
                     } else { //if not food, it is empty
                         b[x][y] = new Empty(imgEmpty, x * size, y * size);
@@ -159,34 +158,55 @@ public final class GamePanel extends JPanel implements Runnable {
         beforeTime = System.currentTimeMillis();
 
         int num = 2;
+        boolean up = true, down = true, left = true, right = true;
 
         while (true) { //this loop runs once ever 25 ms (the DELAY)
 
             if (blinky.getXPos() % 26 == 0 && blinky.getYPos() % 26 == 0) {
                 num = (int) (Math.random() * 4 + 1);
             }
-            switch (num) {
-                case 1:
-                    imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyUp1.png").getImage();
-                    blinky.setSprite(imgBlinky);
-                    blinky.moveUp();
-                    break;
-                case 2:
-                    imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinky1.png").getImage();
-                    blinky.setSprite(imgBlinky);
-                    blinky.moveRight();
-                    break;
-                case 3:
-                    imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyDown1.png").getImage();
-                    blinky.setSprite(imgBlinky);
-                    blinky.moveDown();
-                    break;
-                default:
-                    imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyBack1.png").getImage();
-                    blinky.setSprite(imgBlinky);
-                    blinky.moveLeft();
-                    break;
+            if (num == 1 && up) {
+                if (b[blinky.getXPos()/26][blinky.getYPos()/26 - 1] instanceof Block == false) {
+                down = false;
+                up = true;
+                right = true;
+                left = true;
+                imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyUp1.png").getImage();
+                blinky.setSprite(imgBlinky);
+                blinky.moveUp(size);
+                }
+            } else if (num == 2 && right) {
+                if (b[blinky.getXPos()/26 + 1][blinky.getYPos()/26] instanceof Block == false) {
+                left = false;
+                up = true;
+                down = true;
+                right = true;
+                imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinky1.png").getImage();
+                blinky.setSprite(imgBlinky);
+                blinky.moveRight(size);
             }
+            } else if (num == 3 && down) {
+                if (b[blinky.getXPos()/26][blinky.getYPos()/26 + 1] instanceof Block == false) {
+                up = false;
+                down = true;
+                right = true;
+                left = true;
+                imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyDown1.png").getImage();
+                blinky.setSprite(imgBlinky);
+                blinky.moveDown(size);
+                }
+            } else if (num == 4 && left){
+                if (b[blinky.getXPos()/26 - 1][blinky.getYPos()/26] instanceof Block == false) {
+                right = false;
+                up = true;
+                down = true;
+                left = true;
+                imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyBack1.png").getImage();
+                blinky.setSprite(imgBlinky);
+                blinky.moveLeft(size);
+                }
+            }
+            
 
             repaint();
 
