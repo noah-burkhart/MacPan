@@ -48,7 +48,7 @@ public class Pellet extends AbstractConsumable {
         super(sprite, x, y, points);
         points = 10; //overrides the points assignment as it can only be 10
     }
-
+  
     /**
      * Clones the pellet and makes the clone visible (ignores position).
      * @return - the clone.
