@@ -22,7 +22,7 @@ import macpan.characters.Blinky;
 import macpan.objects.Block;
 import macpan.objects.Pellet;
 import macpan.objects.Food;
-//import macpan.objects.PowerPellet;
+import macpan.objects.PowerPellet;
 
 import macpan.objects.Thing;
 
@@ -54,6 +54,9 @@ public class GamePanel extends JPanel implements Runnable {
         blinky.setYSpeed(2);
     }
 
+    /**
+     * Loads the images and stores them for use.
+     */
     public void loadImage() {
         //loads images that are unchanging
         imgBlock = new ImageIcon("src/macpan/images/JFrames/box.png").getImage();
@@ -89,7 +92,7 @@ public class GamePanel extends JPanel implements Runnable {
                         b[x][y] = new Pellet(imgPellet, x * 26, y * 26);  //set to pellet
 
                     } else if (type.equals("powerPellet")) { //if it is a Power pellet 
-                        //b[x][y] = new PowerPellet(imgPowerPellet, x, y);  //set to Power pellet
+                        b[x][y] = new PowerPellet(imgPowerPellet, x, y);  //set to Power pellet
 
                     } else if (type.equals("food")) { //if it is a Food object 
                         b[x][y] = new Food(imgFood, x, y);  //set to Food
