@@ -23,6 +23,7 @@ import macpan.objects.Block;
 import macpan.objects.Pellet;
 import macpan.objects.Food;
 import macpan.objects.PowerPellet;
+import macpan.objects.Empty;
 
 import macpan.objects.Thing;
 
@@ -104,7 +105,7 @@ public class GamePanel extends JPanel implements Runnable {
                         b[x][y] = new Food(imgFood, x, y);  //set to Food
 
                     } else { //if not food, it is empty
-                        b[x][y] = new Block(null, x * size, y * size);
+                        b[x][y] = new Empty(imgEmpty, x * size, y * size);
                     }
                     gridX[x][y] = x * size; //stores the x cooridnate at the image position
                     gridY[x][y] = y * size; //stores the y coordinate at the image position (both used for pacman interaction)
