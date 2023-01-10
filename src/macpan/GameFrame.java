@@ -27,7 +27,7 @@ public class GameFrame extends JFrame {
         //add a custom JPanel to draw on
         add(new GamePanel());
         //set the size of the window
-        setSize(576, 800);
+        setSize(600, 800);
         //tell the JFrame what to do when closed
         //this is important if our application has multiple windows
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
