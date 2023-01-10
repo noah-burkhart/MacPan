@@ -89,8 +89,8 @@ public class Empty implements Thing{
      * Clones all attributes of a empty
      * @return - the empty.
      */
-    public empty clone(){
-        empty b = new empty(sprite, x, y); //creates a clone at the same spot with the same sprite.
+    public Empty clone(){
+        Empty b = new Empty(sprite, x, y); //creates a clone at the same spot with the same sprite.
         return b; //returns the clone
     }
     

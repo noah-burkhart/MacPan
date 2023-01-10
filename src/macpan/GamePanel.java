@@ -29,7 +29,7 @@ import macpan.objects.Thing;
 public class GamePanel extends JPanel implements Runnable {
 
     private Thread animator;
-    private final int DELAY = 25;
+    private final int DELAY = 25, BUFFER_X = 50, BUFFER_Y = 50;
     Thing[][] b = new Thing[19][21]; //the images
 
     int[][] gridX = new int[19][21]; //parallel to images, holds the position the images are in on the X axis
