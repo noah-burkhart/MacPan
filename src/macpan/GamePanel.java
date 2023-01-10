@@ -24,6 +24,8 @@ import javax.imageio.ImageIO;
 import macpan.characters.Blinky;
 import macpan.objects.Block;
 import macpan.objects.Pellet;
+import macpan.objects.Food;
+//import macpan.objects.PowerPellet;
 
 import macpan.objects.Thing;
 
@@ -31,15 +33,15 @@ public class GamePanel extends JPanel implements Runnable {
 
     private Thread animator;
     private final int DELAY = 25;
-    Thing[][] b = new Thing[21][19];
+    Thing[][] b = new Thing[19][21];
 
-    File blocks = new File("src/macpan/images/Consumables/pellet.png");
+    File blocks = new File("src/macpan/images/JFrames/box.png");
     BufferedImage imgBlocks;
-    File pellet = new File("src/macpan/images/Consumables/pellet.png");
+    File pellet = new File("src/macpan/images/Consumables/smallPellet.png");
     BufferedImage imgPellet;
-    File powerPellet = new File("src/macpan/images/Consumables/powerpellet.png");
+    File powerPellet = new File("src/macpan/images/Consumables/powerPellet.png");
     BufferedImage imgPowerPellet;
-    File food = new File("src/macpan/images/Consumables/food.png");
+    File food = new File("src/macpan/images/Consumables/cherry.png");
     BufferedImage imgFood;
     
     
@@ -60,18 +62,23 @@ public class GamePanel extends JPanel implements Runnable {
     // default constructor
     public GamePanel() {
         try {
+            blocks = new File("src/macpan/images/JFrames/box.png");
             imgBlocks = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
             imgBlocks = ImageIO.read(blocks);
+            pellet = new File("src/macpan/images/Consumables/smallPellet.png");
             imgPellet = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
             imgPellet = ImageIO.read(pellet);
+            powerPellet = new File("src/macpan/images/Consumables/powerPellet.png");
             imgPowerPellet = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
             imgPowerPellet = ImageIO.read(powerPellet);
+            File food = new File("src/macpan/images/Consumables/cherry.png");
             imgFood = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
             imgFood = ImageIO.read(food);
         } catch (IOException ex) {
             Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        readFile(b);
+        readFile();
+        
         try {
             bImg = new File("src/macpan/images/Ghosts/Blinky/blinky1.png");
             imgBlinky = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
@@ -100,13 +107,12 @@ public class GamePanel extends JPanel implements Runnable {
     
     /**
      * Reads from the file of game board data and creates the game board.
-     * @param b - the board.
      */
-    public static void readFile(Thing[][] b) {
+    public void readFile() {
         String type = "";
 
         try {
-            File f = new File("src/Blocks.data");
+            File f = new File("src/macpan/Blocks.data");
             Scanner s = new Scanner(f);  //tries to make a file and a scanner
 
             for (int y = 0; y < 21; y++) { //Loops through the y axis of the 2D array
@@ -114,17 +120,20 @@ public class GamePanel extends JPanel implements Runnable {
                     
                     type = s.nextLine(); //saves the type of 'thing' from the data file
 
-                    if (type.equals("block")) { //if it is a block
-                        b[x][y] = new Block(imgBlocks, x, y);  //set to a block
+                    if (type.equals("box")) { //if it is a block
+                        b[x][y] = new Block(imgBlocks, x*26, y*26);  //set to a block
 
                     } else if (type.equals("pellet")) { //if it is a pellet 
-                        b[x][y] = new Pellet(imgPellet, x, y);  //set to pellet
+                        b[x][y] = new Pellet(imgPellet, x*26, y*26);  //set to pellet
 
                     } else if (type.equals("powerPellet")) { //if it is a Power pellet 
-                        b[x][y] = new PowerPellet(imgPowerPellet, x, y);  //set to Power pellet
+                        //b[x][y] = new PowerPellet(imgPowerPellet, x, y);  //set to Power pellet
                         
                     }else if(type.equals("food")){ //if it is a Food object 
                        b[x][y] = new Food(imgFood, x, y);  //set to Food
+                    }
+                    else {
+                        b[x][y] = new Block(null, x*26, y*26);
                     }
                 }
             }
@@ -139,8 +148,8 @@ public class GamePanel extends JPanel implements Runnable {
         //the Graphics2D class is the class that handles all the drawing
         //must be casted from older Graphics class in order to have access to some newer methods
         Graphics2D g2d = (Graphics2D) g;
-        for (int i = 0; i < 21; i++) {
-            for (int j = 0; j < 19; j++) {
+        for (int i = 0; i < 19; i++) {
+            for (int j = 0; j < 21; j++) {
                 g2d.drawImage(b[i][j].getSprite(), b[i][j].getX(), b[i][j].getY(), 26, 26, Color.black, this);
             }
         }

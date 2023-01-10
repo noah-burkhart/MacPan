@@ -26,6 +26,16 @@ public class Food extends AbstractConsumable{
      * @param sprite - the sprite
      * @param x - the x position
      * @param y - the y position
+     */
+    public Food(Image sprite, int x, int y){
+        super(sprite, x, y);
+    }
+    
+    /**
+     * Constructor for food with described variables
+     * @param sprite - the sprite
+     * @param x - the x position
+     * @param y - the y position
      * @param points - the points it is worth
      */
     public Food(Image sprite, int x, int y, int points){

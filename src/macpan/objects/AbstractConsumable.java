@@ -31,7 +31,20 @@ abstract class AbstractConsumable implements Thing{
         sprite = null;
         visible = true;
     }
-
+    
+    /**
+     * General constructor for all consumable objects.
+     *
+     * @param sprite - the sprite
+     * @param xPos - the x position
+     * @param yPos - the y position
+     */
+    public AbstractConsumable(Image sprite, int x, int y) {
+        this(x, y);
+        this.sprite = sprite;              //sets values
+        visible = true; //all are visible by default
+    }
+    
     /**
      * General constructor for all consumable objects.
      *

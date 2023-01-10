@@ -23,7 +23,19 @@ public class Pellet extends AbstractConsumable {
         //sprite = pelletImg;
         points = 10;
     }
-
+    
+    /**
+     * Secondary constructor for a pellet utilizing abstract class.
+     *
+     * @param sprite - the sprite.
+     * @param x - the x position.
+     * @param y - the y position.
+     */
+    public Pellet(Image sprite, int x, int y) {
+        super(sprite, x, y);
+        points = 10; //overrides the points assignment as it can only be 10
+    }
+    
     /**
      * Secondary constructor for a pellet utilizing abstract class.
      *

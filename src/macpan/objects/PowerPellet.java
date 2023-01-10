@@ -9,5 +9,5 @@ package macpan.objects;
  * @author nobur7839
  */
 //public class PowerPellet extends AbstractConsumable{
-//    
+    
 //}
