@@ -108,6 +108,7 @@ public class GamePanel extends JPanel implements Runnable {
     private void doDrawing(Graphics g) {
         //the Graphics2D class is the class that handles all the drawing
         //must be casted from older Graphics class in order to have access to some newer methods
+        
         Graphics2D g2d = (Graphics2D) g;
         for (int i = 0; i < 19; i++) {
             for (int j = 0; j < 21; j++) {
@@ -148,15 +149,7 @@ public class GamePanel extends JPanel implements Runnable {
         int num = 2;
 
         while (true) { //this loop runs once ever 25 ms (the DELAY)
-            /*
-            bImg = new File("src/macpan/images/Ghosts/Blinky/blinky1.png");
-            try {
-                imgBlinky = ImageIO.read(bImg);
-            } catch (IOException ex) {
-                Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            blinky.setSprite(imgBlinky);
-             */
+           
             if (blinky.getXPos() % 26 == 0 && blinky.getYPos() % 26 == 0) {
                 num = (int) (Math.random() * 4 + 1);
             }
