@@ -43,8 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
     BufferedImage imgPowerPellet;
     File food = new File("src/macpan/images/Consumables/cherry.png");
     BufferedImage imgFood;
-    
-    
+
     File bImg = new File("src/macpan/images/Ghosts/Blinky/blinky1.png");
     BufferedImage imgBlinky;
     File pImg = new File("src/macpan/images/Ghosts/Pinky/pinky1.png");
@@ -61,6 +60,18 @@ public class GamePanel extends JPanel implements Runnable {
 
     // default constructor
     public GamePanel() {
+        loadImage();
+        loadBoard();
+
+        blinky = new Blinky(imgBlinky, 156, 156, "east", true);
+        //pinky = new Pinky(imgPinky, 30, 0, "east", true);
+        //inky = new Inky(imgInky, 60, 0, "east", true);
+        //clyde = new Clyde(imgClyde, 90, 0, "east", true);
+        blinky.setXSpeed(2);
+        blinky.setYSpeed(2);
+    }
+
+    public void loadImage() {
         try {
             blocks = new File("src/macpan/images/JFrames/box.png");
             imgBlocks = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
@@ -74,12 +85,7 @@ public class GamePanel extends JPanel implements Runnable {
             File food = new File("src/macpan/images/Consumables/cherry.png");
             imgFood = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
             imgFood = ImageIO.read(food);
-        } catch (IOException ex) {
-            Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        readFile();
-        
-        try {
+
             bImg = new File("src/macpan/images/Ghosts/Blinky/blinky1.png");
             imgBlinky = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
             imgBlinky = ImageIO.read(bImg);
@@ -92,23 +98,15 @@ public class GamePanel extends JPanel implements Runnable {
             cImg = new File("src/macpan/images/Ghosts/Clyde/clyde1.png");
             imgClyde = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
             imgClyde = ImageIO.read(cImg);
-            System.out.println("Ghost Reading Complete.");
-        } catch (IOException e) {
-            System.out.println("Error: " + e);
+        } catch (IOException ex) {
+            Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        blinky = new Blinky(imgBlinky, 156, 156, "east", true);
-        //pinky = new Pinky(imgPinky, 30, 0, "east", true);
-        //inky = new Inky(imgInky, 60, 0, "east", true);
-        //clyde = new Clyde(imgClyde, 90, 0, "east", true);
-        blinky.setXSpeed(2);
-        blinky.setYSpeed(2);
     }
 
-    
     /**
      * Reads from the file of game board data and creates the game board.
      */
-    public void readFile() {
+    public void loadBoard() {
         String type = "";
 
         try {
@@ -117,27 +115,26 @@ public class GamePanel extends JPanel implements Runnable {
 
             for (int y = 0; y < 21; y++) { //Loops through the y axis of the 2D array
                 for (int x = 0; x < 19; x++) { //loops through the x
-                    
+
                     type = s.nextLine(); //saves the type of 'thing' from the data file
 
                     if (type.equals("box")) { //if it is a block
-                        b[x][y] = new Block(imgBlocks, x*26, y*26);  //set to a block
+                        b[x][y] = new Block(imgBlocks, x * 26, y * 26);  //set to a block
 
                     } else if (type.equals("pellet")) { //if it is a pellet 
-                        b[x][y] = new Pellet(imgPellet, x*26, y*26);  //set to pellet
+                        b[x][y] = new Pellet(imgPellet, x * 26, y * 26);  //set to pellet
 
                     } else if (type.equals("powerPellet")) { //if it is a Power pellet 
                         //b[x][y] = new PowerPellet(imgPowerPellet, x, y);  //set to Power pellet
-                        
-                    }else if(type.equals("food")){ //if it is a Food object 
-                       b[x][y] = new Food(imgFood, x, y);  //set to Food
-                    }
-                    else {
-                        b[x][y] = new Block(null, x*26, y*26);
+
+                    } else if (type.equals("food")) { //if it is a Food object 
+                        b[x][y] = new Food(imgFood, x, y);  //set to Food
+                    } else {
+                        b[x][y] = new Block(null, x * 26, y * 26);
                     }
                 }
             }
-            
+
         } catch (FileNotFoundException e) { //cacthes file not found
             System.out.println("Error: " + e);
         }
