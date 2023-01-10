@@ -58,7 +58,10 @@ public class HighscoreFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnBack.setText("Back");
+        btnBack.setBackground(new java.awt.Color(0, 0, 0));
+        btnBack.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        btnBack.setForeground(new java.awt.Color(255, 222, 9));
+        btnBack.setText("BACK");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
@@ -81,74 +84,70 @@ public class HighscoreFrame extends javax.swing.JFrame {
         ScoreLabel.setForeground(new java.awt.Color(255, 222, 9));
         ScoreLabel.setText("SCORE");
 
-        rank1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        rank1.setForeground(new java.awt.Color(255, 222, 9));
+        rank1.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        rank1.setForeground(new java.awt.Color(255, 0, 51));
         rank1.setText("jLabel1");
 
-        rank2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        rank2.setForeground(new java.awt.Color(255, 222, 9));
+        rank2.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        rank2.setForeground(new java.awt.Color(255, 153, 255));
         rank2.setText("jLabel2");
 
-        rank3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        rank3.setForeground(new java.awt.Color(255, 222, 9));
+        rank3.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        rank3.setForeground(new java.awt.Color(102, 255, 255));
         rank3.setText("jLabel3");
 
-        rank4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        rank4.setForeground(new java.awt.Color(255, 222, 9));
+        rank4.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        rank4.setForeground(new java.awt.Color(255, 153, 51));
         rank4.setText("jLabel4");
 
-        rank5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        rank5.setForeground(new java.awt.Color(255, 222, 9));
+        rank5.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        rank5.setForeground(new java.awt.Color(255, 255, 255));
         rank5.setText("jLabel5");
 
-        name1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        name1.setForeground(new java.awt.Color(255, 222, 9));
+        name1.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        name1.setForeground(new java.awt.Color(255, 0, 51));
         name1.setText("jLabel6");
 
-        name2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        name2.setForeground(new java.awt.Color(255, 222, 9));
+        name2.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        name2.setForeground(new java.awt.Color(255, 153, 255));
         name2.setText("jLabel7");
 
-        name3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        name3.setForeground(new java.awt.Color(255, 222, 9));
+        name3.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        name3.setForeground(new java.awt.Color(102, 255, 255));
         name3.setText("jLabel8");
 
-        name4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        name4.setForeground(new java.awt.Color(255, 222, 9));
+        name4.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        name4.setForeground(new java.awt.Color(255, 153, 51));
         name4.setText("jLabel9");
 
-        name5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        name5.setForeground(new java.awt.Color(255, 222, 9));
+        name5.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        name5.setForeground(new java.awt.Color(255, 255, 255));
         name5.setText("jLabel10");
 
-        score1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        score1.setForeground(new java.awt.Color(255, 222, 9));
+        score1.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        score1.setForeground(new java.awt.Color(255, 0, 51));
         score1.setText("jLabel11");
 
-        score2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        score2.setForeground(new java.awt.Color(255, 222, 9));
+        score2.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        score2.setForeground(new java.awt.Color(255, 153, 255));
         score2.setText("jLabel12");
 
-        score3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        score3.setForeground(new java.awt.Color(255, 222, 9));
+        score3.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        score3.setForeground(new java.awt.Color(102, 255, 255));
         score3.setText("jLabel13");
 
-        score4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        score4.setForeground(new java.awt.Color(255, 222, 9));
+        score4.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        score4.setForeground(new java.awt.Color(255, 153, 51));
         score4.setText("jLabel14");
 
-        score5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        score5.setForeground(new java.awt.Color(255, 222, 9));
+        score5.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        score5.setForeground(new java.awt.Color(255, 255, 255));
         score5.setText("jLabel15");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBack)
-                .addGap(164, 164, 164))
             .addGroup(layout.createSequentialGroup()
                 .addGap(141, 141, 141)
                 .addComponent(HighScoreLabel)
@@ -157,31 +156,33 @@ public class HighscoreFrame extends javax.swing.JFrame {
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(rank4)
-                        .addGap(100, 100, 100)
-                        .addComponent(name4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(RankLabel)
-                            .addComponent(rank1)
-                            .addComponent(rank2)
-                            .addComponent(rank3))
-                        .addGap(97, 97, 97)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(name3)
-                            .addComponent(name2)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(NameLabel)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(name1)
-                                    .addGap(0, 0, Short.MAX_VALUE)))))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(rank5)
-                        .addGap(100, 100, 100)
-                        .addComponent(name5)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(rank4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(name4))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(name1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(RankLabel)
+                                    .addComponent(rank1)
+                                    .addComponent(rank2)
+                                    .addComponent(rank3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(name5)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(16, 16, 16)
+                                            .addComponent(NameLabel)))
+                                    .addComponent(name2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(name3, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addGap(72, 72, 72)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ScoreLabel)
                     .addComponent(score1)
@@ -190,6 +191,10 @@ public class HighscoreFrame extends javax.swing.JFrame {
                     .addComponent(score4)
                     .addComponent(score5))
                 .addGap(40, 40, 40))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnBack)
+                .addGap(164, 164, 164))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,7 +231,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
                     .addComponent(rank5)
                     .addComponent(name5)
                     .addComponent(score5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(btnBack)
                 .addContainerGap())
         );

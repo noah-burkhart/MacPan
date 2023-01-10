@@ -34,13 +34,13 @@ public class InstructionsFrame extends javax.swing.JFrame {
                                 Tips and Tricks:
                                 Power Pellets: 
                                 When PacMan eats power pellets, he can now eat the ghosts!
-                                But he can only eat them when the ghosts become scared 
-                                but this will only last for a limited time so be careful!
+                                But he can only eat them when the ghosts become\nscared 
+                                but this will only last for a limited time so \nbe careful!
                                 Fruit Treats:
                                 Two fruits appear in each maze. 
                                 As you complete more levels, the more they are worth
                                 Warp Tunnels:
-                                Go through one end and you will warp out the other end
+                                Go through one end and you will warp out the \nother end
                                 Use these tunnels to your advantage!
                                 
                                 Scoring:
@@ -75,7 +75,10 @@ public class InstructionsFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnBack.setText("Back");
+        btnBack.setBackground(new java.awt.Color(0, 0, 0));
+        btnBack.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
+        btnBack.setForeground(new java.awt.Color(255, 222, 9));
+        btnBack.setText("BACK");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
@@ -84,7 +87,7 @@ public class InstructionsFrame extends javax.swing.JFrame {
 
         instructionArea.setBackground(new java.awt.Color(0, 0, 0));
         instructionArea.setColumns(20);
-        instructionArea.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 12)); // NOI18N
+        instructionArea.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         instructionArea.setForeground(new java.awt.Color(255, 222, 9));
         instructionArea.setLineWrap(true);
         instructionArea.setRows(5);
@@ -93,7 +96,7 @@ public class InstructionsFrame extends javax.swing.JFrame {
         instructionArea.setSelectionColor(new java.awt.Color(0, 0, 0));
         jScrollPane2.setViewportView(instructionArea);
 
-        jLabel1.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Monospaced", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 222, 9));
         jLabel1.setText("INSTRUCTIONS");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -122,7 +125,7 @@ public class InstructionsFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBack)
                 .addContainerGap())
