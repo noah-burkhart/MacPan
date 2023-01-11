@@ -6,6 +6,9 @@
 package macpan;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class HighscoreFrame extends javax.swing.JFrame {
     
@@ -24,8 +27,82 @@ public class HighscoreFrame extends javax.swing.JFrame {
         setTitle("HI-SCORE List");
         getContentPane().setBackground(Color.BLACK);
         mainWindow = m;
+        
     }
 
+    public static void readFile(){
+        try {
+            File f = new File("src/macpan/score.data");
+            Scanner s = new Scanner(f);
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: " + e);
+        }
+    }
+    
+    /**
+     * Quick Sort Descending
+     * @param arr - the unsorted array
+     * @param low - lowest index
+     * @param high - highest index
+     */
+    public static void quickSortD(int[] arr, int low, int high) {
+        if (low < high) {
+
+            // pi is partitioning index, arr[p]
+            // is now at right place
+            int pi = partitionD(arr, low, high);
+
+            // Separately sort elements before
+            // partition and after partition
+            quickSortD(arr, low, pi - 1);
+            quickSortD(arr, pi + 1, high);
+        }
+    }
+    
+    /**
+     * Picks the pivot index puts all smaller values to its left and larger
+     * values to its right
+     * @param arr - the unsorted array
+     * @param low - lowest index
+     * @param high - highest index
+     * @return - the index of the last pivot
+     */
+    public static int partitionD(int[] arr, int low, int high) {
+        // sets pivot as last index
+        int pivot = arr[high];
+
+        // Index of smaller element and
+        // indicates the right position
+        // of pivot found so far
+        int i = (low - 1);
+
+        for (int j = low; j <= high - 1; j++) {
+            // If current element is smaller
+            // than the pivot
+            if (arr[j] > pivot) { //if greater than pivot
+
+                // Increment index of
+                // smaller element
+                i++;
+                swap(arr, i, j);
+            }
+        }
+        swap(arr, i + 1, high);
+        return (i + 1);
+    }
+    
+    /**
+     * Swap function for quick sort
+     * @param arr - the array it is sorting
+     * @param i - lower index number
+     * @param j - higher index number
+     */
+    public static void swap(int[] arr, int i, int j) {
+        int temp = arr[i]; // temperary variable to hold the value at the lower index
+        arr[i] = arr[j]; // sets them to the same value
+        arr[j] = temp; // places the stored temporary value into higher index number
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -173,15 +250,16 @@ public class HighscoreFrame extends javax.swing.JFrame {
                                     .addComponent(rank1)
                                     .addComponent(rank2)
                                     .addComponent(rank3))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(name5)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(16, 16, 16)
-                                            .addComponent(NameLabel)))
-                                    .addComponent(name2, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(name3, javax.swing.GroupLayout.Alignment.TRAILING))))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                                        .addComponent(NameLabel)
+                                        .addGap(8, 8, 8))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(name2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(name3, javax.swing.GroupLayout.Alignment.TRAILING))))))
                         .addGap(72, 72, 72)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ScoreLabel)
@@ -193,7 +271,9 @@ public class HighscoreFrame extends javax.swing.JFrame {
                 .addGap(40, 40, 40))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBack)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(name5)
+                    .addComponent(btnBack))
                 .addGap(164, 164, 164))
         );
         layout.setVerticalGroup(

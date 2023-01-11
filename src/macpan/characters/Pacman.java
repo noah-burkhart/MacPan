@@ -37,32 +37,36 @@ public class Pacman extends AbstractCharacter{
     }
 
     /**
-     * Accessor 
-     * @return 
+     * Accessor method for lives
+     * @return - number of lives pacman has
      */
     public int getLives() {
         return lives;
     }
 
+    /**
+     * Mutator method for pacman lives
+     * @param lives - number of lives pacman has
+     */
     public void setLives(int lives) {
         this.lives = lives;
     }
     
 
+    /**
+     * Accessor method for power pellet variable
+     * @return - if pacman ate a power pellet or not
+     */
     public boolean isPowerPellet() {
         return powerPellet;
     }
 
+    /**
+     * Mutator Method for power pellet boolean
+     * @param powerPellet - did pacman consume a power pellet? true or false
+     */
     public void setPowerPellet(boolean powerPellet) {
         this.powerPellet = powerPellet;
     }
     
-    
-//    public int state(boolean powerPellet) {
-//        if (powerPellet == true) {
-//            return 3;
-//        } else {
-//            return AbstractGhost.getState();
-//        }
-//    }
 }
