@@ -51,12 +51,12 @@ public final class GamePanel extends JPanel implements Runnable {
         loadImage();
         loadBoard();
         setBackground(Color.black);
-        blinky = new Blinky(imgBlinky, 26*18, 26*9, "east", true);
+        blinky = new Blinky(imgBlinky, 26 * 18, 26 * 9, "east", true);
         //pinky = new Pinky(imgPinky, 30, 0, "east", true);
         //inky = new Inky(imgInky, 60, 0, "east", true);
         //clyde = new Clyde(imgClyde, 90, 0, "east", true);
-        blinky.setXSpeed(1);
-        blinky.setYSpeed(1);
+        blinky.setXSpeed(2);
+        blinky.setYSpeed(2);
     }
 
     /**
@@ -114,6 +114,71 @@ public final class GamePanel extends JPanel implements Runnable {
             System.out.println("Error: " + e);
         }
     }
+    
+    public void moveGhosts() {
+        int skippedNums[] = new int[3];
+            for (int i = 0; i < skippedNums.length; i++) {
+                skippedNums[i] = 0;
+            }
+            if (blinky.getXPos() % 26 == 0 && blinky.getYPos() % 26 == 0) {
+                if (b[blinky.getXPos() / 26][blinky.getYPos() / 26 - 1] instanceof Block) {
+                    up = false;
+                    skippedNums[0] = 1;
+                }
+                if (b[blinky.getXPos() / 26][blinky.getYPos() / 26 + 1] instanceof Block) {
+                    down = false;
+                    skippedNums[0] = 1;
+                }
+                if (b[blinky.getXPos() / 26 + 1][blinky.getYPos() / 26] instanceof Block) {
+                    right = false;
+                    skippedNums[0] = 1;
+                }
+                if (b[blinky.getXPos() / 26 - 1][blinky.getYPos() / 26] instanceof Block) {
+                    left = false;
+                    skippedNums[0] = 1;
+                }
+                num = (int) (Math.random() * counter);
+            }
+        }
+        imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyUp1.png").getImage();
+
+        blinky.setSprite(imgBlinky);
+
+        blinky.moveUp(size);
+    }
+}
+else if (num == 2 && right) {
+                if (b[blinky.getXPos()/26 + 1][blinky.getYPos()/26] instanceof Block == false) {
+                left = false;
+                up = true;
+                down = true;
+                right = true;
+                imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinky1.png").getImage();
+                blinky.setSprite(imgBlinky);
+                blinky.moveRight(size);
+            }
+            } else if (num == 3 && down) {
+                if (b[blinky.getXPos()/26][blinky.getYPos()/26 + 1] instanceof Block == false) {
+                up = false;
+                down = true;
+                right = true;
+                left = true;
+                imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyDown1.png").getImage();
+                blinky.setSprite(imgBlinky);
+                blinky.moveDown(size);
+                }
+            } else if (num == 4 && left){
+                if (b[blinky.getXPos()/26 - 1][blinky.getYPos()/26] instanceof Block == false) {
+                right = false;
+                up = true;
+                down = true;
+                left = true;
+                imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyBack1.png").getImage();
+                blinky.setSprite(imgBlinky);
+                blinky.moveLeft(size);
+                }
+            }
+    }
 
     //does the actual drawing
     private void doDrawing(Graphics g) {
@@ -158,54 +223,12 @@ public final class GamePanel extends JPanel implements Runnable {
         beforeTime = System.currentTimeMillis();
 
         int num = 2;
+        int counter;
         boolean up = true, down = true, left = true, right = true;
 
         while (true) { //this loop runs once ever 25 ms (the DELAY)
 
-            if (blinky.getXPos() % 26 == 0 && blinky.getYPos() % 26 == 0) {
-                num = (int) (Math.random() * 4 + 1);
-            }
-            if (num == 1 && up) {
-                if (b[blinky.getXPos()/26][blinky.getYPos()/26 - 1] instanceof Block == false) {
-                down = false;
-                up = true;
-                right = true;
-                left = true;
-                imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyUp1.png").getImage();
-                blinky.setSprite(imgBlinky);
-                blinky.moveUp(size);
-                }
-            } else if (num == 2 && right) {
-                if (b[blinky.getXPos()/26 + 1][blinky.getYPos()/26] instanceof Block == false) {
-                left = false;
-                up = true;
-                down = true;
-                right = true;
-                imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinky1.png").getImage();
-                blinky.setSprite(imgBlinky);
-                blinky.moveRight(size);
-            }
-            } else if (num == 3 && down) {
-                if (b[blinky.getXPos()/26][blinky.getYPos()/26 + 1] instanceof Block == false) {
-                up = false;
-                down = true;
-                right = true;
-                left = true;
-                imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyDown1.png").getImage();
-                blinky.setSprite(imgBlinky);
-                blinky.moveDown(size);
-                }
-            } else if (num == 4 && left){
-                if (b[blinky.getXPos()/26 - 1][blinky.getYPos()/26] instanceof Block == false) {
-                right = false;
-                up = true;
-                down = true;
-                left = true;
-                imgBlinky = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyBack1.png").getImage();
-                blinky.setSprite(imgBlinky);
-                blinky.moveLeft(size);
-                }
-            }
+            
             
 
             repaint();
