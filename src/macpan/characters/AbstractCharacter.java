@@ -13,7 +13,7 @@ abstract class AbstractCharacter {
     
     //Instance variables
     protected Image sprite;
-    protected static int xPos, yPos, xSpeed, ySpeed;
+    protected static int xPos, yPos, xSpeed, ySpeed, xPosGrid, yPosGrid;
     protected String direction;
     
     /**
@@ -26,7 +26,9 @@ abstract class AbstractCharacter {
     public AbstractCharacter(Image s, int x, int y, String d) {
         sprite = s;
         xPos = x;
+        xPosGrid = x/26;
         yPos = y;
+        yPosGrid = y/26;
         direction = d;
     }
     
@@ -104,6 +106,38 @@ abstract class AbstractCharacter {
      */
     public int getYPos() {
         return yPos;
+    }
+    
+        /**
+     * Set the image sprite of the character
+     * @param s - Sprite image
+     */
+    public void setGridXPos(int x) {
+        xPosGrid = x/26;
+    }
+    
+    /**
+     * Get the image sprite of the character
+     * @return - Sprite image
+     */
+    public int getGridXPos() {
+        return xPosGrid;
+    }
+    
+    /**
+     * Set the image sprite of the character
+     * @param s - Sprite image
+     */
+    public void setGridYPos(int y) {
+        yPosGrid = y/26;
+    }
+    
+    /**
+     * Get the image sprite of the character
+     * @return - Sprite image
+     */
+    public int getGridYPos() {
+        return yPosGrid;
     }
     
     /**

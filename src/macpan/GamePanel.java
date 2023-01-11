@@ -33,6 +33,9 @@ public final class GamePanel extends JPanel implements Runnable {
     private final int DELAY = 25, BUFFER_X = 48, BUFFER_Y = 41;
     Thing[][] b = new Thing[19][21]; //the images
     final int size = 26; //the size of each grid space (26x26 px)
+    int counter = 24;
+    String possible = "";
+    String choice = "";
 
     int[][] gridX = new int[19][21]; //parallel to images, holds the position the images are in on the X axis
     int[][] gridY = new int[19][21]; //parallel to images, holds the position the images are in on the Y axis
@@ -51,7 +54,7 @@ public final class GamePanel extends JPanel implements Runnable {
         loadImage();
         loadBoard();
         setBackground(Color.black);
-        blinky = new Blinky(imgBlinkyUp, 26 * 10, 26 * 7, "east", true);
+        blinky = new Blinky(imgBlinkyUp, 26 * 14, 26 * 9, "east", true);
         //pinky = new Pinky(imgPinky, 30, 0, "east", true);
         //inky = new Inky(imgInky, 60, 0, "east", true);
         //clyde = new Clyde(imgClyde, 90, 0, "east", true);
@@ -160,62 +163,9 @@ public final class GamePanel extends JPanel implements Runnable {
         //get the current time
         beforeTime = System.currentTimeMillis();
 
-        int num = 2;
-        boolean up = true, down = true, left = true, right = true;
-
         while (true) { //this loop runs once ever 25 ms (the DELAY)
-            moveGhost();
-            /*if (blinky.getXPos() % 26 == 0 && blinky.getYPos() % 26 == 0) {
-                     if (b[blinky.getXPos() / 26][blinky.getYPos() / 26 - 1] instanceof Block) {
-                    up = false;
-                }
-                if (b[blinky.getXPos() / 26][blinky.getYPos() / 26 + 1] instanceof Block) {
-                    down = false;
-                }
-                if (b[blinky.getXPos() / 26 + 1][blinky.getYPos() / 26] instanceof Block) {
-                    right = false;
-                }
-                if (b[blinky.getXPos() / 26 - 1][blinky.getYPos() / 26] instanceof Block) {
-                    left = false;
-                }
-                num = (int) ((Math.random() * 4) + 1);
-            }
-            if (num == 1 && up) {
-                up = false;
-                down = true;
-                right = true;
-                left = true;
-                blinky.setSprite(imgBlinkyUp);
-                blinky.moveUp();
-            } else if (num == 2 && right) {
-                if (b[blinky.getXPos() / 26 + 1][blinky.getYPos() / 26] instanceof Block == false) {
-                    left = false;
-                    up = true;
-                    down = true;
-                    right = true;
-                    blinky.setSprite(imgBlinkyRight);
-                    blinky.moveRight();
-                }
-            } else if (num == 3 && down) {
-                if (b[blinky.getXPos() / 26][blinky.getYPos() / 26 + 1] instanceof Block == false) {
-                    up = false;
-                    down = true;
-                    right = true;
-                    left = true;
-                    blinky.setSprite(imgBlinkyDown);
-                    blinky.moveDown();
-                }
-            } else if (num == 4 && left) {
-                if (b[blinky.getXPos() / 26 - 1][blinky.getYPos() / 26] instanceof Block == false) {
-                    right = false;
-                    up = true;
-                    down = true;
-                    left = true;
-                    blinky.setSprite(imgBlinkyLeft);
-                    blinky.moveLeft();
-                }
-            }
-             */
+            counter += blinky.getXSpeed(); //Counter moves the same amount as the ghost each time
+            moveGhost(); //Move ghost
             repaint();
 
             //calculate how much time has passed since the last call
@@ -242,51 +192,83 @@ public final class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    boolean up = true, down = true, left = true, right = true; //Booleans for checking backward movement
+
+    /**
+     * Move the ghost by making a decision every time the counter has reached 26
+     * (when the ghost is in the middle block)
+     */
     public void moveGhost() {
-        String possible = "";
-        if (blinky.getXPos() % 26 == 0 && blinky.getYPos() % 26 == 0) { //if its on the middle of a square
-            if (b[blinky.getXPos() / 26][blinky.getYPos() / 26 - 1] instanceof Block == false) { //if it can move UP
-                possible += "up";
+        //If counter has reached the tile width (meaning the ghost has moved enough to get to the middle of the block)
+        //Then find the possible moves
+        if (counter == size) {
+            possible = ""; //Reset the possible moves to nothing
+            if (b[(blinky.getXPos() / 26)][blinky.getYPos() / 26 - 1] instanceof Block == false && up) { //if it can move UP
+                possible += "up "; //Add "up" to possible moves
             }
-            if (b[blinky.getXPos() / 26][blinky.getYPos() / 26 + 1] instanceof Block == false) { //if it can move DOWN
-                possible += " down";
+            if (b[blinky.getXPos() / 26][blinky.getYPos() / 26 + 1] instanceof Block == false && down) { //if it can move DOWN
+                possible += "down "; //Add "down" to possible moves
             }
-            if (b[blinky.getXPos() / 26 + 1][blinky.getYPos() / 26] instanceof Block == false) { //if it can move RIGHT
-                possible += " right";
+            if (b[blinky.getXPos() / 26 + 1][blinky.getYPos() / 26] instanceof Block == false && right) { //if it can move RIGHT
+                possible += "right "; //Add "right" to possible moves
             }
-            if (b[blinky.getXPos() / 26 - 1][blinky.getYPos() / 26] instanceof Block == false) { //if it can move LEFT
-                possible += " left";
+            if (b[blinky.getXPos() / 26 - 1][blinky.getYPos() / 26] instanceof Block == false && left) { //if it can move LEFT
+                possible += "left"; //Add "left" to possible move
             }
 
-            String choice = makeChoice(possible);
-            switch (choice) {
-                case "up":
-                    blinky.setSprite(imgBlinkyUp);
-                    blinky.moveUp();
-                    break;
-                case "down":
-                    blinky.setSprite(imgBlinkyDown);
-                    blinky.moveDown();
-                    break;
-                case "right":
-                    blinky.setSprite(imgBlinkyRight);
-                    blinky.moveRight();
-                    break;
-                default: //must be left
-                    blinky.setSprite(imgBlinkyLeft);
-                    blinky.moveLeft();
-                    break;
-            }
+            choice = makeChoice(possible); //Make the choice for where to go
+            counter = 0; //Reset the counter keeping track of how far the ghost has moved
         }
+        
+        if (choice.equals("up")) { //If choice selected is up
+            blinky.setSprite(imgBlinkyUp); //Set the image to up
+            blinky.moveUp(); //Move the ghost up the same amount as it's speed
+            down = false; //Ghost can no longer go down (backwards)
+            //But can go all other directions assuming there isn't a block in the way
+            up = true; 
+            right = true;
+            left = true;
+        } else if (choice.equals("down")) { //If choice selected is down
+            blinky.setSprite(imgBlinkyDown); //Set the image to down
+            blinky.moveDown(); //Move the ghost down the same amount as it's speed
+            up = false; //Ghost can no longer go up (backwards)
+            //But can go all other directions assuming there isn't a block in the way
+            down = true;
+            right = true;
+            left = true;
+        } else if (choice.equals("right")) { //If choice selected is right
+            blinky.setSprite(imgBlinkyRight); //Set the image to right
+            blinky.moveRight(); //Move the ghost right the same amount as it's speed
+            left = false; //Ghost can no longer go left (backwards)
+            //But can go all other directions assuming there isn't a block in the way
+            up = true;
+            right = true;
+            down = true;
+        } else {
+            //must be left
+            blinky.setSprite(imgBlinkyLeft); //Set the image to left
+            blinky.moveLeft(); //Move the ghost left the same amount as it's speed
+            right = false; //Ghost can no longer go right (backwards)
+            //But can go all other directions assuming there isn't a block in the way
+            up = true;
+            down = true;
+            left = true;
+        }
+
     }
 
+    /**
+     * Makes the choice between all the possible moves on where to go
+     * @param main - The string list of moves
+     * @return - The chosen string for movement
+     */
     public String makeChoice(String main) {
-        String[] options = main.split(" ");
-        if (options.length == 1) {
-            return options[0];
-        } else {
-            int randomNum = (int) (Math.random() * options.length - 1); //generates a random number selecting any of the multiple choices it can move to
-            return options[randomNum];
+        String[] options = main.split(" "); //Create an array of the options, splitting the spaces
+        if (options.length == 1) { //If theres only one option
+            return options[0]; //Return that option
+        } else { //If there is two or three options
+            int randomNum = (int) (Math.random() * options.length); //generates a random number selecting any of the multiple choices it can move to
+            return options[randomNum]; //Return the option randomly picked
         }
     }
 
