@@ -94,6 +94,7 @@ public class InstructionsFrame extends javax.swing.JFrame {
         instructionArea.setRows(5);
         instructionArea.setAutoscrolls(false);
         instructionArea.setBorder(null);
+        instructionArea.setEnabled(false);
         instructionArea.setSelectionColor(new java.awt.Color(0, 0, 0));
         jScrollPane2.setViewportView(instructionArea);
 
