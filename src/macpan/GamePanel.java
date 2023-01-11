@@ -39,7 +39,7 @@ public final class GamePanel extends JPanel implements Runnable {
 
     //creating image files to be used
     private Image imgPellet, imgPowerPellet, imgFood, imgBlock, imgEmpty;
-    private Image imgBlinkyUp, imgBlinkyDown, imgBlinkyLeft, imgBlinkyRight ,imgPinky, imgInky, imgClyde;
+    private Image imgBlinkyUp, imgBlinkyDown, imgBlinkyLeft, imgBlinkyRight, imgPinky, imgInky, imgClyde;
 
     Blinky blinky;
     //Pinky pinky;
@@ -164,8 +164,9 @@ public final class GamePanel extends JPanel implements Runnable {
         boolean up = true, down = true, left = true, right = true;
 
         while (true) { //this loop runs once ever 25 ms (the DELAY)
-            if (blinky.getXPos() % 26 == 0 && blinky.getYPos() % 26 == 0) {
-                if (b[blinky.getXPos() / 26][blinky.getYPos() / 26 - 1] instanceof Block) {
+            moveGhost();
+            /*if (blinky.getXPos() % 26 == 0 && blinky.getYPos() % 26 == 0) {
+                     if (b[blinky.getXPos() / 26][blinky.getYPos() / 26 - 1] instanceof Block) {
                     up = false;
                 }
                 if (b[blinky.getXPos() / 26][blinky.getYPos() / 26 + 1] instanceof Block) {
@@ -214,7 +215,7 @@ public final class GamePanel extends JPanel implements Runnable {
                     blinky.moveLeft();
                 }
             }
-
+             */
             repaint();
 
             //calculate how much time has passed since the last call
@@ -240,4 +241,53 @@ public final class GamePanel extends JPanel implements Runnable {
             beforeTime = System.currentTimeMillis();
         }
     }
+
+    public void moveGhost() {
+        String possible = "";
+        if (blinky.getXPos() % 26 == 0 && blinky.getYPos() % 26 == 0) { //if its on the middle of a square
+            if (b[blinky.getXPos() / 26][blinky.getYPos() / 26 - 1] instanceof Block == false) { //if it can move UP
+                possible += "up";
+            }
+            if (b[blinky.getXPos() / 26][blinky.getYPos() / 26 + 1] instanceof Block == false) { //if it can move DOWN
+                possible += " down";
+            }
+            if (b[blinky.getXPos() / 26 + 1][blinky.getYPos() / 26] instanceof Block == false) { //if it can move RIGHT
+                possible += " right";
+            }
+            if (b[blinky.getXPos() / 26 - 1][blinky.getYPos() / 26] instanceof Block == false) { //if it can move LEFT
+                possible += " left";
+            }
+
+            String choice = makeChoice(possible);
+            switch (choice) {
+                case "up":
+                    blinky.setSprite(imgBlinkyUp);
+                    blinky.moveUp();
+                    break;
+                case "down":
+                    blinky.setSprite(imgBlinkyDown);
+                    blinky.moveDown();
+                    break;
+                case "right":
+                    blinky.setSprite(imgBlinkyRight);
+                    blinky.moveRight();
+                    break;
+                default: //must be left
+                    blinky.setSprite(imgBlinkyLeft);
+                    blinky.moveLeft();
+                    break;
+            }
+        }
+    }
+
+    public String makeChoice(String main) {
+        String[] options = main.split(" ");
+        if (options.length == 1) {
+            return options[0];
+        } else {
+            int randomNum = (int) (Math.random() * options.length - 1); //generates a random number selecting any of the multiple choices it can move to
+            return options[randomNum];
+        }
+    }
+
 }
