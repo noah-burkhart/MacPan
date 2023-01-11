@@ -85,6 +85,7 @@ public class InstructionsFrame extends javax.swing.JFrame {
             }
         });
 
+        instructionArea.setEditable(false);
         instructionArea.setBackground(new java.awt.Color(0, 0, 0));
         instructionArea.setColumns(20);
         instructionArea.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
