@@ -15,6 +15,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
     //Main window variable
     MenuFrame mainWindow;
     
+    
     /**
      * Creates the high score frame with gui builder
      * @param m - the main window
@@ -27,13 +28,16 @@ public class HighscoreFrame extends javax.swing.JFrame {
         setTitle("HI-SCORE List");
         getContentPane().setBackground(Color.BLACK);
         mainWindow = m;
-        
+//      Score topScores[] = new Score[5];
+//      readFile(topScores);
     }
 
-    public static void readFile(){
+    public static void readFile(int arr[]){
         try {
             File f = new File("src/macpan/score.data");
             Scanner s = new Scanner(f);
+            while (s.hasNextLine());
+            
         } catch (FileNotFoundException e) {
             System.out.println("Error: " + e);
         }
