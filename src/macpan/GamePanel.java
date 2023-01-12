@@ -30,13 +30,13 @@ import macpan.objects.Empty;
 
 import macpan.objects.Thing;
 
-public final class GamePanel extends JPanel implements Runnable {
+public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private Thread animator;
     private final int DELAY = 25, BUFFER_X = 48, BUFFER_Y = 41;
     Thing[][] b = new Thing[19][21]; //the images
     final int size = 26; //the size of each grid space (26x26 px)
-    int counter = size;
+    int counter = size, pacmanCounter = size;
     String possible = "";
     String choice = "";
 
@@ -66,15 +66,18 @@ public final class GamePanel extends JPanel implements Runnable {
         btnBack.setLocation(600, 600);
         add(btnBack);
         setBackground(Color.black);
-        pacman = new Pacman(imgPacman, 26 * 10, 26 * 13, "east");
-        blinky = new Blinky(imgBlinkyUp1, 26 * 14, 26 * 9, "east", true);
+        pacman = new Pacman(3, imgPacman, 26 * 10, 26 * 13, 2, 2, "right");
+        blinky = new Blinky(imgBlinkyUp1, 26 * 14, 26 * 9, "right", true);
         //pinky = new Pinky(imgPinky, 30, 0, "east", true);
         //inky = new Inky(imgInky, 60, 0, "east", true);
         //clyde = new Clyde(imgClyde, 90, 0, "east", true);
         blinky.setXSpeed(2);
         blinky.setYSpeed(2);
-        pacman.setXSpeed(2);
-        pacman.setYSpeed(2);
+
+        //attach the keyboard to the panel and give it "focus"
+        this.addKeyListener(this);
+        this.setFocusable(true);
+        this.requestFocus();
     }
 
     /**
@@ -194,8 +197,10 @@ public final class GamePanel extends JPanel implements Runnable {
 
         while (true) { //this loop runs once ever 25 ms (the DELAY)
             moveBlinky(); //Move ghost
+            movePacman();
             counter += blinky.getXSpeed(); //Counter moves the same amount as the ghost each time
-            System.out.println(counter);
+            pacmanCounter += pacman.getXSpeed();
+
             repaint();
 
             //calculate how much time has passed since the last call
@@ -219,6 +224,94 @@ public final class GamePanel extends JPanel implements Runnable {
             }
             //get the new current time
             beforeTime = System.currentTimeMillis();
+        }
+    }
+
+    public void movePacman() {
+        if ((double)(pacman.getXPos()%26) == 0 && b[(pacman.getXPos() / 26)][pacman.getYPos() / 26 - 1] instanceof Block == false && keyPressed.equals("up")){ //If up key is pressed and pacman is in center of space with no block above
+            pacman.moveUp(); //Move up
+        } else if ((double)(pacman.getXPos()%26) == 0 && b[(pacman.getXPos() / 26)][pacman.getYPos() / 26 + 1] instanceof Block == false && keyPressed.equals("down")){ //If down key is pressed and pacman is in center of space with no block below
+            pacman.moveDown(); //Move down
+        } else if ((double)(pacman.getYPos()%26) == 0 && b[(pacman.getXPos() / 26 + 1)][pacman.getYPos() / 26] instanceof Block == false && keyPressed.equals("right")){ //If right key is pressed and pacman is in center of space with no block to the right
+            pacman.moveRight(); //Move right
+        } else if ((double)(pacman.getYPos()%26) == 0 && b[(pacman.getXPos() / 26 - 1)][pacman.getYPos() / 26] instanceof Block == false && keyPressed.equals("left")){ //If left key is pressed and pacman is in center of space with no block to the left
+            pacman.moveLeft(); //move left
+        }
+        /*
+        if (b[pacman.getXPos() / 26][pacman.getYPos() / 26 - 1] instanceof Block == false) { //up
+            if (b[pacman.getXPos() / 26][pacman.getYPos() / 26 + 1] instanceof Block == false) { //down
+                if (b[pacman.getXPos() / 26 - 1][pacman.getYPos() / 26] instanceof Block == false) { //left 
+                    if (b[pacman.getXPos() / 26 + 1][pacman.getYPos() / 26] instanceof Block == false) { //right
+                        centered = true;
+                    }
+                }
+            }
+        }
+         */
+//        int x = pacman.getXPos(); //sets the xpos to the middle 
+//        int y = pacman.getYPos();
+//        switch (keyPressed) {
+//            case "up" -> {
+//                if (b[x/26][y / 26 - 1] instanceof Block == false ) { //up
+//                    System.out.println("up");
+//                    pacman.setDirection("up");
+//                    pacman.moveUp();
+//                }
+//            }
+//            case "down" -> {
+//                if (b[x / 26][y / 26 + 1] instanceof Block == false ) { //down
+//                    System.out.println("down");
+//                    pacman.setDirection("down");
+//                    pacman.moveDown();
+//                }
+//            }
+//
+//            case "left" -> { //leftie no workie becausie hezies thinkzies he is in the block beside
+//                if (b[x / 26 -1][y / 26] instanceof Block == false ) { //left
+//                    System.out.println("left");
+//                    pacman.setDirection("left");
+//                    pacman.moveLeft();
+//                }
+//            }
+//            default -> {
+//                //must be right
+//                if (b[x / 26 + 1][y / 26] instanceof Block == false ) { //right
+//                    System.out.println("right");
+//                    pacman.setDirection("right");
+//                    pacman.moveRight();
+//                }
+//            }
+//        }
+    }
+
+    public boolean centered() {
+        if ((double)(pacman.getXPos()%26) == 0 && (double)(pacman.getYPos()%26) == 0) { //if it is exactly in the middle of the square
+            System.out.println("true");
+            return true;
+        } else {
+            System.out.println("false");
+            return false;
+        }
+    }
+
+    public void animatePacman() {
+        //animate here
+    }
+
+    private String keyPressed = ""; //used to control what key was last pressed
+
+    @Override
+    public void keyPressed(KeyEvent evt) {
+        int key = evt.getKeyCode();  // Keyboard code for the pressed key.
+
+        if (key == KeyEvent.VK_W) { //if key pressed is W meaning UP
+            keyPressed = "up";
+        } else if (key == KeyEvent.VK_S) { //if key pressed is S meaning DOWN
+            keyPressed = "down";
+        } else if (key == KeyEvent.VK_A) {//if key pressed is A meaning LEFT
+            keyPressed = "left";
+        } else if (key == KeyEvent.VK_D) {//if key pressed is D meaning RIGHT
+            keyPressed = "right";
         }
     }
 
@@ -319,5 +412,17 @@ public final class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    /*
+    Abstract methods for key listener class
+     */
+    @Override
+    public void keyTyped(KeyEvent e) {
+        //
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        //
+    }
+
 }
-       

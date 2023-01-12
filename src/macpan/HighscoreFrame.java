@@ -10,6 +10,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import macpan.objects.Score;
+import java.io.BufferedWriter; 
+import java.io.FileWriter; 
+import java.io.IOException; 
+import java.io.PrintWriter;
 
 public class HighscoreFrame extends javax.swing.JFrame {
     
@@ -30,19 +34,28 @@ public class HighscoreFrame extends javax.swing.JFrame {
         getContentPane().setBackground(Color.BLACK);
         mainWindow = m;
         Score topScores[] = new Score[5];
+        //readFile(topScores);
         
-//      readFile(topScores);
+        
+        FileWriter fw = null; 
+        BufferedWriter bw = null; 
+        PrintWriter pw = null;
+        
     }
 
-    public static void readFile(Score arr[]){
+    public static void readFile(){
         try {
             File f = new File("src/macpan/score.data");
             Scanner s = new Scanner(f);
+            //int size = f.getLength;
             for (int i = 0; i < 5; i++) {
                int score = Integer.parseInt(s.nextLine());
                String name = s.nextLine();
                Score score_ = new Score(score, name);
-               arr[i] = score_;
+            }
+            //quickSortD(arr, 0, 4);
+            for (int i = 0; i < 5; i++) {
+                //System.out.println(arr[i]);
             }
             while (s.hasNextLine()){
                 
@@ -59,7 +72,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
      * @param low - lowest index
      * @param high - highest index
      */
-    public static void quickSortD(int[] arr, int low, int high) {
+    public static void quickSortD(Score[] arr, int low, int high) {
         if (low < high) {
 
             // pi is partitioning index, arr[p]
@@ -81,9 +94,9 @@ public class HighscoreFrame extends javax.swing.JFrame {
      * @param high - highest index
      * @return - the index of the last pivot
      */
-    public static int partitionD(int[] arr, int low, int high) {
+    public static int partitionD(Score[] arr, int low, int high) {
         // sets pivot as last index
-        int pivot = arr[high];
+        int pivot = arr[high].getValue();
 
         // Index of smaller element and
         // indicates the right position
@@ -93,7 +106,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
         for (int j = low; j <= high - 1; j++) {
             // If current element is smaller
             // than the pivot
-            if (arr[j] > pivot) { //if greater than pivot
+            if (arr[j].getValue() > pivot) { //if greater than pivot
 
                 // Increment index of
                 // smaller element
@@ -111,9 +124,10 @@ public class HighscoreFrame extends javax.swing.JFrame {
      * @param i - lower index number
      * @param j - higher index number
      */
-    public static void swap(int[] arr, int i, int j) {
-        int temp = arr[i]; // temperary variable to hold the value at the lower index
+    public static void swap(Score[] arr, int i, int j) {
+        Score temp = arr[i].clone();
         arr[i] = arr[j]; // sets them to the same value
+        System.out.println("");
         arr[j] = temp; // places the stored temporary value into higher index number
     }
     
