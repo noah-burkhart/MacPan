@@ -148,8 +148,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                 g2d.drawImage(b[i][j].getSprite(), b[i][j].getX() + BUFFER_X, b[i][j].getY() + BUFFER_Y, 26, 26, Color.black, this);
             }
         }
-        g2d.drawImage(blinky.getSprite(), blinky.getXPos() + BUFFER_X, blinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
-        g2d.drawImage(pacman.getSprite(), pacman.getXPos() + BUFFER_X, pacman.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
+        g2d.drawImage(blinky.getSprite(), blinky.getXPos() + BUFFER_X, blinky.getYPos() + BUFFER_Y, 26, 26, Color.black, this);
+        g2d.drawImage(pacman.getSprite(), pacman.getXPos() + BUFFER_X, pacman.getYPos() + BUFFER_Y, 26, 26, Color.black, this);
 
     }
 
@@ -213,28 +213,46 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     public void movePacman() {
+        /*
+        if (b[pacman.getXPos() / 26][pacman.getYPos() / 26 - 1] instanceof Block == false) { //up
+            if (b[pacman.getXPos() / 26][pacman.getYPos() / 26 + 1] instanceof Block == false) { //down
+                if (b[pacman.getXPos() / 26 - 1][pacman.getYPos() / 26] instanceof Block == false) { //left 
+                    if (b[pacman.getXPos() / 26 + 1][pacman.getYPos() / 26] instanceof Block == false) { //right
+                        centered = true;
+                    }
+                }
+            }
+        }
+         */
+        int x = pacman.getXPos(); //sets the xpos to the middle 
+        int y = pacman.getYPos();
         switch (keyPressed) {
             case "up" -> {
-                if (b[pacman.getXPos() / 26][pacman.getYPos() / 26 - 1] instanceof Block == false) { //if there is not a block above
+                if (b[x/26][y / 26 - 1] instanceof Block == false ) { //up
+                    System.out.println("up");
                     pacman.setDirection("up");
                     pacman.moveUp();
                 }
             }
             case "down" -> {
-                if (b[pacman.getXPos() / 26][pacman.getYPos() / 26 + 1] instanceof Block == false) {
+                if (b[x / 26][y / 26 + 1] instanceof Block == false ) { //down
+                    System.out.println("down");
                     pacman.setDirection("down");
                     pacman.moveDown();
                 }
             }
-            case "left" -> {
-                if (b[pacman.getXPos() / 26 - 1][pacman.getYPos() / 26] instanceof Block == false) {
+
+            case "left" -> { //leftie no workie becausie hezies thinkzies he is in the block beside
+                if (b[x / 26 -1][y / 26] instanceof Block == false ) { //left
+                    System.out.println("left");
                     pacman.setDirection("left");
                     pacman.moveLeft();
                 }
             }
             default -> {
                 //must be right
-                if (b[pacman.getXPos() / 26 + 1][pacman.getYPos() / 26] instanceof Block == false) {
+                if (b[x / 26 + 1][y / 26] instanceof Block == false ) { //right
+                    System.out.println("right");
                     pacman.setDirection("right");
                     pacman.moveRight();
                 }
@@ -242,8 +260,18 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
-    public void animatePacman() {
+    public boolean centered() {
+        if (pacman.getXPos() % 26 == 0 && pacman.getYPos() % 26 == 0) { //if it is exactly in the middle of the square
+            System.out.println("true");
+            return true;
+        } else {
+            System.out.println("false");
+            return false;
+        }
+    }
 
+    public void animatePacman() {
+        //animate here
     }
 
     private String keyPressed = ""; //used to control what key was last pressed
@@ -253,16 +281,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         int key = evt.getKeyCode();  // Keyboard code for the pressed key.
 
         if (key == KeyEvent.VK_W) { //if key pressed is W meaning UP
-            System.out.println("w");
             keyPressed = "up";
         } else if (key == KeyEvent.VK_S) { //if key pressed is S meaning DOWN
-            System.out.println("s");
             keyPressed = "down";
         } else if (key == KeyEvent.VK_A) {//if key pressed is A meaning LEFT
-            System.out.println("a");
             keyPressed = "left";
         } else if (key == KeyEvent.VK_D) {//if key pressed is D meaning RIGHT
-            System.out.println("d");
             keyPressed = "right";
         }
     }
