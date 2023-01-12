@@ -35,6 +35,24 @@ public class Pacman extends AbstractCharacter{
         super(s, x, y, d);
         this.lives = lives;
     }
+    
+    /**
+     * Full constructor for a PacMan object.
+     * @param lives - the amound of lives he has
+     * @param s - the sprite
+     * @param x - the x position
+     * @param y - the y position
+     * @param xSpeed - the x speed
+     * @param ySpeed - the y speed
+     * @param d - the direction its facing
+     */
+    public Pacman(int lives, Image s, int x, int y, int xSpeed, int ySpeed, String d){
+        super(s, x, y, d);
+        this.setXSpeed(xSpeed); //sets the x and y speed
+        this.setYSpeed(ySpeed);
+        this.lives = lives; //sets the lives
+        
+    }
 
     /**
      * Accessor method for lives
