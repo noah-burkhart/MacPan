@@ -13,6 +13,7 @@ import java.awt.Graphics2D;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.event.*;
 import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -63,6 +64,8 @@ public final class GamePanel extends JPanel implements Runnable {
         //clyde = new Clyde(imgClyde, 90, 0, "east", true);
         blinky.setXSpeed(2);
         blinky.setYSpeed(2);
+        pacman.setXSpeed(2);
+        pacman.setYSpeed(2);
     }
 
     /**
@@ -89,7 +92,7 @@ public final class GamePanel extends JPanel implements Runnable {
         imgInky = new ImageIcon("src/macpan/images/Ghosts/Inky/inky1.png").getImage();
         imgClyde = new ImageIcon("src/macpan/images/Ghosts/Clyde/clyde1.png").getImage();
 
-        imgPacman = new ImageIcon("src/macpan/images/Pacman/pacman1.png").getImage();
+        imgPacman = new ImageIcon("src/macpan/images/Pacman/pacmanWhole.png").getImage();
     }
 
     /**
@@ -176,7 +179,6 @@ public final class GamePanel extends JPanel implements Runnable {
         beforeTime = System.currentTimeMillis();
 
         while (true) { //this loop runs once ever 25 ms (the DELAY)
-            pacman.moveDown();
             moveGhost(); //Move ghost
             counter += blinky.getXSpeed(); //Counter moves the same amount as the ghost each time
             System.out.println(counter);
@@ -304,3 +306,4 @@ public final class GamePanel extends JPanel implements Runnable {
     }
 
 }
+       
