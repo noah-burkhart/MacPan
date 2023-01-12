@@ -5,6 +5,8 @@
  */
 package macpan;
 
+import java.awt.Color;
+
 public class MenuFrame extends javax.swing.JFrame {
 
     //Variables for the other two frames that will be switched to
@@ -21,6 +23,7 @@ public class MenuFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("MacPan");
+        getContentPane().setBackground(Color.BLACK);
     }
 
     /**
