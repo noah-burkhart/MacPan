@@ -228,20 +228,20 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     public void movePacman() {
-        double xCenter = (double) (pacman.getXPos() % 26);
-        double yCenter = (double) (pacman.getYPos() % 26);
+        double centreX = (double) (pacman.getXPos() % 26);
+        double centreY = (double) (pacman.getYPos() % 26);
         //represents pacmans position in each grid space. When centred, value will be 0
 
         int xGrid = pacman.getXPos() / 26;  //represents pacmans position on the 'grid' (the map array)
         int yGrid = pacman.getYPos() / 26;
 
-        if (xCenter == 0 && b[xGrid][yGrid - 1] instanceof Block == false && keyPressed.equals("up")) { //If up key is pressed and pacman is in center of space with no block above
+        if (centreX == 0 && b[xGrid][yGrid - 1] instanceof Block == false && keyPressed.equals("up")) { //If up key is pressed and pacman is in center of space with no block above
             pacman.moveUp(); //Move up
-        } else if (xCenter == 0 && b[xGrid][yGrid + 1] instanceof Block == false && keyPressed.equals("down")) { //If down key is pressed and pacman is in center of space with no block below
+        } else if (centreX == 0 && b[xGrid][yGrid + 1] instanceof Block == false && keyPressed.equals("down")) { //If down key is pressed and pacman is in center of space with no block below
             pacman.moveDown(); //Move down
-        } else if (yCenter == 0 && b[xGrid + 1][yGrid] instanceof Block == false && keyPressed.equals("right")) { //If right key is pressed and pacman is in center of space with no block to the right
+        } else if (centreY == 0 && b[xGrid + 1][yGrid] instanceof Block == false && keyPressed.equals("right")) { //If right key is pressed and pacman is in center of space with no block to the right
             pacman.moveRight(); //Move right
-        } else if (yCenter == 0 && b[xGrid - 1][yGrid] instanceof Block == false && keyPressed.equals("left")) { //If left key is pressed and pacman is in center of space with no block to the left
+        } else if (centreY == 0 && b[xGrid - 1][yGrid] instanceof Block == false && keyPressed.equals("left")) { //If left key is pressed and pacman is in center of space with no block to the left
             pacman.moveLeft(); //move left
         }
         /*
