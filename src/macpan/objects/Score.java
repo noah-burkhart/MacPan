@@ -41,7 +41,7 @@ public class Score {
      * Mutator Method for score value
      * @param value - value of score
      */
-    public void setvalue(int value) {
+    public void setValue(int value) {
         this.value = value;
     }
 
@@ -57,6 +57,7 @@ public class Score {
      * toString method for Score
      * @return - all of score's information
      */
+    @Override
     public String toString() {
         return "Score{" + "value=" + value + ", name=" + name + '}';
     }
@@ -66,6 +67,7 @@ public class Score {
      * @param obj - another score
      * @return - true or false if they are equal or not
      */
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -82,4 +84,10 @@ public class Score {
         }
         return Objects.equals(this.name, other.name);
     }   
+    
+    @Override
+    public Score clone() {
+        Score s = new Score(value, name);
+        return s;
+    }
 }
