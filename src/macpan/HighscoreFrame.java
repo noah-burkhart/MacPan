@@ -10,6 +10,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import macpan.objects.Score;
+import java.io.BufferedWriter; 
+import java.io.FileWriter; 
+import java.io.IOException; 
+import java.io.PrintWriter;
 
 public class HighscoreFrame extends javax.swing.JFrame {
     
@@ -30,24 +34,28 @@ public class HighscoreFrame extends javax.swing.JFrame {
         getContentPane().setBackground(Color.BLACK);
         mainWindow = m;
         Score topScores[] = new Score[5];
-        readFile(topScores);
+        //readFile(topScores);
         
-//      readFile(topScores);
+        
+        FileWriter fw = null; 
+        BufferedWriter bw = null; 
+        PrintWriter pw = null;
+        
     }
 
-    public static void readFile(Score arr[]){
+    public static void readFile(){
         try {
             File f = new File("src/macpan/score.data");
             Scanner s = new Scanner(f);
+            //int size = f.getLength;
             for (int i = 0; i < 5; i++) {
                int score = Integer.parseInt(s.nextLine());
                String name = s.nextLine();
                Score score_ = new Score(score, name);
-               arr[i] = score_;
             }
-            quickSortD(arr, 0, 4);
+            //quickSortD(arr, 0, 4);
             for (int i = 0; i < 5; i++) {
-                System.out.println(arr[i]);
+                //System.out.println(arr[i]);
             }
             while (s.hasNextLine()){
                 
