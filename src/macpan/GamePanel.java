@@ -29,7 +29,7 @@ import macpan.objects.Empty;
 
 import macpan.objects.Thing;
 
-public final class GamePanel extends JPanel implements Runnable {
+public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private Thread animator;
     private final int DELAY = 25, BUFFER_X = 48, BUFFER_Y = 41;
@@ -57,15 +57,18 @@ public final class GamePanel extends JPanel implements Runnable {
         loadImage();
         loadBoard();
         setBackground(Color.black);
-        pacman = new Pacman(imgPacman, 26 * 10, 26 * 13, "east");
-        blinky = new Blinky(imgBlinkyUp1, 26 * 14, 26 * 9, "east", true);
+        pacman = new Pacman(3, imgPacman, 26 * 10, 26 * 13, 2, 2, "right");
+        blinky = new Blinky(imgBlinkyUp1, 26 * 14, 26 * 9, "right", true);
         //pinky = new Pinky(imgPinky, 30, 0, "east", true);
         //inky = new Inky(imgInky, 60, 0, "east", true);
         //clyde = new Clyde(imgClyde, 90, 0, "east", true);
         blinky.setXSpeed(2);
         blinky.setYSpeed(2);
-        pacman.setXSpeed(2);
-        pacman.setYSpeed(2);
+
+        //attach the keyboard to the panel and give it "focus"
+        this.addKeyListener(this);
+        this.setFocusable(true);
+        this.requestFocus();
     }
 
     /**
@@ -180,8 +183,9 @@ public final class GamePanel extends JPanel implements Runnable {
 
         while (true) { //this loop runs once ever 25 ms (the DELAY)
             moveBlinky(); //Move ghost
+            movePacman();
             counter += blinky.getXSpeed(); //Counter moves the same amount as the ghost each time
-            System.out.println(counter);
+
             repaint();
 
             //calculate how much time has passed since the last call
@@ -205,6 +209,61 @@ public final class GamePanel extends JPanel implements Runnable {
             }
             //get the new current time
             beforeTime = System.currentTimeMillis();
+        }
+    }
+
+    public void movePacman() {
+        switch (keyPressed) {
+            case "up" -> {
+                if (b[pacman.getXPos() / 26][pacman.getYPos() / 26 - 1] instanceof Block == false) { //if there is not a block above
+                    pacman.setDirection("up");
+                    pacman.moveUp();
+                }
+            }
+            case "down" -> {
+                if (b[pacman.getXPos() / 26][pacman.getYPos() / 26 + 1] instanceof Block == false) {
+                    pacman.setDirection("down");
+                    pacman.moveDown();
+                }
+            }
+            case "left" -> {
+                if (b[pacman.getXPos() / 26 - 1][pacman.getYPos() / 26] instanceof Block == false) {
+                    pacman.setDirection("left");
+                    pacman.moveLeft();
+                }
+            }
+            default -> {
+                //must be right
+                if (b[pacman.getXPos() / 26 + 1][pacman.getYPos() / 26] instanceof Block == false) {
+                    pacman.setDirection("right");
+                    pacman.moveRight();
+                }
+            }
+        }
+    }
+
+    public void animatePacman() {
+
+    }
+
+    private String keyPressed = ""; //used to control what key was last pressed
+
+    @Override
+    public void keyPressed(KeyEvent evt) {
+        int key = evt.getKeyCode();  // Keyboard code for the pressed key.
+
+        if (key == KeyEvent.VK_W) { //if key pressed is W meaning UP
+            System.out.println("w");
+            keyPressed = "up";
+        } else if (key == KeyEvent.VK_S) { //if key pressed is S meaning DOWN
+            System.out.println("s");
+            keyPressed = "down";
+        } else if (key == KeyEvent.VK_A) {//if key pressed is A meaning LEFT
+            System.out.println("a");
+            keyPressed = "left";
+        } else if (key == KeyEvent.VK_D) {//if key pressed is D meaning RIGHT
+            System.out.println("d");
+            keyPressed = "right";
         }
     }
 
@@ -305,5 +364,17 @@ public final class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    /*
+    Abstract methods for key listener class
+     */
+    @Override
+    public void keyTyped(KeyEvent e) {
+        //
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        //
+    }
+
 }
-       
