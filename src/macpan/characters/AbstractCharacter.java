@@ -13,7 +13,7 @@ abstract class AbstractCharacter {
     
     //Instance variables
     protected Image sprite;
-    protected static int xPos, yPos, xSpeed, ySpeed, xPosGrid, yPosGrid;
+    protected int xPos, yPos, xSpeed, ySpeed, xPosGrid, yPosGrid;
     protected String direction;
     
     /**

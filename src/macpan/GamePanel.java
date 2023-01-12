@@ -19,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import javax.swing.ImageIcon;
 import macpan.characters.Blinky;
+import macpan.characters.Pacman;
 import macpan.objects.Block;
 import macpan.objects.Pellet;
 import macpan.objects.Food;
@@ -33,7 +34,7 @@ public final class GamePanel extends JPanel implements Runnable {
     private final int DELAY = 25, BUFFER_X = 48, BUFFER_Y = 41;
     Thing[][] b = new Thing[19][21]; //the images
     final int size = 26; //the size of each grid space (26x26 px)
-    int counter = 24;
+    int counter = size;
     String possible = "";
     String choice = "";
 
@@ -42,8 +43,9 @@ public final class GamePanel extends JPanel implements Runnable {
 
     //creating image files to be used
     private Image imgPellet, imgPowerPellet, imgFood, imgBlock, imgEmpty;
-    private Image imgBlinkyUp, imgBlinkyDown, imgBlinkyLeft, imgBlinkyRight, imgPinky, imgInky, imgClyde;
+    private Image imgBlinkyUp1, imgBlinkyUp2, imgBlinkyDown1, imgBlinkyDown2, imgBlinkyLeft1, imgBlinkyLeft2, imgBlinkyRight1, imgBlinkyRight2, imgPinky, imgInky, imgClyde, imgPacman;
 
+    Pacman pacman;
     Blinky blinky;
     //Pinky pinky;
     //Inky inky;
@@ -54,7 +56,8 @@ public final class GamePanel extends JPanel implements Runnable {
         loadImage();
         loadBoard();
         setBackground(Color.black);
-        blinky = new Blinky(imgBlinkyUp, 26 * 14, 26 * 9, "east", true);
+        pacman = new Pacman(imgPacman, 26 * 10, 26 * 13, "east");
+        blinky = new Blinky(imgBlinkyUp1, 26 * 14, 26 * 9, "east", true);
         //pinky = new Pinky(imgPinky, 30, 0, "east", true);
         //inky = new Inky(imgInky, 60, 0, "east", true);
         //clyde = new Clyde(imgClyde, 90, 0, "east", true);
@@ -73,13 +76,20 @@ public final class GamePanel extends JPanel implements Runnable {
         imgPowerPellet = new ImageIcon("src/macpan/images/Consumables/powerPellet.png").getImage();
         imgFood = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
 
-        imgBlinkyUp = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyUp1.png").getImage();
-        imgBlinkyDown = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyDown1.png").getImage();
-        imgBlinkyLeft = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyBack1.png").getImage();
-        imgBlinkyRight = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinky1.png").getImage();
+        imgBlinkyUp1 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyUp1.png").getImage();
+        imgBlinkyUp2 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyUp2.png").getImage();
+        imgBlinkyDown1 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyDown1.png").getImage();
+        imgBlinkyDown2 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyDown2.png").getImage();
+        imgBlinkyLeft1 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyBack1.png").getImage();
+        imgBlinkyLeft2 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyBack2.png").getImage();
+        imgBlinkyRight1 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinky1.png").getImage();
+        imgBlinkyRight2 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinky2.png").getImage();
+
         imgPinky = new ImageIcon("src/macpan/images/Ghosts/Pinky/pinky1.png").getImage();
         imgInky = new ImageIcon("src/macpan/images/Ghosts/Inky/inky1.png").getImage();
         imgClyde = new ImageIcon("src/macpan/images/Ghosts/Clyde/clyde1.png").getImage();
+
+        imgPacman = new ImageIcon("src/macpan/images/Pacman/pacman1.png").getImage();
     }
 
     /**
@@ -133,6 +143,8 @@ public final class GamePanel extends JPanel implements Runnable {
             }
         }
         g2d.drawImage(blinky.getSprite(), blinky.getXPos() + BUFFER_X, blinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
+        g2d.drawImage(pacman.getSprite(), pacman.getXPos() + BUFFER_X, pacman.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
+
     }
 
     //overrides paintComponent in JPanel class
@@ -164,8 +176,10 @@ public final class GamePanel extends JPanel implements Runnable {
         beforeTime = System.currentTimeMillis();
 
         while (true) { //this loop runs once ever 25 ms (the DELAY)
-            counter += blinky.getXSpeed(); //Counter moves the same amount as the ghost each time
+            pacman.moveDown();
             moveGhost(); //Move ghost
+            counter += blinky.getXSpeed(); //Counter moves the same amount as the ghost each time
+            System.out.println(counter);
             repaint();
 
             //calculate how much time has passed since the last call
@@ -201,7 +215,8 @@ public final class GamePanel extends JPanel implements Runnable {
     public void moveGhost() {
         //If counter has reached the tile width (meaning the ghost has moved enough to get to the middle of the block)
         //Then find the possible moves
-        if (counter == size) {
+        if (counter == 26) {
+            counter = 0; //Reset the counter keeping track of how far the ghost has moved
             possible = ""; //Reset the possible moves to nothing
             if (b[(blinky.getXPos() / 26)][blinky.getYPos() / 26 - 1] instanceof Block == false && up) { //if it can move UP
                 possible += "up "; //Add "up" to possible moves
@@ -217,19 +232,26 @@ public final class GamePanel extends JPanel implements Runnable {
             }
 
             choice = makeChoice(possible); //Make the choice for where to go
-            counter = 0; //Reset the counter keeping track of how far the ghost has moved
         }
-        
+
         if (choice.equals("up")) { //If choice selected is up
-            blinky.setSprite(imgBlinkyUp); //Set the image to up
+            if (counter > 0 && counter < 14) {
+                blinky.setSprite(imgBlinkyUp1); //Set the image to up
+            } else {
+                blinky.setSprite(imgBlinkyUp2); //Set the image to up but different
+            }
             blinky.moveUp(); //Move the ghost up the same amount as it's speed
             down = false; //Ghost can no longer go down (backwards)
             //But can go all other directions assuming there isn't a block in the way
-            up = true; 
+            up = true;
             right = true;
             left = true;
         } else if (choice.equals("down")) { //If choice selected is down
-            blinky.setSprite(imgBlinkyDown); //Set the image to down
+            if (counter > 0 && counter < 14) {
+                blinky.setSprite(imgBlinkyDown1); //Set the image to down
+            } else {
+                blinky.setSprite(imgBlinkyDown2); //Set the image to down but different
+            }
             blinky.moveDown(); //Move the ghost down the same amount as it's speed
             up = false; //Ghost can no longer go up (backwards)
             //But can go all other directions assuming there isn't a block in the way
@@ -237,7 +259,11 @@ public final class GamePanel extends JPanel implements Runnable {
             right = true;
             left = true;
         } else if (choice.equals("right")) { //If choice selected is right
-            blinky.setSprite(imgBlinkyRight); //Set the image to right
+            if (counter > 0 && counter < 14) {
+                blinky.setSprite(imgBlinkyRight1); //Set the image to right
+            } else {
+                blinky.setSprite(imgBlinkyRight2); //Set the image to right but different
+            }
             blinky.moveRight(); //Move the ghost right the same amount as it's speed
             left = false; //Ghost can no longer go left (backwards)
             //But can go all other directions assuming there isn't a block in the way
@@ -246,7 +272,11 @@ public final class GamePanel extends JPanel implements Runnable {
             down = true;
         } else {
             //must be left
-            blinky.setSprite(imgBlinkyLeft); //Set the image to left
+            if (counter > 0 && counter < 14) {
+                blinky.setSprite(imgBlinkyLeft1); //Set the image to left
+            } else {
+                blinky.setSprite(imgBlinkyLeft2); //Set the image to left but different
+            } //Set the image to left
             blinky.moveLeft(); //Move the ghost left the same amount as it's speed
             right = false; //Ghost can no longer go right (backwards)
             //But can go all other directions assuming there isn't a block in the way
@@ -259,6 +289,7 @@ public final class GamePanel extends JPanel implements Runnable {
 
     /**
      * Makes the choice between all the possible moves on where to go
+     *
      * @param main - The string list of moves
      * @return - The chosen string for movement
      */
