@@ -215,23 +215,34 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     public void movePacman() {
         switch (keyPressed) {
             case "up" -> {
-                pacman.setDirection("up");
-                pacman.moveUp();
+                if (b[pacman.getXPos() / 26][pacman.getYPos() / 26 - 1] instanceof Block == false) { //if there is not a block above
+                    pacman.setDirection("up");
+                    pacman.moveUp();
+                }
             }
             case "down" -> {
-                pacman.setDirection("down");
-                pacman.moveDown();
+                if (b[pacman.getXPos() / 26][pacman.getYPos() / 26 + 1] instanceof Block == false) {
+                    pacman.setDirection("down");
+                    pacman.moveDown();
+                }
             }
             case "left" -> {
-                pacman.setDirection("left");
-                pacman.moveLeft();
+                if (b[pacman.getXPos() / 26 - 1][pacman.getYPos() / 26] instanceof Block == false) {
+                    pacman.setDirection("left");
+                    pacman.moveLeft();
+                }
             }
             default -> {
                 //must be right
-                pacman.setDirection("right");
-                pacman.moveRight();
+                if (b[pacman.getXPos() / 26 + 1][pacman.getYPos() / 26] instanceof Block == false) {
+                    pacman.setDirection("right");
+                    pacman.moveRight();
+                }
             }
         }
+    }
+
+    public void animatePacman() {
 
     }
 
@@ -363,7 +374,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-       //
+        //
     }
 
 }
