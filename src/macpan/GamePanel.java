@@ -179,7 +179,7 @@ public final class GamePanel extends JPanel implements Runnable {
         beforeTime = System.currentTimeMillis();
 
         while (true) { //this loop runs once ever 25 ms (the DELAY)
-            moveGhost(); //Move ghost
+            moveBlinky(); //Move ghost
             counter += blinky.getXSpeed(); //Counter moves the same amount as the ghost each time
             System.out.println(counter);
             repaint();
@@ -214,7 +214,7 @@ public final class GamePanel extends JPanel implements Runnable {
      * Move the ghost by making a decision every time the counter has reached 26
      * (when the ghost is in the middle block)
      */
-    public void moveGhost() {
+    public void moveBlinky() {
         //If counter has reached the tile width (meaning the ghost has moved enough to get to the middle of the block)
         //Then find the possible moves
         if (counter == 26) {
