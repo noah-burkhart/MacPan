@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import macpan.characters.Blinky;
 import macpan.characters.Pacman;
 import macpan.objects.Block;
@@ -51,11 +52,19 @@ public final class GamePanel extends JPanel implements Runnable {
     //Pinky pinky;
     //Inky inky;
     //Clyde clyde;
+    
+    JButton btnBack = new javax.swing.JButton();
 
     // default constructor
     public GamePanel() {
         loadImage();
         loadBoard();
+        btnBack.setBackground(Color.black);
+        btnBack.setFont(new java.awt.Font("Monospaced", 1, 20));
+        btnBack.setForeground(Color.white);
+        btnBack.setText("Back");
+        btnBack.setLocation(600, 600);
+        add(btnBack);
         setBackground(Color.black);
         pacman = new Pacman(imgPacman, 26 * 10, 26 * 13, "east");
         blinky = new Blinky(imgBlinkyUp1, 26 * 14, 26 * 9, "east", true);
@@ -145,6 +154,11 @@ public final class GamePanel extends JPanel implements Runnable {
                 g2d.drawImage(b[i][j].getSprite(), b[i][j].getX() + BUFFER_X, b[i][j].getY() + BUFFER_Y, 26, 26, Color.black, this);
             }
         }
+        g2d.setColor(Color.white);
+        g2d.setFont(new java.awt.Font("Monospaced", 1, 17));
+        g2d.drawString("HIGH-SCORE: " + 100000, 10, 28);
+        g2d.drawString("SCORE: ______", 375, 28);
+        g2d.drawString("LIVES: ", 10, 615);
         g2d.drawImage(blinky.getSprite(), blinky.getXPos() + BUFFER_X, blinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
         g2d.drawImage(pacman.getSprite(), pacman.getXPos() + BUFFER_X, pacman.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
 
