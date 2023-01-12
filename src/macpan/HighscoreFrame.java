@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import macpan.objects.Score;
 
 public class HighscoreFrame extends javax.swing.JFrame {
     
@@ -28,15 +29,24 @@ public class HighscoreFrame extends javax.swing.JFrame {
         setTitle("HI-SCORE List");
         getContentPane().setBackground(Color.BLACK);
         mainWindow = m;
-//      Score topScores[] = new Score[5];
+        Score topScores[] = new Score[5];
+        
 //      readFile(topScores);
     }
 
-    public static void readFile(int arr[]){
+    public static void readFile(Score arr[]){
         try {
             File f = new File("src/macpan/score.data");
             Scanner s = new Scanner(f);
-            while (s.hasNextLine());
+            for (int i = 0; i < 5; i++) {
+               int score = Integer.parseInt(s.nextLine());
+               String name = s.nextLine();
+               Score score_ = new Score(score, name);
+               arr[i] = score_;
+            }
+            while (s.hasNextLine()){
+                
+            }
             
         } catch (FileNotFoundException e) {
             System.out.println("Error: " + e);
@@ -167,23 +177,23 @@ public class HighscoreFrame extends javax.swing.JFrame {
 
         rank1.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         rank1.setForeground(new java.awt.Color(255, 0, 51));
-        rank1.setText("jLabel1");
+        rank1.setText("1ST");
 
         rank2.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         rank2.setForeground(new java.awt.Color(255, 153, 255));
-        rank2.setText("jLabel2");
+        rank2.setText("2ND");
 
         rank3.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         rank3.setForeground(new java.awt.Color(102, 255, 255));
-        rank3.setText("jLabel3");
+        rank3.setText("3RD");
 
         rank4.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         rank4.setForeground(new java.awt.Color(255, 153, 51));
-        rank4.setText("jLabel4");
+        rank4.setText("4TH");
 
         rank5.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         rank5.setForeground(new java.awt.Color(255, 255, 255));
-        rank5.setText("jLabel5");
+        rank5.setText("5TH");
 
         name1.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         name1.setForeground(new java.awt.Color(255, 0, 51));
