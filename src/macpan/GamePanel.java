@@ -42,7 +42,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private final int px = 26; //the size of each grid spot (26x26 pixels)
 
-    int blinkyCounter = px, pinkyCounter = px, inkyCounter = px, clydeCounter = px, pacmanCounter = px;
+    int blinkyCounter = px, pinkyCounter = px, inkyCounter = px, clydeCounter = px, pacmanTick = 27;
     String blinkyPossible = "", pinkyPossible = "", inkyPossible = "", clydePossible = "";
     String blinkyChoice = "", pinkyChoice = "", inkyChoice = "", clydeChoice = "";
 
@@ -246,8 +246,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             inkyCounter += inky.getXSpeed(); //Counter moves the same amount as the ghost each time
             clydeCounter += clyde.getXSpeed(); //Counter moves the same amount as the ghost each time
 
-            pacmanCounter += pacman.getXSpeed();
-
             repaint();
 
             //calculate how much time has passed since the last call
@@ -312,7 +310,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         double inBlockX = (double) (pacman.getXPos() % px);
         double inBlockY = (double) (pacman.getYPos() % px);
 
-        System.out.println("XGrid: " + xTop + " YGrid: " + yTop + " inBlockX: " + inBlockX + " inBlockY: " + inBlockY);
+        
         if (inBlockX == 0 && b[xBottom][yBottom - 1] instanceof Block == false && oldPressed.equals("up")) { //If up key is pressed and pacman is in center of space with no block above
             pacman.moveUp(); //Move up
         } else if (inBlockX == 0 && b[xTop][yTop + 1] instanceof Block == false && oldPressed.equals("down")) { //If down key is pressed and pacman is in center of space with no block below
@@ -324,6 +322,11 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             pacman.moveLeft(); //move left
             // System.out.println("done");
         }
+        pacmanTick+=3; //add two every time
+        if(pacmanTick >= 27){
+            pacmanTick = 0;
+        }
+        System.out.println(pacmanTick);
         //System.out.println(b[xGrid - 1][yGrid] instanceof Block);
     }
 
@@ -354,25 +357,25 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      */
     public void animatePacman() {
         if (oldPressed.equals("up")) { //if it is moving up
-            if (pacmanCounter <= 13.5) { //sprite 1
+            if (pacmanTick <= 13.5) { //sprite 1
                 pacman.setSprite(imgPacUp1);
             } else { //sprite 2
                 pacman.setSprite(imgPacUp2);
             }
         } else if (oldPressed.equals("down")) { //if it is moving down
-            if (pacmanCounter <= 13.5) { //sprite 1
+            if (pacmanTick <= 13.5) { //sprite 1
                 pacman.setSprite(imgPacDown1);
             } else { //sprite 2
                 pacman.setSprite(imgPacDown2);
             }
         } else if (oldPressed.equals("left")) { //if it is moving left
-            if (pacmanCounter <= 13.5) { //sprite 1
+            if (pacmanTick <= 13.5) { //sprite 1
                 pacman.setSprite(imgPacLeft1);
             } else { //sprite 2
                 pacman.setSprite(imgPacLeft2);
             }
         } else { //must be right
-            if (pacmanCounter <= 13.5) { //sprite 1
+            if (pacmanTick <= 13.5) { //sprite 1
                 pacman.setSprite(imgPacRight1);
             } else { //sprite 2
                 pacman.setSprite(imgPacRight2);
