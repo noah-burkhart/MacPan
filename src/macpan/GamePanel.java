@@ -403,6 +403,9 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     private String currentPressed = "", oldPressed = ""; //used to control what key was last pressed
 
     @Override
+    /**
+     * Runs when a key is pressed
+     */
     public void keyPressed(KeyEvent evt) {
         int key = evt.getKeyCode();  // Keyboard code for the pressed key.
 
