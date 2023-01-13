@@ -35,8 +35,10 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     private Thread animator;
     private final int DELAY = 25, BUFFER_X = 48, BUFFER_Y = 41;
     Thing[][] b = new Thing[19][21]; //the images
-    final int size = 26; //the size of each grid space (26x26 px)
-    int counter = size, pacmanCounter = size;
+    
+    private final int px = 26; //the size of each grid spot (26x26 pixels)
+    
+    int counter = px, pacmanCounter = px;
     String possible = "";
     String choice = "";
 
@@ -55,6 +57,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     JButton btnBack = new javax.swing.JButton();
 
+    
+    
     // default constructor
     public GamePanel() {
         loadImage();
@@ -66,8 +70,11 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         btnBack.setLocation(600, 600);
         add(btnBack);
         setBackground(Color.black);
-        pacman = new Pacman(3, imgPacman, 26 * 10, 26 * 13, 2, 2, "right");
-        blinky = new Blinky(imgBlinkyUp1, 26 * 14, 26 * 9, "right", true);
+       
+        
+        pacman = new Pacman(3, imgPacman, px * 10, px * 13, 2, 2, "right");
+        blinky = new Blinky(imgBlinkyUp1, px * 14, px * 9, "right", true);
+        
         //pinky = new Pinky(imgPinky, 30, 0, "east", true);
         //inky = new Inky(imgInky, 60, 0, "east", true);
         //clyde = new Clyde(imgClyde, 90, 0, "east", true);
@@ -123,22 +130,22 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                     type = s.nextLine(); //saves the type of 'thing' from the data file
 
                     if (type.equals("box")) { //if it is a block
-                        b[x][y] = new Block(imgBlock, x * size, y * size);  //set to a block
+                        b[x][y] = new Block(imgBlock, x * px, y * px);  //set to a block
 
                     } else if (type.equals("pellet")) { //if it is a pellet 
-                        b[x][y] = new Pellet(imgPellet, x * size, y * size);  //set to pellet
+                        b[x][y] = new Pellet(imgPellet, x * px, y * px);  //set to pellet
 
                     } else if (type.equals("powerPellet")) { //if it is a Power pellet 
-                        b[x][y] = new PowerPellet(imgPowerPellet, x * size, y * size);  //set to Power pellet
+                        b[x][y] = new PowerPellet(imgPowerPellet, x * px, y * px);  //set to Power pellet
 
                     } else if (type.equals("food")) { //if it is a Food object 
-                        b[x][y] = new Food(imgFood, x * size, y * size);  //set to Food
+                        b[x][y] = new Food(imgFood, x * px, y * px);  //set to Food
 
                     } else { //if not food, it is empty
-                        b[x][y] = new Empty(imgEmpty, x * size, y * size);
+                        b[x][y] = new Empty(imgEmpty, x * px, y * px);
                     }
-                    gridX[x][y] = x * size; //stores the x cooridnate at the image position
-                    gridY[x][y] = y * size; //stores the y coordinate at the image position (both used for pacman interaction)
+                    gridX[x][y] = x * px; //stores the x cooridnate at the image position
+                    gridY[x][y] = y * px; //stores the y coordinate at the image position (both used for pacman interaction)
                 }
             }
         } catch (FileNotFoundException e) { //cacthes file not found
@@ -154,7 +161,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         Graphics2D g2d = (Graphics2D) g;
         for (int i = 0; i < 19; i++) {
             for (int j = 0; j < 21; j++) {
-                g2d.drawImage(b[i][j].getSprite(), b[i][j].getX() + BUFFER_X, b[i][j].getY() + BUFFER_Y, 26, 26, Color.black, this);
+                g2d.drawImage(b[i][j].getSprite(), b[i][j].getX() + BUFFER_X, b[i][j].getY() + BUFFER_Y, px, px, Color.black, this);
             }
         }
         g2d.setColor(Color.white);
@@ -231,8 +238,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
  */
     public void runPacman() {
         //represents pacmans position in each grid space. When centred, value will be 0
-        int xGrid = pacman.getXPos() / 26;  //represents pacmans position on the 'grid' (the map array)
-        int yGrid = pacman.getYPos() / 26;
+        int xGrid = pacman.getXPos() / px;  //represents pacmans position on the 'grid' (the map array)
+        int yGrid = pacman.getYPos() / px;
 
         if (currentIsPossible(currentPressed, xGrid, yGrid)) { //sees if the current wanted direcion is possible
             oldPressed = currentPressed; //change the old one to the new, which runs based off of the old direction it was moving
@@ -246,8 +253,10 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      * @param yGrid - the y position on the grid.
      */
     public void movePacman(int xGrid, int yGrid) {
-        double inBlockX = (double) (pacman.getXPos() % 26);
-        double inBlockY = (double) (pacman.getYPos() % 26);
+        double inBlockX = (double) (pacman.getXPos() % px);
+        double inBlockY = (double) (pacman.getYPos() % px);
+        
+        System.out.println(b[xGrid - 1][yGrid] instanceof Block);
         
         if (inBlockX == 0 && b[xGrid][yGrid - 1] instanceof Block == false && oldPressed.equals("up")) { //If up key is pressed and pacman is in center of space with no block above
             pacman.moveUp(); //Move up
@@ -256,7 +265,9 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         } else if (inBlockY == 0 && b[xGrid + 1][yGrid] instanceof Block == false && oldPressed.equals("right")) { //If right key is pressed and pacman is in center of space with no block to the right
             pacman.moveRight(); //Move right
         } else if (inBlockY == 0 && b[xGrid - 1][yGrid] instanceof Block == false && oldPressed.equals("left")) { //If left key is pressed and pacman is in center of space with no block to the left
+            System.out.println(b[xGrid - 1][yGrid] instanceof Block);
             pacman.moveLeft(); //move left
+            System.out.println("done");
         }
     }
 
@@ -303,28 +314,32 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
+    
+    
+    
+    
     boolean up = true, down = true, left = true, right = true; //Booleans for checking backward movement
 
     /**
-     * Move the ghost by making a decision every time the counter has reached 26
+     * Move the ghost by making a decision every time the counter has reached PX
      * (when the ghost is in the middle block)
      */
     public void moveBlinky() {
         //If counter has reached the tile width (meaning the ghost has moved enough to get to the middle of the block)
         //Then find the possible moves
-        if (counter == 26) {
+        if (counter == px) {
             counter = 0; //Reset the counter keeping track of how far the ghost has moved
             possible = ""; //Reset the possible moves to nothing
-            if (b[(blinky.getXPos() / 26)][blinky.getYPos() / 26 - 1] instanceof Block == false && up) { //if it can move UP
+            if (b[(blinky.getXPos() / px)][blinky.getYPos() / px - 1] instanceof Block == false && up) { //if it can move UP
                 possible += "up "; //Add "up" to possible moves
             }
-            if (b[blinky.getXPos() / 26][blinky.getYPos() / 26 + 1] instanceof Block == false && down) { //if it can move DOWN
+            if (b[blinky.getXPos() / px][blinky.getYPos() / px + 1] instanceof Block == false && down) { //if it can move DOWN
                 possible += "down "; //Add "down" to possible moves
             }
-            if (b[blinky.getXPos() / 26 + 1][blinky.getYPos() / 26] instanceof Block == false && right) { //if it can move RIGHT
+            if (b[blinky.getXPos() / px + 1][blinky.getYPos() / px] instanceof Block == false && right) { //if it can move RIGHT
                 possible += "right "; //Add "right" to possible moves
             }
-            if (b[blinky.getXPos() / 26 - 1][blinky.getYPos() / 26] instanceof Block == false && left) { //if it can move LEFT
+            if (b[blinky.getXPos() / px - 1][blinky.getYPos() / px] instanceof Block == false && left) { //if it can move LEFT
                 possible += "left"; //Add "left" to possible move
             }
 
@@ -414,10 +429,10 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     /*
-        if (b[pacman.getXPos() / 26][pacman.getYPos() / 26 - 1] instanceof Block == false) { //up
-            if (b[pacman.getXPos() / 26][pacman.getYPos() / 26 + 1] instanceof Block == false) { //down
-                if (b[pacman.getXPos() / 26 - 1][pacman.getYPos() / 26] instanceof Block == false) { //left 
-                    if (b[pacman.getXPos() / 26 + 1][pacman.getYPos() / 26] instanceof Block == false) { //right
+        if (b[pacman.getXPos() / PX][pacman.getYPos() / PX - 1] instanceof Block == false) { //up
+            if (b[pacman.getXPos() / PX][pacman.getYPos() / PX + 1] instanceof Block == false) { //down
+                if (b[pacman.getXPos() / PX - 1][pacman.getYPos() / PX] instanceof Block == false) { //left 
+                    if (b[pacman.getXPos() / PX + 1][pacman.getYPos() / PX] instanceof Block == false) { //right
                         centered = true;
                     }
                 }
@@ -428,14 +443,14 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 //        int y = pacman.getYPos();
 //        switch (keyPressed) {
 //            case "up" -> {
-//                if (b[x/26][y / 26 - 1] instanceof Block == false ) { //up
+//                if (b[x/PX][y / PX - 1] instanceof Block == false ) { //up
 //                    System.out.println("up");
 //                    pacman.setDirection("up");
 //                    pacman.moveUp();
 //                }
 //            }
 //            case "down" -> {
-//                if (b[x / 26][y / 26 + 1] instanceof Block == false ) { //down
+//                if (b[x / PX][y / PX + 1] instanceof Block == false ) { //down
 //                    System.out.println("down");
 //                    pacman.setDirection("down");
 //                    pacman.moveDown();
@@ -443,7 +458,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 //            }
 //
 //            case "left" -> { //leftie no workie becausie hezies thinkzies he is in the block beside
-//                if (b[x / 26 -1][y / 26] instanceof Block == false ) { //left
+//                if (b[x / PX -1][y / PX] instanceof Block == false ) { //left
 //                    System.out.println("left");
 //                    pacman.setDirection("left");
 //                    pacman.moveLeft();
@@ -451,7 +466,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 //            }
 //            default -> {
 //                //must be right
-//                if (b[x / 26 + 1][y / 26] instanceof Block == false ) { //right
+//                if (b[x / PX + 1][y / PX] instanceof Block == false ) { //right
 //                    System.out.println("right");
 //                    pacman.setDirection("right");
 //                    pacman.moveRight();
