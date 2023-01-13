@@ -73,7 +73,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         loadBoard();
         setBackground(Color.black);
 
-        pacman = new Pacman(3, imgPacUp1, px * 10, px * 13, 2, 2, "right");
+        pacman = new Pacman(3, imgPacUp1, px * 9, px * 9, 2, 2, "right");
 
         blinky = new Blinky(imgBlinkyUp1, px * 1, px * 1, 2, 2, "right");
         pinky = new Pinky(imgPinkyUp1, px * 17, px * 1, 2, 2, "right");
