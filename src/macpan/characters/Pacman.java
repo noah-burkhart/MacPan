@@ -10,6 +10,7 @@ public class Pacman extends AbstractCharacter{
     
     private boolean powerPellet;
     private int lives;
+    private int score;
     
     /**
      * Primary Constructor for PacMan (from AbstractCharacter)
@@ -21,6 +22,8 @@ public class Pacman extends AbstractCharacter{
      */
     public Pacman(Image s, int x, int y, String d) {
         super(s, x, y, d);
+        lives = 3;
+        score = 0;
     }
 
     /**
@@ -34,6 +37,7 @@ public class Pacman extends AbstractCharacter{
     public Pacman(int lives, Image s, int x, int y, String d) {
         super(s, x, y, d);
         this.lives = lives;
+        score = 0;
     }
     
     /**
@@ -51,6 +55,7 @@ public class Pacman extends AbstractCharacter{
         this.setXSpeed(xSpeed); //sets the x and y speed
         this.setYSpeed(ySpeed);
         this.lives = lives; //sets the lives
+        score = 0;
         
     }
 
@@ -69,8 +74,32 @@ public class Pacman extends AbstractCharacter{
     public void setLives(int lives) {
         this.lives = lives;
     }
-    
 
+    /**
+     * Gets the score of Pacman
+     * @return - the score
+     */
+    public int getScore() {
+        return score;
+    }
+
+    /**
+     * Sets the score of Pacman
+     * @param score 
+     */
+    public void setScore(int score) {
+        this.score = score;
+    }
+    
+    /**
+     * Adds to the score.
+     * @param score 
+     */
+    public void addScore(int score){
+        this.score += score; //adds to the score
+    }
+    
+   
     /**
      * Accessor method for power pellet variable
      * @return - if pacman ate a power pellet or not
