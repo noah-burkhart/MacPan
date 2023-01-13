@@ -42,10 +42,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private final int px = 26; //the size of each grid spot (26x26 pixels)
 
-    int blinkyCounter = px, pinkyCounter = px, inkyCounter = px, clydeCounter = px, pacmanTick = 27;
-    String blinkyPossible = "", pinkyPossible = "", inkyPossible = "", clydePossible = "";
-    String blinkyChoice = "", pinkyChoice = "", inkyChoice = "", clydeChoice = "";
+    private int blinkyCounter = px, pinkyCounter = px, inkyCounter = px, clydeCounter = px;
+    private String blinkyPossible = "", pinkyPossible = "", inkyPossible = "", clydePossible = "";
+    private String blinkyChoice = "", pinkyChoice = "", inkyChoice = "", clydeChoice = "";
 
+    private final int pacmanTick = 27;
+    
     int[][] gridX = new int[19][21]; //parallel to images, holds the position the images are in on the X axis
     int[][] gridY = new int[19][21]; //parallel to images, holds the position the images are in on the Y axis
 
@@ -326,8 +328,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         if(pacmanTick >= 27){
             pacmanTick = 0;
         }
-        System.out.println(pacmanTick);
-        //System.out.println(b[xGrid - 1][yGrid] instanceof Block);
     }
 
     /**
