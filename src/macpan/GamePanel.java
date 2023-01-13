@@ -21,7 +21,10 @@ import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import macpan.characters.Blinky;
+import macpan.characters.Clyde;
+import macpan.characters.Inky;
 import macpan.characters.Pacman;
+import macpan.characters.Pinky;
 import macpan.objects.Block;
 import macpan.objects.Pellet;
 import macpan.objects.Food;
@@ -35,30 +38,32 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     private Thread animator;
     private final int DELAY = 25, BUFFER_X = 48, BUFFER_Y = 41;
     Thing[][] b = new Thing[19][21]; //the images
-    
+
     private final int px = 26; //the size of each grid spot (26x26 pixels)
-    
-    int counter = px, pacmanCounter = px;
-    String possible = "";
-    String choice = "";
+
+    int blinkyCounter = px, pinkyCounter = px, inkyCounter = px, clydeCounter = px, pacmanCounter = px;
+    String blinkyPossible = "", pinkyPossible = "", inkyPossible = "", clydePossible = "";
+    String blinkyChoice = "", pinkyChoice = "", inkyChoice = "", clydeChoice = "";
 
     int[][] gridX = new int[19][21]; //parallel to images, holds the position the images are in on the X axis
     int[][] gridY = new int[19][21]; //parallel to images, holds the position the images are in on the Y axis
 
     //creating image files to be used
     private Image imgPellet, imgPowerPellet, imgFood, imgBlock, imgEmpty;
-    private Image imgBlinkyUp1, imgBlinkyUp2, imgBlinkyDown1, imgBlinkyDown2, imgBlinkyLeft1, imgBlinkyLeft2, imgBlinkyRight1, imgBlinkyRight2, imgPinky, imgInky, imgClyde, imgPacman;
+    private Image imgBlinkyUp1, imgBlinkyUp2, imgBlinkyDown1, imgBlinkyDown2, imgBlinkyLeft1, imgBlinkyLeft2, imgBlinkyRight1, imgBlinkyRight2;
+    private Image imgPinkyUp1, imgPinkyUp2, imgPinkyDown1, imgPinkyDown2, imgPinkyLeft1, imgPinkyLeft2, imgPinkyRight1, imgPinkyRight2;
+    private Image imgInkyUp1, imgInkyUp2, imgInkyDown1, imgInkyDown2, imgInkyLeft1, imgInkyLeft2, imgInkyRight1, imgInkyRight2;
+    private Image imgClydeUp1, imgClydeUp2, imgClydeDown1, imgClydeDown2, imgClydeLeft1, imgClydeLeft2, imgClydeRight1, imgClydeRight2;
+    private Image imgPacman;
 
     Pacman pacman;
     Blinky blinky;
-    //Pinky pinky;
-    //Inky inky;
-    //Clyde clyde;
+    Pinky pinky;
+    Inky inky;
+    Clyde clyde;
 
     JButton btnBack = new javax.swing.JButton();
 
-    
-    
     // default constructor
     public GamePanel() {
         loadImage();
@@ -70,16 +75,13 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         btnBack.setLocation(600, 600);
         add(btnBack);
         setBackground(Color.black);
-       
-        
+
         pacman = new Pacman(3, imgPacman, px * 10, px * 13, 2, 2, "right");
-        blinky = new Blinky(imgBlinkyUp1, px * 14, px * 9, "right", true);
-        
-        //pinky = new Pinky(imgPinky, 30, 0, "east", true);
-        //inky = new Inky(imgInky, 60, 0, "east", true);
-        //clyde = new Clyde(imgClyde, 90, 0, "east", true);
-        blinky.setXSpeed(2);
-        blinky.setYSpeed(2);
+
+        blinky = new Blinky(imgBlinkyUp1, px * 1, px * 1, 2, 2, "right");
+        pinky = new Pinky(imgPinkyUp1, px * 17, px * 1, 2, 2, "right");
+        inky = new Inky(imgInkyUp1, px * 5, px * 10, 2, 2, "right");
+        clyde = new Clyde(imgClydeUp1, px * 10, px * 10, 2, 2, "right");
 
         //attach the keyboard to the panel and give it "focus"
         this.addKeyListener(this);
@@ -107,9 +109,32 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         imgBlinkyRight1 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinky1.png").getImage();
         imgBlinkyRight2 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinky2.png").getImage();
 
-        imgPinky = new ImageIcon("src/macpan/images/Ghosts/Pinky/pinky1.png").getImage();
-        imgInky = new ImageIcon("src/macpan/images/Ghosts/Inky/inky1.png").getImage();
-        imgClyde = new ImageIcon("src/macpan/images/Ghosts/Clyde/clyde1.png").getImage();
+        imgPinkyUp1 = new ImageIcon("src/macpan/images/Ghosts/Pinky/pinkyUp1.png").getImage();
+        imgPinkyUp2 = new ImageIcon("src/macpan/images/Ghosts/Pinky/pinkyUp2.png").getImage();
+        imgPinkyDown1 = new ImageIcon("src/macpan/images/Ghosts/Pinky/pinkyDown1.png").getImage();
+        imgPinkyDown2 = new ImageIcon("src/macpan/images/Ghosts/Pinky/pinkyDown2.png").getImage();
+        imgPinkyLeft1 = new ImageIcon("src/macpan/images/Ghosts/Pinky/pinkyBack1.png").getImage();
+        imgPinkyLeft2 = new ImageIcon("src/macpan/images/Ghosts/Pinky/pinkyBack2.png").getImage();
+        imgPinkyRight1 = new ImageIcon("src/macpan/images/Ghosts/Pinky/pinky1.png").getImage();
+        imgPinkyRight2 = new ImageIcon("src/macpan/images/Ghosts/Pinky/pinky2.png").getImage();
+
+        imgInkyUp1 = new ImageIcon("src/macpan/images/Ghosts/Inky/inkyUp1.png").getImage();
+        imgInkyUp2 = new ImageIcon("src/macpan/images/Ghosts/Inky/inkyUp2.png").getImage();
+        imgInkyDown1 = new ImageIcon("src/macpan/images/Ghosts/Inky/inkyDown1.png").getImage();
+        imgInkyDown2 = new ImageIcon("src/macpan/images/Ghosts/Inky/inkyDown2.png").getImage();
+        imgInkyLeft1 = new ImageIcon("src/macpan/images/Ghosts/Inky/inkyBack1.png").getImage();
+        imgInkyLeft2 = new ImageIcon("src/macpan/images/Ghosts/Inky/inkyBack2.png").getImage();
+        imgInkyRight1 = new ImageIcon("src/macpan/images/Ghosts/Inky/inky1.png").getImage();
+        imgInkyRight2 = new ImageIcon("src/macpan/images/Ghosts/Inky/inky2.png").getImage();
+
+        imgClydeUp1 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clydeUp1.png").getImage();
+        imgClydeUp2 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clydeUp2.png").getImage();
+        imgClydeDown1 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clydeDown1.png").getImage();
+        imgClydeDown2 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clydeDown2.png").getImage();
+        imgClydeLeft1 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clydeBack1.png").getImage();
+        imgClydeLeft2 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clydeBack2.png").getImage();
+        imgClydeRight1 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clyde1.png").getImage();
+        imgClydeRight2 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clyde2.png").getImage();
 
         imgPacman = new ImageIcon("src/macpan/images/Pacman/pacmanWhole.png").getImage();
     }
@@ -170,6 +195,9 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         g2d.drawString("SCORE: ______", 375, 28);
         g2d.drawString("LIVES: ", 10, 615);
         g2d.drawImage(blinky.getSprite(), blinky.getXPos() + BUFFER_X, blinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
+        g2d.drawImage(pinky.getSprite(), pinky.getXPos() + BUFFER_X, pinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
+        g2d.drawImage(inky.getSprite(), inky.getXPos() + BUFFER_X, inky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
+        g2d.drawImage(clyde.getSprite(), clyde.getXPos() + BUFFER_X, clyde.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
         g2d.drawImage(pacman.getSprite(), pacman.getXPos() + BUFFER_X, pacman.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
 
     }
@@ -203,9 +231,17 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         beforeTime = System.currentTimeMillis();
 
         while (true) { //this loop runs once ever 25 ms (the DELAY)
-            moveBlinky(); //Move ghost
+            moveBlinky(); //Move ghosts
+            movePinky();
+            moveInky();
+            moveClyde();
+
             runPacman();
-            counter += blinky.getXSpeed(); //Counter moves the same amount as the ghost each time
+            blinkyCounter += blinky.getXSpeed(); //Counter moves the same amount as the ghost each time
+            pinkyCounter += pinky.getXSpeed(); //Counter moves the same amount as the ghost each time
+            inkyCounter += inky.getXSpeed(); //Counter moves the same amount as the ghost each time
+            clydeCounter += clyde.getXSpeed(); //Counter moves the same amount as the ghost each time
+            
             pacmanCounter += pacman.getXSpeed();
 
             repaint();
@@ -233,9 +269,10 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             beforeTime = System.currentTimeMillis();
         }
     }
-/**
- * Runs all of the PacMan movement and animation methods
- */
+
+    /**
+     * Runs all of the PacMan movement and animation methods
+     */
     public void runPacman() {
         //represents pacmans position in each grid space. When centred, value will be 0
         int xGrid = pacman.getXPos() / px;  //represents pacmans position on the 'grid' (the map array)
@@ -249,15 +286,20 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     /**
      * Moves PacMan given a certain position on the grid
-     * @param xGrid - the x position on the grid 
+     *
+     * @param xGrid - the x position on the grid
      * @param yGrid - the y position on the grid.
      */
     public void movePacman(int xGrid, int yGrid) {
         double inBlockX = (double) (pacman.getXPos() % px);
         double inBlockY = (double) (pacman.getYPos() % px);
-        
-        System.out.println(b[xGrid - 1][yGrid] instanceof Block);
-        
+
+//        System.out.println("Left: " + (b[xGrid - 1][yGrid] instanceof Block));
+//        System.out.println("Up: " + (b[xGrid][yGrid - 1] instanceof Block));
+//        System.out.println("Down: " + (b[xGrid][yGrid + 1] instanceof Block));
+//        System.out.println("Right: " + (b[xGrid + 1][yGrid] instanceof Block));
+//        System.out.println("");
+
         if (inBlockX == 0 && b[xGrid][yGrid - 1] instanceof Block == false && oldPressed.equals("up")) { //If up key is pressed and pacman is in center of space with no block above
             pacman.moveUp(); //Move up
         } else if (inBlockX == 0 && b[xGrid][yGrid + 1] instanceof Block == false && oldPressed.equals("down")) { //If down key is pressed and pacman is in center of space with no block below
@@ -292,7 +334,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     }
 
-
     public void animatePacman() {
         //animate here
     }
@@ -314,89 +355,322 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
-    
-    
-    
-    
-    boolean up = true, down = true, left = true, right = true; //Booleans for checking backward movement
+    boolean blinkyUp = true, blinkyDown = true, blinkyLeft = true, blinkyRight = true; //Booleans for checking backward movement
+    boolean pinkyUp = true, pinkyDown = true, pinkyLeft = true, pinkyRight = true; //Booleans for checking backward movement
+    boolean inkyUp = true, inkyDown = true, inkyLeft = true, inkyRight = true; //Booleans for checking backward movement
+    boolean clydeUp = true, clydeDown = true, clydeLeft = true, clydeRight = true; //Booleans for checking backward movement
 
     /**
-     * Move the ghost by making a decision every time the counter has reached PX
+     * Move Blinky by making a decision every time the counter has reached PX
      * (when the ghost is in the middle block)
      */
     public void moveBlinky() {
-        //If counter has reached the tile width (meaning the ghost has moved enough to get to the middle of the block)
-        //Then find the possible moves
-        if (counter == px) {
-            counter = 0; //Reset the counter keeping track of how far the ghost has moved
-            possible = ""; //Reset the possible moves to nothing
-            if (b[(blinky.getXPos() / px)][blinky.getYPos() / px - 1] instanceof Block == false && up) { //if it can move UP
-                possible += "up "; //Add "up" to possible moves
+        //If blinkyCounter has reached the tile width (meaning the ghost has moved enough to get to the middle of the block)
+        //Then find the blinkyPossible moves
+        if (blinkyCounter == px) {
+            blinkyCounter = 0; //Reset the blinkyCounter keeping track of how far the ghost has moved
+            blinkyPossible = ""; //Reset the blinkyPossible moves to nothing
+            if (b[(blinky.getXPos() / px)][blinky.getYPos() / px - 1] instanceof Block == false && blinkyUp) { //if it can move UP
+                blinkyPossible += "up "; //Add "up" to blinkyPossible moves
             }
-            if (b[blinky.getXPos() / px][blinky.getYPos() / px + 1] instanceof Block == false && down) { //if it can move DOWN
-                possible += "down "; //Add "down" to possible moves
+            if (b[blinky.getXPos() / px][blinky.getYPos() / px + 1] instanceof Block == false && blinkyDown) { //if it can move DOWN
+                blinkyPossible += "down "; //Add "down" to blinkyPossible moves
             }
-            if (b[blinky.getXPos() / px + 1][blinky.getYPos() / px] instanceof Block == false && right) { //if it can move RIGHT
-                possible += "right "; //Add "right" to possible moves
+            if (b[blinky.getXPos() / px + 1][blinky.getYPos() / px] instanceof Block == false && blinkyRight) { //if it can move RIGHT
+                blinkyPossible += "right "; //Add "right" to blinkyPossible moves
             }
-            if (b[blinky.getXPos() / px - 1][blinky.getYPos() / px] instanceof Block == false && left) { //if it can move LEFT
-                possible += "left"; //Add "left" to possible move
+            if (b[blinky.getXPos() / px - 1][blinky.getYPos() / px] instanceof Block == false && blinkyLeft) { //if it can move LEFT
+                blinkyPossible += "left"; //Add "left" to blinkyPossible move
             }
 
-            choice = makeChoice(possible); //Make the choice for where to go
+            blinkyChoice = makeChoice(blinkyPossible); //Make the blinkyChoice for where to go
         }
 
-        if (choice.equals("up")) { //If choice selected is up
-            if (counter > 0 && counter < 14) {
+        if (blinkyChoice.equals("up")) { //If blinkyChoice selected is up
+            if (blinkyCounter > 0 && blinkyCounter < 14) {
                 blinky.setSprite(imgBlinkyUp1); //Set the image to up
             } else {
                 blinky.setSprite(imgBlinkyUp2); //Set the image to up but different
             }
             blinky.moveUp(); //Move the ghost up the same amount as it's speed
-            down = false; //Ghost can no longer go down (backwards)
+            blinkyDown = false; //Ghost can no longer go down (backwards)
             //But can go all other directions assuming there isn't a block in the way
-            up = true;
-            right = true;
-            left = true;
-        } else if (choice.equals("down")) { //If choice selected is down
-            if (counter > 0 && counter < 14) {
+            blinkyUp = true;
+            blinkyRight = true;
+            blinkyLeft = true;
+        } else if (blinkyChoice.equals("down")) { //If blinkyChoice selected is down
+            if (blinkyCounter > 0 && blinkyCounter < 14) {
                 blinky.setSprite(imgBlinkyDown1); //Set the image to down
             } else {
                 blinky.setSprite(imgBlinkyDown2); //Set the image to down but different
             }
             blinky.moveDown(); //Move the ghost down the same amount as it's speed
-            up = false; //Ghost can no longer go up (backwards)
+            blinkyUp = false; //Ghost can no longer go up (backwards)
             //But can go all other directions assuming there isn't a block in the way
-            down = true;
-            right = true;
-            left = true;
-        } else if (choice.equals("right")) { //If choice selected is right
-            if (counter > 0 && counter < 14) {
+            blinkyDown = true;
+            blinkyRight = true;
+            blinkyLeft = true;
+        } else if (blinkyChoice.equals("right")) { //If blinkyChoice selected is right
+            if (blinkyCounter > 0 && blinkyCounter < 14) {
                 blinky.setSprite(imgBlinkyRight1); //Set the image to right
             } else {
                 blinky.setSprite(imgBlinkyRight2); //Set the image to right but different
             }
             blinky.moveRight(); //Move the ghost right the same amount as it's speed
-            left = false; //Ghost can no longer go left (backwards)
+            blinkyLeft = false; //Ghost can no longer go left (backwards)
             //But can go all other directions assuming there isn't a block in the way
-            up = true;
-            right = true;
-            down = true;
+            blinkyUp = true;
+            blinkyRight = true;
+            blinkyDown = true;
         } else {
             //must be left
-            if (counter > 0 && counter < 14) {
+            if (blinkyCounter > 0 && blinkyCounter < 14) {
                 blinky.setSprite(imgBlinkyLeft1); //Set the image to left
             } else {
                 blinky.setSprite(imgBlinkyLeft2); //Set the image to left but different
             } //Set the image to left
             blinky.moveLeft(); //Move the ghost left the same amount as it's speed
-            right = false; //Ghost can no longer go right (backwards)
+            blinkyRight = false; //Ghost can no longer go right (backwards)
             //But can go all other directions assuming there isn't a block in the way
-            up = true;
-            down = true;
-            left = true;
+            blinkyUp = true;
+            blinkyDown = true;
+            blinkyLeft = true;
+        }
+    }
+
+    /**
+     * Move Pinky by making a decision every time the counter has reached PX
+     * (when the ghost is in the middle block)
+     */
+    public void movePinky() {
+        //If pinkyCounter has reached the tile width (meaning the ghost has moved enough to get to the middle of the block)
+        //Then find the pinkyPossible moves
+        if (pinkyCounter == px) {
+            pinkyCounter = 0; //Reset the pinkyCounter keeping track of how far the ghost has moved
+            pinkyPossible = ""; //Reset the pinkyPossible moves to nothing
+            if (b[(pinky.getXPos() / px)][pinky.getYPos() / px - 1] instanceof Block == false && pinkyUp) { //if it can move UP
+                pinkyPossible += "up "; //Add "up" to pinkyPossible moves
+            }
+            if (b[pinky.getXPos() / px][pinky.getYPos() / px + 1] instanceof Block == false && pinkyDown) { //if it can move DOWN
+                pinkyPossible += "down "; //Add "down" to pinkyPossible moves
+            }
+            if (b[pinky.getXPos() / px + 1][pinky.getYPos() / px] instanceof Block == false && pinkyRight) { //if it can move RIGHT
+                pinkyPossible += "right "; //Add "right" to pinkyPossible moves
+            }
+            if (b[pinky.getXPos() / px - 1][pinky.getYPos() / px] instanceof Block == false && pinkyLeft) { //if it can move LEFT
+                pinkyPossible += "left"; //Add "left" to pinkyPossible move
+            }
+
+            pinkyChoice = makeChoice(pinkyPossible); //Make the pinkyChoice for where to go
         }
 
+        if (pinkyChoice.equals("up")) { //If pinkyChoice selected is up
+            if (pinkyCounter > 0 && pinkyCounter < 14) {
+                pinky.setSprite(imgPinkyUp1); //Set the image to up
+            } else {
+                pinky.setSprite(imgPinkyUp2); //Set the image to up but different
+            }
+            pinky.moveUp(); //Move the ghost up the same amount as it's speed
+            pinkyDown = false; //Ghost can no longer go down (backwards)
+            //But can go all other directions assuming there isn't a block in the way
+            pinkyUp = true;
+            pinkyRight = true;
+            pinkyLeft = true;
+        } else if (pinkyChoice.equals("down")) { //If pinkyChoice selected is down
+            if (pinkyCounter > 0 && pinkyCounter < 14) {
+                pinky.setSprite(imgPinkyDown1); //Set the image to down
+            } else {
+                pinky.setSprite(imgPinkyDown2); //Set the image to down but different
+            }
+            pinky.moveDown(); //Move the ghost down the same amount as it's speed
+            pinkyUp = false; //Ghost can no longer go up (backwards)
+            //But can go all other directions assuming there isn't a block in the way
+            pinkyDown = true;
+            pinkyRight = true;
+            pinkyLeft = true;
+        } else if (pinkyChoice.equals("right")) { //If pinkyChoice selected is right
+            if (pinkyCounter > 0 && pinkyCounter < 14) {
+                pinky.setSprite(imgPinkyRight1); //Set the image to right
+            } else {
+                pinky.setSprite(imgPinkyRight2); //Set the image to right but different
+            }
+            pinky.moveRight(); //Move the ghost right the same amount as it's speed
+            pinkyLeft = false; //Ghost can no longer go left (backwards)
+            //But can go all other directions assuming there isn't a block in the way
+            pinkyUp = true;
+            pinkyRight = true;
+            pinkyDown = true;
+        } else {
+            //must be left
+            if (pinkyCounter > 0 && pinkyCounter < 14) {
+                pinky.setSprite(imgPinkyLeft1); //Set the image to left
+            } else {
+                pinky.setSprite(imgPinkyLeft2); //Set the image to left but different
+            } //Set the image to left
+            pinky.moveLeft(); //Move the ghost left the same amount as it's speed
+            pinkyRight = false; //Ghost can no longer go right (backwards)
+            //But can go all other directions assuming there isn't a block in the way
+            pinkyUp = true;
+            pinkyDown = true;
+            pinkyLeft = true;
+        }
+    }
+
+    /**
+     * Move Inky by making a decision every time the counter has reached PX
+     * (when the ghost is in the middle block)
+     */
+    public void moveInky() {
+        //If inkyCounter has reached the tile width (meaning the ghost has moved enough to get to the middle of the block)
+        //Then find the inkyPossible moves
+        if (inkyCounter == px) {
+            inkyCounter = 0; //Reset the inkyCounter keeping track of how far the ghost has moved
+            inkyPossible = ""; //Reset the inkyPossible moves to nothing
+            if (b[(inky.getXPos() / px)][inky.getYPos() / px - 1] instanceof Block == false && inkyUp) { //if it can move UP
+                inkyPossible += "up "; //Add "up" to inkyPossible moves
+            }
+            if (b[inky.getXPos() / px][inky.getYPos() / px + 1] instanceof Block == false && inkyDown) { //if it can move DOWN
+                inkyPossible += "down "; //Add "down" to inkyPossible moves
+            }
+            if (b[inky.getXPos() / px + 1][inky.getYPos() / px] instanceof Block == false && inkyRight) { //if it can move RIGHT
+                inkyPossible += "right "; //Add "right" to inkyPossible moves
+            }
+            if (b[inky.getXPos() / px - 1][inky.getYPos() / px] instanceof Block == false && inkyLeft) { //if it can move LEFT
+                inkyPossible += "left"; //Add "left" to inkyPossible move
+            }
+
+            inkyChoice = makeChoice(inkyPossible); //Make the inkyChoice for where to go
+        }
+
+        if (inkyChoice.equals("up")) { //If inkyChoice selected is up
+            if (inkyCounter > 0 && inkyCounter < 14) {
+                inky.setSprite(imgInkyUp1); //Set the image to up
+            } else {
+                inky.setSprite(imgInkyUp2); //Set the image to up but different
+            }
+            inky.moveUp(); //Move the ghost up the same amount as it's speed
+            inkyDown = false; //Ghost can no longer go down (backwards)
+            //But can go all other directions assuming there isn't a block in the way
+            inkyUp = true;
+            inkyRight = true;
+            inkyLeft = true;
+        } else if (inkyChoice.equals("down")) { //If inkyChoice selected is down
+            if (inkyCounter > 0 && inkyCounter < 14) {
+                inky.setSprite(imgInkyDown1); //Set the image to down
+            } else {
+                inky.setSprite(imgInkyDown2); //Set the image to down but different
+            }
+            inky.moveDown(); //Move the ghost down the same amount as it's speed
+            inkyUp = false; //Ghost can no longer go up (backwards)
+            //But can go all other directions assuming there isn't a block in the way
+            inkyDown = true;
+            inkyRight = true;
+            inkyLeft = true;
+        } else if (inkyChoice.equals("right")) { //If inkyChoice selected is right
+            if (inkyCounter > 0 && inkyCounter < 14) {
+                inky.setSprite(imgInkyRight1); //Set the image to right
+            } else {
+                inky.setSprite(imgInkyRight2); //Set the image to right but different
+            }
+            inky.moveRight(); //Move the ghost right the same amount as it's speed
+            inkyLeft = false; //Ghost can no longer go left (backwards)
+            //But can go all other directions assuming there isn't a block in the way
+            inkyUp = true;
+            inkyRight = true;
+            inkyDown = true;
+        } else {
+            //must be left
+            if (inkyCounter > 0 && inkyCounter < 14) {
+                inky.setSprite(imgInkyLeft1); //Set the image to left
+            } else {
+                inky.setSprite(imgInkyLeft2); //Set the image to left but different
+            } //Set the image to left
+            inky.moveLeft(); //Move the ghost left the same amount as it's speed
+            inkyRight = false; //Ghost can no longer go right (backwards)
+            //But can go all other directions assuming there isn't a block in the way
+            inkyUp = true;
+            inkyDown = true;
+            inkyLeft = true;
+        }
+    }
+
+    /**
+     * Move Clyde by making a decision every time the counter has reached PX
+     * (when the ghost is in the middle block)
+     */
+    public void moveClyde() {
+        //If clydeCounter has reached the tile width (meaning the ghost has moved enough to get to the middle of the block)
+        //Then find the clydePossible moves
+        if (clydeCounter == px) {
+            clydeCounter = 0; //Reset the clydeCounter keeping track of how far the ghost has moved
+            clydePossible = ""; //Reset the clydePossible moves to nothing
+            if (b[(clyde.getXPos() / px)][clyde.getYPos() / px - 1] instanceof Block == false && clydeUp) { //if it can move UP
+                clydePossible += "up "; //Add "up" to clydePossible moves
+            }
+            if (b[clyde.getXPos() / px][clyde.getYPos() / px + 1] instanceof Block == false && clydeDown) { //if it can move DOWN
+                clydePossible += "down "; //Add "down" to clydePossible moves
+            }
+            if (b[clyde.getXPos() / px + 1][clyde.getYPos() / px] instanceof Block == false && clydeRight) { //if it can move RIGHT
+                clydePossible += "right "; //Add "right" to clydePossible moves
+            }
+            if (b[clyde.getXPos() / px - 1][clyde.getYPos() / px] instanceof Block == false && clydeLeft) { //if it can move LEFT
+                clydePossible += "left"; //Add "left" to clydePossible move
+            }
+
+            System.out.println(clydePossible);
+            clydeChoice = makeChoice(clydePossible); //Make the clydeChoice for where to go
+        }
+
+        if (clydeChoice.equals("up")) { //If clydeChoice selected is up
+            if (clydeCounter > 0 && clydeCounter < 14) {
+                clyde.setSprite(imgClydeUp1); //Set the image to up
+            } else {
+                clyde.setSprite(imgClydeUp2); //Set the image to up but different
+            }
+            clyde.moveUp(); //Move the ghost up the same amount as it's speed
+            clydeDown = false; //Ghost can no longer go down (backwards)
+            //But can go all other directions assuming there isn't a block in the way
+            clydeUp = true;
+            clydeRight = true;
+            clydeLeft = true;
+        } else if (clydeChoice.equals("down")) { //If clydeChoice selected is down
+            if (clydeCounter > 0 && clydeCounter < 14) {
+                clyde.setSprite(imgClydeDown1); //Set the image to down
+            } else {
+                clyde.setSprite(imgClydeDown2); //Set the image to down but different
+            }
+            clyde.moveDown(); //Move the ghost down the same amount as it's speed
+            clydeUp = false; //Ghost can no longer go up (backwards)
+            //But can go all other directions assuming there isn't a block in the way
+            clydeDown = true;
+            clydeRight = true;
+            clydeLeft = true;
+        } else if (clydeChoice.equals("right")) { //If clydeChoice selected is right
+            if (clydeCounter > 0 && clydeCounter < 14) {
+                clyde.setSprite(imgClydeRight1); //Set the image to right
+            } else {
+                clyde.setSprite(imgClydeRight2); //Set the image to right but different
+            }
+            clyde.moveRight(); //Move the ghost right the same amount as it's speed
+            clydeLeft = false; //Ghost can no longer go left (backwards)
+            //But can go all other directions assuming there isn't a block in the way
+            clydeUp = true;
+            clydeRight = true;
+            clydeDown = true;
+        } else {
+            //must be left
+            if (clydeCounter > 0 && clydeCounter < 14) {
+                clyde.setSprite(imgClydeLeft1); //Set the image to left
+            } else {
+                clyde.setSprite(imgClydeLeft2); //Set the image to left but different
+            } //Set the image to left
+            clyde.moveLeft(); //Move the ghost left the same amount as it's speed
+            clydeRight = false; //Ghost can no longer go right (backwards)
+            //But can go all other directions assuming there isn't a block in the way
+            clydeUp = true;
+            clydeDown = true;
+            clydeLeft = true;
+        }
     }
 
     /**

@@ -16,11 +16,27 @@ public class Clyde extends AbstractGhost implements Ghost {
      * @param x - x position of ghost
      * @param y - y position of ghost
      * @param d - direction ghost is facing
-     * @param iB - whether or not the ghost is in the box
      */
-    public Clyde(Image s, int x, int y, String d, boolean iB) {
-        super(s, x, y, d, iB);
+    public Clyde(Image s, int x, int y, String d) {
+        super(s, x, y, d);
     }
+    
+     /**
+     * Full constructor for a Clyde object.
+     * @param s - the sprite
+     * @param x - the x position
+     * @param y - the y position
+     * @param xSpeed - the x speed
+     * @param ySpeed - the y speed
+     * @param d - the direction its facing
+     */
+    public Clyde(Image s, int x, int y, int xSpeed, int ySpeed, String d){
+        super(s, x, y, d);
+        this.setXSpeed(xSpeed); //sets the x and y speed
+        this.setYSpeed(ySpeed);
+        
+    }
+    
     
     public double distanceBetween(int pacmanX, int pacmanY) {
         double distance;

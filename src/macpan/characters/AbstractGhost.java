@@ -23,9 +23,8 @@ public abstract class AbstractGhost extends AbstractCharacter implements Ghost {
      * @param d - direction ghost is facing
      * @param iB - whether or not the ghost is in the box
      */
-    public AbstractGhost(Image s, int x, int y, String d, boolean iB) {
+    public AbstractGhost(Image s, int x, int y, String d) {
         super(s, x, y, d);
-        inBox = iB;
     }
     
     /**
