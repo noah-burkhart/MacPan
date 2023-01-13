@@ -54,7 +54,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     private Image imgPinkyUp1, imgPinkyUp2, imgPinkyDown1, imgPinkyDown2, imgPinkyLeft1, imgPinkyLeft2, imgPinkyRight1, imgPinkyRight2;
     private Image imgInkyUp1, imgInkyUp2, imgInkyDown1, imgInkyDown2, imgInkyLeft1, imgInkyLeft2, imgInkyRight1, imgInkyRight2;
     private Image imgClydeUp1, imgClydeUp2, imgClydeDown1, imgClydeDown2, imgClydeLeft1, imgClydeLeft2, imgClydeRight1, imgClydeRight2;
-    private Image imgPacman;
+    private Image imgPacWhole, imgPacUp1, imgPacUp2, imgPacDown1, imgPacDown2, imgPacLeft1, imgPacLeft2, imgPacRight1, imgPacRight2;
 
     Pacman pacman;
     Blinky blinky;
@@ -76,7 +76,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         add(btnBack);
         setBackground(Color.black);
 
-        pacman = new Pacman(3, imgPacman, px * 10, px * 13, 2, 2, "right");
+        pacman = new Pacman(3, imgPacUp1, px * 10, px * 13, 2, 2, "right");
 
         blinky = new Blinky(imgBlinkyUp1, px * 1, px * 1, 2, 2, "right");
         pinky = new Pinky(imgPinkyUp1, px * 17, px * 1, 2, 2, "right");
@@ -136,7 +136,16 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         imgClydeRight1 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clyde1.png").getImage();
         imgClydeRight2 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clyde2.png").getImage();
 
-        imgPacman = new ImageIcon("src/macpan/images/Pacman/pacmanWhole.png").getImage();
+        //pacman images
+        imgPacWhole = new ImageIcon("src/macpan/images/Pacman/pacmanWhole.png").getImage();
+        imgPacUp1 = new ImageIcon("src/macpan/images/Pacman/pacUp1.png").getImage();
+        imgPacUp2 = new ImageIcon("src/macpan/images/Pacman/pacUp2.png").getImage();
+        imgPacDown1 = new ImageIcon("src/macpan/images/Pacman/pacDown1.png").getImage();
+        imgPacDown2 = new ImageIcon("src/macpan/images/Pacman/pacDown2.png").getImage();
+        imgPacLeft1 = new ImageIcon("src/macpan/images/Pacman/pacBack1.png").getImage();
+        imgPacLeft2 = new ImageIcon("src/macpan/images/Pacman/pacBack2.png").getImage();
+        imgPacRight1 = new ImageIcon("src/macpan/images/Pacman/pacman1.png").getImage();
+        imgPacRight2 = new ImageIcon("src/macpan/images/Pacman/pacman2.png").getImage();
     }
 
     /**
@@ -241,7 +250,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             pinkyCounter += pinky.getXSpeed(); //Counter moves the same amount as the ghost each time
             inkyCounter += inky.getXSpeed(); //Counter moves the same amount as the ghost each time
             clydeCounter += clyde.getXSpeed(); //Counter moves the same amount as the ghost each time
-            
+
             pacmanCounter += pacman.getXSpeed();
 
             repaint();
@@ -282,6 +291,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             oldPressed = currentPressed; //change the old one to the new, which runs based off of the old direction it was moving
         }
         movePacman(xGrid, yGrid); //move pacman
+        animatePacman();
     }
 
     /**
@@ -299,7 +309,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 //        System.out.println("Down: " + (b[xGrid][yGrid + 1] instanceof Block));
 //        System.out.println("Right: " + (b[xGrid + 1][yGrid] instanceof Block));
 //        System.out.println("");
-
         if (inBlockX == 0 && b[xGrid][yGrid - 1] instanceof Block == false && oldPressed.equals("up")) { //If up key is pressed and pacman is in center of space with no block above
             pacman.moveUp(); //Move up
         } else if (inBlockX == 0 && b[xGrid][yGrid + 1] instanceof Block == false && oldPressed.equals("down")) { //If down key is pressed and pacman is in center of space with no block below
@@ -334,8 +343,35 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     }
 
+    /**
+     * Animates PacMan based on a tick systems swapping between sprites.
+     */
     public void animatePacman() {
-        //animate here
+        if (oldPressed.equals("up")) { //if it is moving up
+            if (pacmanCounter <= 13.5) { //sprite 1
+                pacman.setSprite(imgPacUp1);
+            } else { //sprite 2
+                pacman.setSprite(imgPacUp2);
+            }
+        } else if (oldPressed.equals("down")) { //if it is moving down
+            if (pacmanCounter <= 13.5) { //sprite 1
+                pacman.setSprite(imgPacDown1);
+            } else { //sprite 2
+                pacman.setSprite(imgPacDown2);
+            }
+        } else if (oldPressed.equals("left")) { //if it is moving left
+            if (pacmanCounter <= 13.5) { //sprite 1
+                pacman.setSprite(imgPacLeft1);
+            } else { //sprite 2
+                pacman.setSprite(imgPacLeft2);
+            }
+        } else { //must be right
+            if (pacmanCounter <= 13.5) { //sprite 1
+                pacman.setSprite(imgPacRight1);
+            } else { //sprite 2
+                pacman.setSprite(imgPacRight2);
+            }
+        }
     }
 
     private String currentPressed = "", oldPressed = ""; //used to control what key was last pressed
