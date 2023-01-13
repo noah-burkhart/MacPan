@@ -15,11 +15,27 @@ public class Inky extends AbstractGhost implements Ghost {
      * @param x - x position of ghost
      * @param y - y position of ghost
      * @param d - direction ghost is facing
-     * @param iB - whether or not the ghost is in the box
      */
-    public Inky(Image s, int x, int y, String d, boolean iB) {
-        super(s, x, y, d, iB);
+    public Inky(Image s, int x, int y, String d) {
+        super(s, x, y, d);
     }
+    
+     /**
+     * Full constructor for a Inky object.
+     * @param s - the sprite
+     * @param x - the x position
+     * @param y - the y position
+     * @param xSpeed - the x speed
+     * @param ySpeed - the y speed
+     * @param d - the direction its facing
+     */
+    public Inky(Image s, int x, int y, int xSpeed, int ySpeed, String d){
+        super(s, x, y, d);
+        this.setXSpeed(xSpeed); //sets the x and y speed
+        this.setYSpeed(ySpeed);
+        
+    }
+    
     
 //    public int chaseAlgorithmX(int pacmanX, Blinky b) {
 //        int pivotPointX = pacmanX;

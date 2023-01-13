@@ -16,11 +16,27 @@ public class Pinky extends AbstractGhost implements Ghost {
      * @param x - x position of ghost
      * @param y - y position of ghost
      * @param d - direction ghost is facing
-     * @param iB - whether or not the ghost is in the box
      */
-    public Pinky(Image s, int x, int y, String d, boolean iB) {
-        super(s, x, y, d, iB);
+    public Pinky(Image s, int x, int y, String d) {
+        super(s, x, y, d);
     }
+    
+     /**
+     * Full constructor for a Pinky object.
+     * @param s - the sprite
+     * @param x - the x position
+     * @param y - the y position
+     * @param xSpeed - the x speed
+     * @param ySpeed - the y speed
+     * @param d - the direction its facing
+     */
+    public Pinky(Image s, int x, int y, int xSpeed, int ySpeed, String d){
+        super(s, x, y, d);
+        this.setXSpeed(xSpeed); //sets the x and y speed
+        this.setYSpeed(ySpeed);
+        
+    }
+    
     
 //    public int chaseAlgorithmX(int pacmanX) {
 //        if (Pacman.getDirection().equals("east") || Pacman.getDirection().equals("west")) {
