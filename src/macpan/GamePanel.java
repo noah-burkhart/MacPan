@@ -245,7 +245,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             pinkyCounter += pinky.getXSpeed(); //Counter moves the same amount as the ghost each time
             inkyCounter += inky.getXSpeed(); //Counter moves the same amount as the ghost each time
             clydeCounter += clyde.getXSpeed(); //Counter moves the same amount as the ghost each time
-            
+
             pacmanCounter += pacman.getXSpeed();
 
             repaint();
@@ -281,15 +281,25 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         //represents pacmans position in each grid space. When centred, value will be 0
         int xGrid = pacman.getXPos() / px;  //represents pacmans position on the 'grid' (the map array)
         int yGrid = pacman.getYPos() / px;
-        
-        int xWonk = (pacman.getXPos()+25) / px;  //represents pacmans position on the 'grid' (the map array)
-        int yWonk = (pacman.getYPos()+25) / px;
 
-        if (currentIsPossible(currentPressed, xGrid, yGrid, xWonk, yWonk)) { //sees if the current wanted direcion is possible
-            oldPressed = currentPressed; //change the old one to the new, which runs based off of the old direction it was moving
+        int xWonk = (pacman.getXPos() + 25) / px;  //represents pacmans position on the 'grid' (the map array)
+        int yWonk = (pacman.getYPos() + 25) / px;
+        
+        
+        
+        if (oldPressed.equals("right") || oldPressed.equals("down")) { //if the current movement goes off of normal positioning, pass through current
+            //pass through the normal target
+            if (currentIsPossible(currentPressed, xGrid, yGrid)) { //sees if the current wanted direcion is possible
+                oldPressed = currentPressed; //change the old one to the new, which runs based off of the old direction it was moving
+            }
+        } else { //current must already be wonk
+            //pass through wonk
+            if (currentIsPossible(currentPressed, xWonk, yWonk)) { //sees if the current wanted direcion is possible
+                oldPressed = currentPressed; //change the old one to the new, which runs based off of the old direction it was moving
+            }
         }
         movePacman(xGrid, yGrid, xWonk, yWonk); //move pacman
-        animatePacman();
+        animatePacman(); //animate pacman
     }
 
     /**
@@ -312,7 +322,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         } else if (inBlockY == 0 && b[xWonk - 1][yWonk] instanceof Block == false && oldPressed.equals("left")) { //If left key is pressed and pacman is in center of space with no block to the left
             //System.out.println(b[xGrid - 1][yGrid] instanceof Block);
             pacman.moveLeft(); //move left
-           // System.out.println("done");
+            // System.out.println("done");
         }
         //System.out.println(b[xGrid - 1][yGrid] instanceof Block);
     }
@@ -321,19 +331,20 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      * Will return if the current requested movement is possible
      *
      * @param preffered - the preferred direction to move in
-     * @param xGrid - the x position of pacman on the grid
-     * @param yGrid - the y position of pacman on the grid
+     * @param x - the x position of pacman on the grid
+     * @param y - the y position of pacman on the grid
      * @return - if it is possible or not.
      */
-    public boolean currentIsPossible(String preffered, int xGrid, int yGrid, int xWonk, int yWonk) {
+    public boolean currentIsPossible(String preffered, int x, int y) {
+
         if (preffered.equals("up")) {
-            return b[xWonk][yWonk - 1] instanceof Block == false; //return if the one above is a block or not
+            return b[x][y - 1] instanceof Block == false; //return if the one above is a block or not
         } else if (preffered.equals("down")) {
-            return b[xGrid][yGrid + 1] instanceof Block == false;
+            return b[x][y + 1] instanceof Block == false;
         } else if (preffered.equals("left")) {
-            return b[xWonk - 1][yWonk] instanceof Block == false;
+            return b[x - 1][y] instanceof Block == false;
         } else { //must be right
-            return b[xGrid + 1][yGrid] instanceof Block == false;
+            return b[x + 1][y] instanceof Block == false;
         }
 
     }
@@ -648,7 +659,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                 clydePossible += "left"; //Add "left" to clydePossible move
             }
 
-           // System.out.println(clydePossible);
+            // System.out.println(clydePossible);
             clydeChoice = makeChoice(clydePossible); //Make the clydeChoice for where to go
         }
 
