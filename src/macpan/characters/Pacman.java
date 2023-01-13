@@ -1,6 +1,7 @@
 /*
  * V. He
  * Jan 5th, 2023
+ * Pacman class 
  */
 package macpan.characters;
 
@@ -115,5 +116,4 @@ public class Pacman extends AbstractCharacter{
     public void setPowerPellet(boolean powerPellet) {
         this.powerPellet = powerPellet;
     }
-    
 }

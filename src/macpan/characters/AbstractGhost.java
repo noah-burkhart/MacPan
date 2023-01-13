@@ -2,7 +2,7 @@
  * Jack Luhta
  * December 23, 2022
  * Abstract ghost class
-   This class contains the similar information and methods between all ghosts
+ * This class contains the similar information and methods between all ghosts
  */
 package macpan.characters;
 
@@ -21,7 +21,6 @@ public abstract class AbstractGhost extends AbstractCharacter implements Ghost {
      * @param x - x position of ghost
      * @param y - y position of ghost
      * @param d - direction ghost is facing
-     * @param iB - whether or not the ghost is in the box
      */
     public AbstractGhost(Image s, int x, int y, String d) {
         super(s, x, y, d);

@@ -57,10 +57,18 @@ public class Inky extends AbstractGhost implements Ghost {
 //        return targetY;
 //    }
     
+    /**
+     * target x coordinate for scatter mode
+     * @return - the coordinate inky should go to 
+     */
     public int scatterPointX() {
         return 600;
     }
     
+    /**
+     * target y coordinate for scatter mode
+     * @return - the coordinate inky should go to 
+     */
     public int scatterPointY() {
         return 800;
     }

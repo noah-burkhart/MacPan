@@ -7,8 +7,6 @@ package macpan.characters;
 
 import java.awt.Image;
 
-
-
 public class Clyde extends AbstractGhost implements Ghost {
     /**
      * Clyde must be created with a sprite, a position, a direction, and whether or not they're in the spawn box
@@ -37,7 +35,6 @@ public class Clyde extends AbstractGhost implements Ghost {
         
     }
     
-    
     public double distanceBetween(int pacmanX, int pacmanY) {
         double distance;
         distance = (Math.pow((getXPos() - pacmanX), 2)) + (Math.pow((getYPos() - pacmanY), 2));
@@ -65,10 +62,18 @@ public class Clyde extends AbstractGhost implements Ghost {
         return pacmanY;
     }
     
+    /**
+     * target x coordinate for scatter mode
+     * @return - the coordinate clyde should go to 
+     */
     public int scatterPointX() {
         return 0;
     }
     
+    /**
+     * target y coordinate for scatter mode
+     * @return - the coordinate clyde should go to 
+     */
     public int scatterPointY() {
         return 800;
     }

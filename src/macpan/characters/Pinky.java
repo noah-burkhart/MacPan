@@ -52,10 +52,18 @@ public class Pinky extends AbstractGhost implements Ghost {
 //        return pacmanY;
 //    }
     
+    /**
+     * target x coordinate for scatter mode
+     * @return - the coordinate pinky should go to 
+     */
     public int scatterPointX() {
         return 0;
     }
     
+    /**
+     * target y coordinate for scatter mode
+     * @return - the coordinate pinky should go to 
+     */
     public int scatterPointY() {
         return 0;
     }
