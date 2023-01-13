@@ -30,8 +30,6 @@ import macpan.objects.Pellet;
 import macpan.objects.Food;
 import macpan.objects.PowerPellet;
 import macpan.objects.Empty;
-import macpan.GameFrame;
-
 import macpan.objects.Thing;
 
 public final class GamePanel extends JPanel implements Runnable, KeyListener {
