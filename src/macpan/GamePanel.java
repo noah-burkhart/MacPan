@@ -47,7 +47,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     private String blinkyChoice = "", pinkyChoice = "", inkyChoice = "", clydeChoice = "";
 
     private int pacmanTick = 27;
-    
+
     int[][] gridX = new int[19][21]; //parallel to images, holds the position the images are in on the X axis
     int[][] gridY = new int[19][21]; //parallel to images, holds the position the images are in on the Y axis
 
@@ -198,7 +198,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         g2d.setColor(Color.white);
         g2d.setFont(new java.awt.Font("Monospaced", 1, 17));
         g2d.drawString("HIGH-SCORE: " + 100000, 10, 28);
-        g2d.drawString("SCORE: ______", 375, 28);
+        g2d.drawString("SCORE: " + pacman.getScore(), 375, 28);
         g2d.drawString("LIVES: ", 10, 615);
         g2d.drawImage(blinky.getSprite(), blinky.getXPos() + BUFFER_X, blinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
         g2d.drawImage(pinky.getSprite(), pinky.getXPos() + BUFFER_X, pinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
@@ -284,9 +284,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
         int xBottom = (pacman.getXPos() + 25) / px;  //represents pacmans position on the 'grid' (the map array)
         int yBottom = (pacman.getYPos() + 25) / px;
-        
-        
-        
+
         if (oldPressed.equals("right") || oldPressed.equals("down")) { //if the current movement goes off of top positioning, pass through current
             //pass through the top target
             if (currentIsPossible(currentPressed, xTop, yTop)) { //sees if the current wanted direcion is possible
@@ -300,6 +298,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
         movePacman(xTop, yTop, xBottom, yBottom); //move pacman
         animatePacman(); //animate pacman
+        checkScored();
     }
 
     /**
@@ -312,24 +311,23 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         double inBlockX = (double) (pacman.getXPos() % px);
         double inBlockY = (double) (pacman.getYPos() % px);
 
-        
         if (inBlockX == 0 && b[xBottom][yBottom - 1] instanceof Block == false && oldPressed.equals("up")) { //If up key is pressed and pacman is in center of space with no block above
             pacman.moveUp(); //Move up
-            pacmanTick+=3; //add two every time
+            pacmanTick += 3; //add two every time
         } else if (inBlockX == 0 && b[xTop][yTop + 1] instanceof Block == false && oldPressed.equals("down")) { //If down key is pressed and pacman is in center of space with no block below
             pacman.moveDown(); //Move down
-            pacmanTick+=3; //add two every time
+            pacmanTick += 3; //add two every time
         } else if (inBlockY == 0 && b[xTop + 1][yTop] instanceof Block == false && oldPressed.equals("right")) { //If right key is pressed and pacman is in center of space with no block to the right
             pacman.moveRight(); //Move right
-            pacmanTick+=3; //add two every time
+            pacmanTick += 3; //add two every time
         } else if (inBlockY == 0 && b[xBottom - 1][yBottom] instanceof Block == false && oldPressed.equals("left")) { //If left key is pressed and pacman is in center of space with no block to the left
             //System.out.println(b[xGrid - 1][yGrid] instanceof Block);
             pacman.moveLeft(); //move left
-            pacmanTick+=3; //add two every time
+            pacmanTick += 3; //add two every time
             // System.out.println("done");
         }
-        
-        if(pacmanTick >= 27){
+
+        if (pacmanTick >= 27) {
             pacmanTick = 0;
         }
     }
@@ -352,6 +350,21 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             return b[x - 1][y] instanceof Block == false;
         } else { //must be right
             return b[x + 1][y] instanceof Block == false;
+        }
+
+    }
+
+    /**
+     * Checks to see if pacman is on a consumable, then adds points and erase
+     */
+    public void checkScored() {
+        Empty e = new Empty(imgEmpty, 0, 0);
+        int x = (pacman.getXPos()) / px;  //represents pacmans position on the 'grid' (the map array)
+        int y = (pacman.getYPos()) / px;
+
+        if (b[x][y] instanceof Pellet == true) {
+            pacman.addScore(((Pellet) (b[x][y])).getPoints()); //adds the score of the pellet to pacmans score
+            b[x][y] = new Empty(imgEmpty, x*px, y*px);
         }
 
     }
