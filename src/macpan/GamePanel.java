@@ -30,6 +30,7 @@ import macpan.objects.Pellet;
 import macpan.objects.Food;
 import macpan.objects.PowerPellet;
 import macpan.objects.Empty;
+import macpan.GameFrame;
 
 import macpan.objects.Thing;
 
@@ -68,20 +69,14 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     public GamePanel() {
         loadImage();
         loadBoard();
-        btnBack.setBackground(Color.black);
-        btnBack.setFont(new java.awt.Font("Monospaced", 1, 20));
-        btnBack.setForeground(Color.white);
-        btnBack.setText("Back");
-        btnBack.setLocation(600, 600);
-        add(btnBack);
         setBackground(Color.black);
 
         pacman = new Pacman(3, imgPacman, px * 10, px * 13, 2, 2, "right");
 
         blinky = new Blinky(imgBlinkyUp1, px * 1, px * 1, 2, 2, "right");
         pinky = new Pinky(imgPinkyUp1, px * 17, px * 1, 2, 2, "right");
-        inky = new Inky(imgInkyUp1, px * 5, px * 10, 2, 2, "right");
-        clyde = new Clyde(imgClydeUp1, px * 10, px * 10, 2, 2, "right");
+        inky = new Inky(imgInkyUp1, px * 1, px * 19, 2, 2, "right");
+        clyde = new Clyde(imgClydeUp1, px * 17, px * 19, 2, 2, "right");
 
         //attach the keyboard to the panel and give it "focus"
         this.addKeyListener(this);
@@ -241,7 +236,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             pinkyCounter += pinky.getXSpeed(); //Counter moves the same amount as the ghost each time
             inkyCounter += inky.getXSpeed(); //Counter moves the same amount as the ghost each time
             clydeCounter += clyde.getXSpeed(); //Counter moves the same amount as the ghost each time
-            
+
             pacmanCounter += pacman.getXSpeed();
 
             repaint();
@@ -299,7 +294,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 //        System.out.println("Down: " + (b[xGrid][yGrid + 1] instanceof Block));
 //        System.out.println("Right: " + (b[xGrid + 1][yGrid] instanceof Block));
 //        System.out.println("");
-
         if (inBlockX == 0 && b[xGrid][yGrid - 1] instanceof Block == false && oldPressed.equals("up")) { //If up key is pressed and pacman is in center of space with no block above
             pacman.moveUp(); //Move up
         } else if (inBlockX == 0 && b[xGrid][yGrid + 1] instanceof Block == false && oldPressed.equals("down")) { //If down key is pressed and pacman is in center of space with no block below
