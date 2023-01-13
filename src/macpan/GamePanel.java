@@ -245,7 +245,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             pinkyCounter += pinky.getXSpeed(); //Counter moves the same amount as the ghost each time
             inkyCounter += inky.getXSpeed(); //Counter moves the same amount as the ghost each time
             clydeCounter += clyde.getXSpeed(); //Counter moves the same amount as the ghost each time
-
+            
             pacmanCounter += pacman.getXSpeed();
 
             repaint();
@@ -281,11 +281,14 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         //represents pacmans position in each grid space. When centred, value will be 0
         int xGrid = pacman.getXPos() / px;  //represents pacmans position on the 'grid' (the map array)
         int yGrid = pacman.getYPos() / px;
+        
+        int xWonk = (pacman.getXPos()+25) / px;  //represents pacmans position on the 'grid' (the map array)
+        int yWonk = (pacman.getYPos()+25) / px;
 
-        if (currentIsPossible(currentPressed, xGrid, yGrid)) { //sees if the current wanted direcion is possible
+        if (currentIsPossible(currentPressed, xGrid, yGrid, xWonk, yWonk)) { //sees if the current wanted direcion is possible
             oldPressed = currentPressed; //change the old one to the new, which runs based off of the old direction it was moving
         }
-        movePacman(xGrid, yGrid); //move pacman
+        movePacman(xGrid, yGrid, xWonk, yWonk); //move pacman
         animatePacman();
     }
 
@@ -295,26 +298,23 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      * @param xGrid - the x position on the grid
      * @param yGrid - the y position on the grid.
      */
-    public void movePacman(int xGrid, int yGrid) {
+    public void movePacman(int xGrid, int yGrid, int xWonk, int yWonk) {
         double inBlockX = (double) (pacman.getXPos() % px);
         double inBlockY = (double) (pacman.getYPos() % px);
 
-//        System.out.println("Left: " + (b[xGrid - 1][yGrid] instanceof Block));
-//        System.out.println("Up: " + (b[xGrid][yGrid - 1] instanceof Block));
-//        System.out.println("Down: " + (b[xGrid][yGrid + 1] instanceof Block));
-//        System.out.println("Right: " + (b[xGrid + 1][yGrid] instanceof Block));
-//        System.out.println("");
-        if (inBlockX == 0 && b[xGrid][yGrid - 1] instanceof Block == false && oldPressed.equals("up")) { //If up key is pressed and pacman is in center of space with no block above
+        System.out.println("XGrid: " + xGrid + " YGrid: " + yGrid + " inBlockX: " + inBlockX + " inBlockY: " + inBlockY);
+        if (inBlockX == 0 && b[xWonk][yWonk - 1] instanceof Block == false && oldPressed.equals("up")) { //If up key is pressed and pacman is in center of space with no block above
             pacman.moveUp(); //Move up
         } else if (inBlockX == 0 && b[xGrid][yGrid + 1] instanceof Block == false && oldPressed.equals("down")) { //If down key is pressed and pacman is in center of space with no block below
             pacman.moveDown(); //Move down
         } else if (inBlockY == 0 && b[xGrid + 1][yGrid] instanceof Block == false && oldPressed.equals("right")) { //If right key is pressed and pacman is in center of space with no block to the right
             pacman.moveRight(); //Move right
-        } else if (inBlockY == 0 && b[xGrid - 1][yGrid] instanceof Block == false && oldPressed.equals("left")) { //If left key is pressed and pacman is in center of space with no block to the left
-            System.out.println(b[xGrid - 1][yGrid] instanceof Block);
+        } else if (inBlockY == 0 && b[xWonk - 1][yWonk] instanceof Block == false && oldPressed.equals("left")) { //If left key is pressed and pacman is in center of space with no block to the left
+            //System.out.println(b[xGrid - 1][yGrid] instanceof Block);
             pacman.moveLeft(); //move left
-            System.out.println("done");
+           // System.out.println("done");
         }
+        //System.out.println(b[xGrid - 1][yGrid] instanceof Block);
     }
 
     /**
@@ -325,13 +325,13 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      * @param yGrid - the y position of pacman on the grid
      * @return - if it is possible or not.
      */
-    public boolean currentIsPossible(String preffered, int xGrid, int yGrid) {
+    public boolean currentIsPossible(String preffered, int xGrid, int yGrid, int xWonk, int yWonk) {
         if (preffered.equals("up")) {
-            return b[xGrid][yGrid - 1] instanceof Block == false; //return if the one above is a block or not
+            return b[xWonk][yWonk - 1] instanceof Block == false; //return if the one above is a block or not
         } else if (preffered.equals("down")) {
             return b[xGrid][yGrid + 1] instanceof Block == false;
         } else if (preffered.equals("left")) {
-            return b[xGrid - 1][yGrid] instanceof Block == false;
+            return b[xWonk - 1][yWonk] instanceof Block == false;
         } else { //must be right
             return b[xGrid + 1][yGrid] instanceof Block == false;
         }
@@ -648,7 +648,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                 clydePossible += "left"; //Add "left" to clydePossible move
             }
 
-            System.out.println(clydePossible);
+           // System.out.println(clydePossible);
             clydeChoice = makeChoice(clydePossible); //Make the clydeChoice for where to go
         }
 
@@ -732,50 +732,4 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     public void keyReleased(KeyEvent e) {
         //
     }
-
-    /*
-        if (b[pacman.getXPos() / PX][pacman.getYPos() / PX - 1] instanceof Block == false) { //up
-            if (b[pacman.getXPos() / PX][pacman.getYPos() / PX + 1] instanceof Block == false) { //down
-                if (b[pacman.getXPos() / PX - 1][pacman.getYPos() / PX] instanceof Block == false) { //left 
-                    if (b[pacman.getXPos() / PX + 1][pacman.getYPos() / PX] instanceof Block == false) { //right
-                        centered = true;
-                    }
-                }
-            }
-        }
-     */
-//        int x = pacman.getXPos(); //sets the xpos to the middle 
-//        int y = pacman.getYPos();
-//        switch (keyPressed) {
-//            case "up" -> {
-//                if (b[x/PX][y / PX - 1] instanceof Block == false ) { //up
-//                    System.out.println("up");
-//                    pacman.setDirection("up");
-//                    pacman.moveUp();
-//                }
-//            }
-//            case "down" -> {
-//                if (b[x / PX][y / PX + 1] instanceof Block == false ) { //down
-//                    System.out.println("down");
-//                    pacman.setDirection("down");
-//                    pacman.moveDown();
-//                }
-//            }
-//
-//            case "left" -> { //leftie no workie becausie hezies thinkzies he is in the block beside
-//                if (b[x / PX -1][y / PX] instanceof Block == false ) { //left
-//                    System.out.println("left");
-//                    pacman.setDirection("left");
-//                    pacman.moveLeft();
-//                }
-//            }
-//            default -> {
-//                //must be right
-//                if (b[x / PX + 1][y / PX] instanceof Block == false ) { //right
-//                    System.out.println("right");
-//                    pacman.setDirection("right");
-//                    pacman.moveRight();
-//                }
-//            }
-//        }
 }
