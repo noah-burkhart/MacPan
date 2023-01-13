@@ -197,7 +197,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
         while (true) { //this loop runs once ever 25 ms (the DELAY)
             moveBlinky(); //Move ghost
-            movePacman();
+            runPacman();
             counter += blinky.getXSpeed(); //Counter moves the same amount as the ghost each time
             pacmanCounter += pacman.getXSpeed();
 
@@ -227,68 +227,51 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
-    public void movePacman() {
-        double centreX = (double) (pacman.getXPos() % 26);
-        double centreY = (double) (pacman.getYPos() % 26);
+    public void runPacman() {
         //represents pacmans position in each grid space. When centred, value will be 0
-
         int xGrid = pacman.getXPos() / 26;  //represents pacmans position on the 'grid' (the map array)
         int yGrid = pacman.getYPos() / 26;
 
-        if (centreX == 0 && b[xGrid][yGrid - 1] instanceof Block == false && keyPressed.equals("up")) { //If up key is pressed and pacman is in center of space with no block above
+        if (currentIsPossible(currentPressed, xGrid, yGrid)) {
+            oldPressed = currentPressed;
+        }
+        movePacman(xGrid, yGrid);
+    }
+
+    public void movePacman(int xGrid, int yGrid) {
+        double centreX = (double) (pacman.getXPos() % 26);
+        double centreY = (double) (pacman.getYPos() % 26);
+        
+        if (centreX == 0 && b[xGrid][yGrid - 1] instanceof Block == false && oldPressed.equals("up")) { //If up key is pressed and pacman is in center of space with no block above
             pacman.moveUp(); //Move up
-        } else if (centreX == 0 && b[xGrid][yGrid + 1] instanceof Block == false && keyPressed.equals("down")) { //If down key is pressed and pacman is in center of space with no block below
+        } else if (centreX == 0 && b[xGrid][yGrid + 1] instanceof Block == false && oldPressed.equals("down")) { //If down key is pressed and pacman is in center of space with no block below
             pacman.moveDown(); //Move down
-        } else if (centreY == 0 && b[xGrid + 1][yGrid] instanceof Block == false && keyPressed.equals("right")) { //If right key is pressed and pacman is in center of space with no block to the right
+        } else if (centreY == 0 && b[xGrid + 1][yGrid] instanceof Block == false && oldPressed.equals("right")) { //If right key is pressed and pacman is in center of space with no block to the right
             pacman.moveRight(); //Move right
-        } else if (centreY == 0 && b[xGrid - 1][yGrid] instanceof Block == false && keyPressed.equals("left")) { //If left key is pressed and pacman is in center of space with no block to the left
+        } else if (centreY == 0 && b[xGrid - 1][yGrid] instanceof Block == false && oldPressed.equals("left")) { //If left key is pressed and pacman is in center of space with no block to the left
             pacman.moveLeft(); //move left
         }
-        /*
-        if (b[pacman.getXPos() / 26][pacman.getYPos() / 26 - 1] instanceof Block == false) { //up
-            if (b[pacman.getXPos() / 26][pacman.getYPos() / 26 + 1] instanceof Block == false) { //down
-                if (b[pacman.getXPos() / 26 - 1][pacman.getYPos() / 26] instanceof Block == false) { //left 
-                    if (b[pacman.getXPos() / 26 + 1][pacman.getYPos() / 26] instanceof Block == false) { //right
-                        centered = true;
-                    }
-                }
-            }
+    }
+
+    /**
+     * Will return if the current requested movement is possible
+     *
+     * @param preffered - the preferred direction to move in
+     * @param xGrid - the x position of pacman on the grid
+     * @param yGrid - the y position of pacman on the grid
+     * @return - if it is possible or not.
+     */
+    public boolean currentIsPossible(String preffered, int xGrid, int yGrid) {
+        if (preffered.equals("up")) {
+            return b[xGrid][yGrid - 1] instanceof Block == false; //return if the one above is a block or not
+        } else if (preffered.equals("down")) {
+            return b[xGrid][yGrid + 1] instanceof Block == false;
+        } else if (preffered.equals("left")) {
+            return b[xGrid - 1][yGrid] instanceof Block == false;
+        } else { //must be right
+            return b[xGrid + 1][yGrid] instanceof Block == false;
         }
-         */
-//        int x = pacman.getXPos(); //sets the xpos to the middle 
-//        int y = pacman.getYPos();
-//        switch (keyPressed) {
-//            case "up" -> {
-//                if (b[x/26][y / 26 - 1] instanceof Block == false ) { //up
-//                    System.out.println("up");
-//                    pacman.setDirection("up");
-//                    pacman.moveUp();
-//                }
-//            }
-//            case "down" -> {
-//                if (b[x / 26][y / 26 + 1] instanceof Block == false ) { //down
-//                    System.out.println("down");
-//                    pacman.setDirection("down");
-//                    pacman.moveDown();
-//                }
-//            }
-//
-//            case "left" -> { //leftie no workie becausie hezies thinkzies he is in the block beside
-//                if (b[x / 26 -1][y / 26] instanceof Block == false ) { //left
-//                    System.out.println("left");
-//                    pacman.setDirection("left");
-//                    pacman.moveLeft();
-//                }
-//            }
-//            default -> {
-//                //must be right
-//                if (b[x / 26 + 1][y / 26] instanceof Block == false ) { //right
-//                    System.out.println("right");
-//                    pacman.setDirection("right");
-//                    pacman.moveRight();
-//                }
-//            }
-//        }
+
     }
 
     public boolean centered() {
@@ -305,20 +288,20 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         //animate here
     }
 
-    private String keyPressed = ""; //used to control what key was last pressed
+    private String currentPressed = "", oldPressed = "right"; //used to control what key was last pressed
 
     @Override
     public void keyPressed(KeyEvent evt) {
         int key = evt.getKeyCode();  // Keyboard code for the pressed key.
 
         if (key == KeyEvent.VK_W) { //if key pressed is W meaning UP
-            keyPressed = "up";
+            currentPressed = "up";
         } else if (key == KeyEvent.VK_S) { //if key pressed is S meaning DOWN
-            keyPressed = "down";
+            currentPressed = "down";
         } else if (key == KeyEvent.VK_A) {//if key pressed is A meaning LEFT
-            keyPressed = "left";
+            currentPressed = "left";
         } else if (key == KeyEvent.VK_D) {//if key pressed is D meaning RIGHT
-            keyPressed = "right";
+            currentPressed = "right";
         }
     }
 
@@ -432,4 +415,49 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         //
     }
 
+    /*
+        if (b[pacman.getXPos() / 26][pacman.getYPos() / 26 - 1] instanceof Block == false) { //up
+            if (b[pacman.getXPos() / 26][pacman.getYPos() / 26 + 1] instanceof Block == false) { //down
+                if (b[pacman.getXPos() / 26 - 1][pacman.getYPos() / 26] instanceof Block == false) { //left 
+                    if (b[pacman.getXPos() / 26 + 1][pacman.getYPos() / 26] instanceof Block == false) { //right
+                        centered = true;
+                    }
+                }
+            }
+        }
+     */
+//        int x = pacman.getXPos(); //sets the xpos to the middle 
+//        int y = pacman.getYPos();
+//        switch (keyPressed) {
+//            case "up" -> {
+//                if (b[x/26][y / 26 - 1] instanceof Block == false ) { //up
+//                    System.out.println("up");
+//                    pacman.setDirection("up");
+//                    pacman.moveUp();
+//                }
+//            }
+//            case "down" -> {
+//                if (b[x / 26][y / 26 + 1] instanceof Block == false ) { //down
+//                    System.out.println("down");
+//                    pacman.setDirection("down");
+//                    pacman.moveDown();
+//                }
+//            }
+//
+//            case "left" -> { //leftie no workie becausie hezies thinkzies he is in the block beside
+//                if (b[x / 26 -1][y / 26] instanceof Block == false ) { //left
+//                    System.out.println("left");
+//                    pacman.setDirection("left");
+//                    pacman.moveLeft();
+//                }
+//            }
+//            default -> {
+//                //must be right
+//                if (b[x / 26 + 1][y / 26] instanceof Block == false ) { //right
+//                    System.out.println("right");
+//                    pacman.setDirection("right");
+//                    pacman.moveRight();
+//                }
+//            }
+//        }
 }
