@@ -311,21 +311,21 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
         if (inBlockX == 0 && b[xBottom][yBottom - 1] instanceof Block == false && oldPressed.equals("up")) { //If up key is pressed and pacman is in center of space with no block above
             pacman.moveUp(); //Move up
-            pacmanTick += 3; //add two every time
+            pacmanTick+=3;
         } else if (inBlockX == 0 && b[xTop][yTop + 1] instanceof Block == false && oldPressed.equals("down")) { //If down key is pressed and pacman is in center of space with no block below
             pacman.moveDown(); //Move down
-            pacmanTick += 3; //add two every time
+            pacmanTick+=3;
         } else if (inBlockY == 0 && b[xTop + 1][yTop] instanceof Block == false && oldPressed.equals("right")) { //If right key is pressed and pacman is in center of space with no block to the right
             pacman.moveRight(); //Move right
             pacmanTick += 3; //add two every time
         } else if (inBlockY == 0 && b[xBottom - 1][yBottom] instanceof Block == false && oldPressed.equals("left")) { //If left key is pressed and pacman is in center of space with no block to the left
             //System.out.println(b[xGrid - 1][yGrid] instanceof Block);
             pacman.moveLeft(); //move left
-            pacmanTick += 3; //add two every time
+            pacmanTick+=3;
             // System.out.println("done");
         }
-
-        if (pacmanTick >= 27) {
+         //add two every time
+        if(pacmanTick >= 36){
             pacmanTick = 0;
         }
     }
@@ -372,28 +372,36 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      */
     public void animatePacman() {
         if (oldPressed.equals("up")) { //if it is moving up
-            if (pacmanTick <= 13.5) { //sprite 1
+            if (pacmanTick <= 12) { //sprite 1
                 pacman.setSprite(imgPacUp1);
-            } else { //sprite 2
+            } else if (pacmanTick <= 24){ //sprite 2
                 pacman.setSprite(imgPacUp2);
+            } else {
+                pacman.setSprite(imgPacWhole);
             }
         } else if (oldPressed.equals("down")) { //if it is moving down
-            if (pacmanTick <= 13.5) { //sprite 1
+            if (pacmanTick <= 12) { //sprite 1
                 pacman.setSprite(imgPacDown1);
-            } else { //sprite 2
+            } else if (pacmanTick <= 24){ //sprite 2
                 pacman.setSprite(imgPacDown2);
+            } else {
+                pacman.setSprite(imgPacWhole);
             }
         } else if (oldPressed.equals("left")) { //if it is moving left
-            if (pacmanTick <= 13.5) { //sprite 1
+            if (pacmanTick <= 12) { //sprite 1
                 pacman.setSprite(imgPacLeft1);
-            } else { //sprite 2
+            } else if (pacmanTick <= 24){ //sprite 2
                 pacman.setSprite(imgPacLeft2);
+            } else {
+                pacman.setSprite(imgPacWhole);
             }
         } else { //must be right
-            if (pacmanTick <= 13.5) { //sprite 1
+            if (pacmanTick <= 12) { //sprite 1
                 pacman.setSprite(imgPacRight1);
-            } else { //sprite 2
+            } else if (pacmanTick <= 24){ //sprite 2
                 pacman.setSprite(imgPacRight2);
+            } else {
+                pacman.setSprite(imgPacWhole);
             }
         }
     }
