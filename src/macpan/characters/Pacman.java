@@ -57,7 +57,6 @@ public class Pacman extends AbstractCharacter{
         this.setYSpeed(ySpeed);
         this.lives = lives; //sets the lives
         score = 0;
-        
     }
 
     /**
