@@ -279,47 +279,47 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      */
     public void runPacman() {
         //represents pacmans position in each grid space. When centred, value will be 0
-        int xGrid = pacman.getXPos() / px;  //represents pacmans position on the 'grid' (the map array)
-        int yGrid = pacman.getYPos() / px;
+        int xTop = pacman.getXPos() / px;  //represents pacmans position on the 'grid' (the map array)
+        int yTop = pacman.getYPos() / px;
 
-        int xWonk = (pacman.getXPos() + 25) / px;  //represents pacmans position on the 'grid' (the map array)
-        int yWonk = (pacman.getYPos() + 25) / px;
+        int xBottom = (pacman.getXPos() + 25) / px;  //represents pacmans position on the 'grid' (the map array)
+        int yBottom = (pacman.getYPos() + 25) / px;
         
         
         
-        if (oldPressed.equals("right") || oldPressed.equals("down")) { //if the current movement goes off of normal positioning, pass through current
-            //pass through the normal target
-            if (currentIsPossible(currentPressed, xGrid, yGrid)) { //sees if the current wanted direcion is possible
+        if (oldPressed.equals("right") || oldPressed.equals("down")) { //if the current movement goes off of top positioning, pass through current
+            //pass through the top target
+            if (currentIsPossible(currentPressed, xTop, yTop)) { //sees if the current wanted direcion is possible
                 oldPressed = currentPressed; //change the old one to the new, which runs based off of the old direction it was moving
             }
-        } else { //current must already be wonk
-            //pass through wonk
-            if (currentIsPossible(currentPressed, xWonk, yWonk)) { //sees if the current wanted direcion is possible
+        } else { //current must already be bottom
+            //pass through bottom
+            if (currentIsPossible(currentPressed, xBottom, yBottom)) { //sees if the current wanted direcion is possible
                 oldPressed = currentPressed; //change the old one to the new, which runs based off of the old direction it was moving
             }
         }
-        movePacman(xGrid, yGrid, xWonk, yWonk); //move pacman
+        movePacman(xTop, yTop, xBottom, yBottom); //move pacman
         animatePacman(); //animate pacman
     }
 
     /**
      * Moves PacMan given a certain position on the grid
      *
-     * @param xGrid - the x position on the grid
-     * @param yGrid - the y position on the grid.
+     * @param xTop - the x position on the grid
+     * @param yTop - the y position on the grid.
      */
-    public void movePacman(int xGrid, int yGrid, int xWonk, int yWonk) {
+    public void movePacman(int xTop, int yTop, int xBottom, int yBottom) {
         double inBlockX = (double) (pacman.getXPos() % px);
         double inBlockY = (double) (pacman.getYPos() % px);
 
-        System.out.println("XGrid: " + xGrid + " YGrid: " + yGrid + " inBlockX: " + inBlockX + " inBlockY: " + inBlockY);
-        if (inBlockX == 0 && b[xWonk][yWonk - 1] instanceof Block == false && oldPressed.equals("up")) { //If up key is pressed and pacman is in center of space with no block above
+        System.out.println("XGrid: " + xTop + " YGrid: " + yTop + " inBlockX: " + inBlockX + " inBlockY: " + inBlockY);
+        if (inBlockX == 0 && b[xBottom][yBottom - 1] instanceof Block == false && oldPressed.equals("up")) { //If up key is pressed and pacman is in center of space with no block above
             pacman.moveUp(); //Move up
-        } else if (inBlockX == 0 && b[xGrid][yGrid + 1] instanceof Block == false && oldPressed.equals("down")) { //If down key is pressed and pacman is in center of space with no block below
+        } else if (inBlockX == 0 && b[xTop][yTop + 1] instanceof Block == false && oldPressed.equals("down")) { //If down key is pressed and pacman is in center of space with no block below
             pacman.moveDown(); //Move down
-        } else if (inBlockY == 0 && b[xGrid + 1][yGrid] instanceof Block == false && oldPressed.equals("right")) { //If right key is pressed and pacman is in center of space with no block to the right
+        } else if (inBlockY == 0 && b[xTop + 1][yTop] instanceof Block == false && oldPressed.equals("right")) { //If right key is pressed and pacman is in center of space with no block to the right
             pacman.moveRight(); //Move right
-        } else if (inBlockY == 0 && b[xWonk - 1][yWonk] instanceof Block == false && oldPressed.equals("left")) { //If left key is pressed and pacman is in center of space with no block to the left
+        } else if (inBlockY == 0 && b[xBottom - 1][yBottom] instanceof Block == false && oldPressed.equals("left")) { //If left key is pressed and pacman is in center of space with no block to the left
             //System.out.println(b[xGrid - 1][yGrid] instanceof Block);
             pacman.moveLeft(); //move left
             // System.out.println("done");
