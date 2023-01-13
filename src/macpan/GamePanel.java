@@ -226,29 +226,36 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             beforeTime = System.currentTimeMillis();
         }
     }
-
+/**
+ * Runs all of the PacMan movement and animation methods
+ */
     public void runPacman() {
         //represents pacmans position in each grid space. When centred, value will be 0
         int xGrid = pacman.getXPos() / 26;  //represents pacmans position on the 'grid' (the map array)
         int yGrid = pacman.getYPos() / 26;
 
-        if (currentIsPossible(currentPressed, xGrid, yGrid)) {
-            oldPressed = currentPressed;
+        if (currentIsPossible(currentPressed, xGrid, yGrid)) { //sees if the current wanted direcion is possible
+            oldPressed = currentPressed; //change the old one to the new, which runs based off of the old direction it was moving
         }
-        movePacman(xGrid, yGrid);
+        movePacman(xGrid, yGrid); //move pacman
     }
 
+    /**
+     * Moves PacMan given a certain position on the grid
+     * @param xGrid - the x position on the grid 
+     * @param yGrid - the y position on the grid.
+     */
     public void movePacman(int xGrid, int yGrid) {
-        double centreX = (double) (pacman.getXPos() % 26);
-        double centreY = (double) (pacman.getYPos() % 26);
+        double inBlockX = (double) (pacman.getXPos() % 26);
+        double inBlockY = (double) (pacman.getYPos() % 26);
         
-        if (centreX == 0 && b[xGrid][yGrid - 1] instanceof Block == false && oldPressed.equals("up")) { //If up key is pressed and pacman is in center of space with no block above
+        if (inBlockX == 0 && b[xGrid][yGrid - 1] instanceof Block == false && oldPressed.equals("up")) { //If up key is pressed and pacman is in center of space with no block above
             pacman.moveUp(); //Move up
-        } else if (centreX == 0 && b[xGrid][yGrid + 1] instanceof Block == false && oldPressed.equals("down")) { //If down key is pressed and pacman is in center of space with no block below
+        } else if (inBlockX == 0 && b[xGrid][yGrid + 1] instanceof Block == false && oldPressed.equals("down")) { //If down key is pressed and pacman is in center of space with no block below
             pacman.moveDown(); //Move down
-        } else if (centreY == 0 && b[xGrid + 1][yGrid] instanceof Block == false && oldPressed.equals("right")) { //If right key is pressed and pacman is in center of space with no block to the right
+        } else if (inBlockY == 0 && b[xGrid + 1][yGrid] instanceof Block == false && oldPressed.equals("right")) { //If right key is pressed and pacman is in center of space with no block to the right
             pacman.moveRight(); //Move right
-        } else if (centreY == 0 && b[xGrid - 1][yGrid] instanceof Block == false && oldPressed.equals("left")) { //If left key is pressed and pacman is in center of space with no block to the left
+        } else if (inBlockY == 0 && b[xGrid - 1][yGrid] instanceof Block == false && oldPressed.equals("left")) { //If left key is pressed and pacman is in center of space with no block to the left
             pacman.moveLeft(); //move left
         }
     }
@@ -274,21 +281,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     }
 
-    public boolean centered() {
-        if ((double) (pacman.getXPos() % 26) == 0 && (double) (pacman.getYPos() % 26) == 0) { //if it is exactly in the middle of the square
-            System.out.println("true");
-            return true;
-        } else {
-            System.out.println("false");
-            return false;
-        }
-    }
 
     public void animatePacman() {
         //animate here
     }
 
-    private String currentPressed = "", oldPressed = "right"; //used to control what key was last pressed
+    private String currentPressed = "", oldPressed = ""; //used to control what key was last pressed
 
     @Override
     public void keyPressed(KeyEvent evt) {
