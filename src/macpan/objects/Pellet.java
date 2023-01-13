@@ -26,7 +26,6 @@ public class Pellet extends AbstractConsumable {
     
     /**
      * Secondary constructor for a pellet utilizing abstract class.
-     *
      * @param sprite - the sprite.
      * @param x - the x position.
      * @param y - the y position.
@@ -38,7 +37,6 @@ public class Pellet extends AbstractConsumable {
     
     /**
      * Secondary constructor for a pellet utilizing abstract class.
-     *
      * @param sprite - the sprite.
      * @param x - the x position.
      * @param y - the y position.

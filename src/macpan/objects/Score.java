@@ -85,6 +85,10 @@ public class Score {
         return Objects.equals(this.name, other.name);
     }   
     
+    /**
+     * Clone method for sorting
+     * @return - a clone of a score
+     */
     @Override
     public Score clone() {
         Score s = new Score(value, name);

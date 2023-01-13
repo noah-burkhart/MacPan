@@ -84,7 +84,6 @@ public class Empty implements Thing{
     }
     
     //no equals class needed as all emptys are going to be the same
-    
     /**
      * Clones all attributes of a empty
      * @return - the empty.
@@ -93,7 +92,4 @@ public class Empty implements Thing{
         Empty b = new Empty(sprite, x, y); //creates a clone at the same spot with the same sprite.
         return b; //returns the clone
     }
-    
-    }
-    
-
+}

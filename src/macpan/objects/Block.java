@@ -83,8 +83,7 @@ public class Block implements Thing{
         return "Block{" + "sprite=" + sprite + ", x=" + x + ", y=" + y + '}';
     }
     
-    //no equals class needed as all blocks are going to be the same
-    
+    //no equals class needed as all blocks are going to be the same 
     /**
      * Clones all attributes of a block
      * @return - the block.
@@ -93,7 +92,4 @@ public class Block implements Thing{
         Block b = new Block(sprite, x, y); //creates a clone at the same spot with the same sprite.
         return b; //returns the clone
     }
-    
-    }
-    
-
+}

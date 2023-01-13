@@ -1,5 +1,5 @@
 /*
- *N Burkhart
+ * N Burkhart
  * 12/21/2022
  * Abstract class to represent all consumable objects
  */
@@ -20,7 +20,6 @@ abstract class AbstractConsumable implements Thing{
 
     /**
      * Constructor for a Consumable.
-     *
      * @param x - the x position
      * @param y - the y position;
      */
@@ -34,20 +33,18 @@ abstract class AbstractConsumable implements Thing{
     
     /**
      * General constructor for all consumable objects.
-     *
      * @param sprite - the sprite
      * @param xPos - the x position
      * @param yPos - the y position
      */
     public AbstractConsumable(Image sprite, int x, int y) {
         this(x, y);
-        this.sprite = sprite;              //sets values
+        this.sprite = sprite; //sets values
         visible = true; //all are visible by default
     }
     
     /**
      * General constructor for all consumable objects.
-     *
      * @param sprite - the sprite
      * @param xPos - the x position
      * @param yPos - the y position
@@ -55,15 +52,15 @@ abstract class AbstractConsumable implements Thing{
      */
     public AbstractConsumable(Image sprite, int x, int y, int points) {
         this(x, y);
-        this.sprite = sprite;              //sets values
+        this.sprite = sprite; //sets values
         this.points = points;
         visible = true; //all are visible by default
     }
 
-    //getters and setters
+    /*------getters and setters------*\
+    
     /**
      * Gets the Image file of the sprite
-     *
      * @return - the Image
      */
     public final Image getSprite() {
@@ -72,7 +69,6 @@ abstract class AbstractConsumable implements Thing{
 
     /**
      * Sets the sprite of the object
-     *
      * @param sprite - the new sprite
      */
     public void setSprite(Image sprite) {
@@ -81,7 +77,6 @@ abstract class AbstractConsumable implements Thing{
 
     /**
      * Gets the x-position of the object
-     *
      * @return - the x position
      */
     public final int getX() {
@@ -90,7 +85,6 @@ abstract class AbstractConsumable implements Thing{
 
     /**
      * Sets the x position of the object
-     *
      * @param x - the x position
      */
     public void setX(int x) {
@@ -99,7 +93,6 @@ abstract class AbstractConsumable implements Thing{
 
     /**
      * Gets the y position of the object
-     *
      * @return - the y position
      */
     public final int getY() {
@@ -108,7 +101,6 @@ abstract class AbstractConsumable implements Thing{
 
     /**
      * Sets the y position of the object
-     *
      * @param y - the new y position.
      */
     public void setY(int y) {
@@ -117,7 +109,6 @@ abstract class AbstractConsumable implements Thing{
 
     /**
      * Gets the point value
-     *
      * @return - the value
      */
     public final int getPoints() {
@@ -126,7 +117,6 @@ abstract class AbstractConsumable implements Thing{
 
     /**
      * Sets the point value
-     *
      * @param points - the new point value
      */
     public void setPoints(int points) {
@@ -149,10 +139,9 @@ abstract class AbstractConsumable implements Thing{
         this.visible = visible;
     }
     
-    //behaviours
+    /*------behaviours------*\
     /**
      * Eats the item making the space empty
-     *
      * @return - the point value of the consumable eaten.
      */
     private int eat() {
@@ -169,8 +158,7 @@ abstract class AbstractConsumable implements Thing{
     }
 
     /**
-     * Compares the point value and sprite to see if they are the same.
-     *
+     * Compares the point value and sprite to see if they are the same
      * @param o - the other object
      * @return - if they are the same
      */

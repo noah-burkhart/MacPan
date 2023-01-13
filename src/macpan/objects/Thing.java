@@ -7,7 +7,6 @@ package macpan.objects;
 
 import java.awt.Image;
 
-
 public interface Thing {
     
     public int getX();

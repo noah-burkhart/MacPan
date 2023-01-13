@@ -1,5 +1,5 @@
 /*
- *N Burkhart
+ * N Burkhart
  * 12/21/2022
  * Class to represent a pellet object.
  */
@@ -21,7 +21,6 @@ public class PowerPellet extends AbstractConsumable{
     
     /**
      * Secondary constructor for a Power Pellet utilizing abstract class.
-     *
      * @param sprite - the sprite.
      * @param x - the x position.
      * @param y - the y position.
@@ -33,7 +32,6 @@ public class PowerPellet extends AbstractConsumable{
     
     /**
      * Secondary constructor for a pellet utilizing abstract class.
-     *
      * @param sprite - the sprite.
      * @param x - the x position.
      * @param y - the y position.
@@ -68,7 +66,5 @@ public class PowerPellet extends AbstractConsumable{
      */
     public String toString() {
         return "PowerPellet{" + super.toString() + '}';
-    }
-    
-    
+    }   
 }
