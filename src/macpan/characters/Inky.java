@@ -36,7 +36,6 @@ public class Inky extends AbstractGhost implements Ghost {
         
     }
     
-    
 //    public int chaseAlgorithmX(int pacmanX, Blinky b) {
 //        int pivotPointX = pacmanX;
 //        int targetX;
