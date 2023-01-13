@@ -46,7 +46,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     private String blinkyPossible = "", pinkyPossible = "", inkyPossible = "", clydePossible = "";
     private String blinkyChoice = "", pinkyChoice = "", inkyChoice = "", clydeChoice = "";
 
-    private final int pacmanTick = 27;
+    private int pacmanTick = 27;
     
     int[][] gridX = new int[19][21]; //parallel to images, holds the position the images are in on the X axis
     int[][] gridY = new int[19][21]; //parallel to images, holds the position the images are in on the Y axis
