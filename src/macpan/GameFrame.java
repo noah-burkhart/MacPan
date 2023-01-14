@@ -32,37 +32,11 @@ public class GameFrame extends javax.swing.JFrame {
     private void initUI() {        
         //set title of the JFrame
         setTitle("MACPAN");      
-        setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.ipady = 700;
-        c.ipadx = 600;
+        
         //add a custom JPanel to draw on
-        add(new GamePanel(), c);
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridy = 1;
-        c.ipady = 20;
-        c.ipadx = 200;
-        btnBack.setBackground(Color.black);
-        btnBack.setFont(new java.awt.Font("Monospaced", 1, 20));
-        btnBack.setForeground(Color.yellow);
-        btnBack.setText("Back");
-        btnBack.setLocation(600, 600);
-        btnBack.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainWindow.setVisible(true);
-                setVisible(false);
-                
-            }
-        }
-        );
-        add(btnBack, c);
+        add(new GamePanel());
         //set the size of the window
-        setSize(600, 800);
+        setSize(700, 800);
         //tell the JFrame what to do when closed
         //this is important if our application has multiple windows
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

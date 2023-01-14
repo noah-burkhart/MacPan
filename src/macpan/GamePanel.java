@@ -36,7 +36,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private Thread animator;
     private final int DELAY = 25, BUFFER_X = 48, BUFFER_Y = 41;
-    Thing[][] b = new Thing[19][21]; //the images
+    Thing[][] b = new Thing[23][21]; //the images
 
     private final int px = 26; //the size of each grid spot (26x26 pixels)
 
@@ -46,8 +46,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private int pacmanTick = 27;
 
-    int[][] gridX = new int[19][21]; //parallel to images, holds the position the images are in on the X axis
-    int[][] gridY = new int[19][21]; //parallel to images, holds the position the images are in on the Y axis
+    int[][] gridX = new int[23][21]; //parallel to images, holds the position the images are in on the X axis
+    int[][] gridY = new int[23][21]; //parallel to images, holds the position the images are in on the Y axis
 
     //creating image files to be used
     private Image imgPellet, imgPowerPellet, imgFood, imgBlock, imgEmpty;
@@ -71,12 +71,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         loadBoard();
         setBackground(Color.black);
 
-        pacman = new Pacman(3, imgPacUp1, px * 9, px * 9, 2, 2, "right");
+        pacman = new Pacman(3, imgPacUp1, px * 11, px * 11, 2, 2, "right");
 
-        blinky = new Blinky(imgBlinkyUp1, px * 1, px * 1, 2, 2, "right");
-        pinky = new Pinky(imgPinkyUp1, px * 17, px * 1, 2, 2, "right");
-        inky = new Inky(imgInkyUp1, px * 1, px * 19, 2, 2, "right");
-        clyde = new Clyde(imgClydeUp1, px * 17, px * 19, 2, 2, "right");
+        blinky = new Blinky(imgBlinkyUp1, px * 3, px * 1, 2, 2, "right");
+        pinky = new Pinky(imgPinkyUp1, px * 19, px * 1, 2, 2, "right");
+        inky = new Inky(imgInkyUp1, px * 3, px * 19, 2, 2, "right");
+        clyde = new Clyde(imgClydeUp1, px * 19, px * 19, 2, 2, "right");
 
         //attach the keyboard to the panel and give it "focus"
         this.addKeyListener(this);
@@ -154,7 +154,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             Scanner s = new Scanner(f);  //tries to make a file and a scanner
 
             for (int y = 0; y < 21; y++) { //Loops through the y axis of the 2D array
-                for (int x = 0; x < 19; x++) { //loops through the x
+                for (int x = 0; x < 23; x++) { //loops through the x
 
                     type = s.nextLine(); //saves the type of 'thing' from the data file
 
@@ -188,7 +188,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         //must be casted from older Graphics class in order to have access to some newer methods
 
         Graphics2D g2d = (Graphics2D) g;
-        for (int i = 0; i < 19; i++) {
+        for (int i = 2; i < 21; i++) {
             for (int j = 0; j < 21; j++) {
                 g2d.drawImage(b[i][j].getSprite(), b[i][j].getX() + BUFFER_X, b[i][j].getY() + BUFFER_Y, px, px, Color.black, this);
             }
@@ -198,12 +198,21 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         g2d.drawString("HIGH-SCORE: " + 100000, 10, 28);
         g2d.drawString("SCORE: " + pacman.getScore(), 375, 28);
         g2d.drawString("LIVES: ", 10, 615);
+        g2d.drawImage(pacman.getSprite(), pacman.getXPos() + BUFFER_X, pacman.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
         g2d.drawImage(blinky.getSprite(), blinky.getXPos() + BUFFER_X, blinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
         g2d.drawImage(pinky.getSprite(), pinky.getXPos() + BUFFER_X, pinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
         g2d.drawImage(inky.getSprite(), inky.getXPos() + BUFFER_X, inky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
         g2d.drawImage(clyde.getSprite(), clyde.getXPos() + BUFFER_X, clyde.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
-        g2d.drawImage(pacman.getSprite(), pacman.getXPos() + BUFFER_X, pacman.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
-
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 21; j++) {
+                g2d.drawImage(b[i][j].getSprite(), b[i][j].getX() + BUFFER_X, b[i][j].getY() + BUFFER_Y, px, px, Color.black, this);
+            }
+        }
+        for (int i = 21; i < 23; i++) {
+            for (int j = 0; j < 21; j++) {
+                g2d.drawImage(b[i][j].getSprite(), b[i][j].getX() + BUFFER_X, b[i][j].getY() + BUFFER_Y, px, px, Color.black, this);
+            }
+        }
     }
 
     //overrides paintComponent in JPanel class
@@ -295,6 +304,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             }
         }
         movePacman(xTop, yTop, xBottom, yBottom); //move pacman
+        if (xTop == 0) {
+            pacman.setXPos(26 * 21);
+        }
+        if (xBottom == 22) {
+            pacman.setXPos(26 * 1);
+        }
         animatePacman(); //animate pacman
         checkScored();
     }
@@ -507,6 +522,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             blinkyDown = true;
             blinkyLeft = true;
         }
+        if (blinky.getXPos() / 26 == 0) {
+            blinky.setXPos(26 * 20);
+        }
+        if (blinky.getXPos() / 26 == 21) {
+            blinky.setXPos(26 * 1);
+        }
     }
 
     /**
@@ -584,6 +605,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             pinkyUp = true;
             pinkyDown = true;
             pinkyLeft = true;
+        }
+        if (pinky.getXPos() / 26 == 0) {
+            pinky.setXPos(26 * 20);
+        }
+        if (pinky.getXPos() / 26 == 21) {
+            pinky.setXPos(26 * 1);
         }
     }
 
@@ -663,6 +690,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             inkyDown = true;
             inkyLeft = true;
         }
+        if (inky.getXPos() / 26 == 0) {
+            inky.setXPos(26 * 20);
+        }
+        if (inky.getXPos() / 26 == 21) {
+            inky.setXPos(26 * 1);
+        }
     }
 
     /**
@@ -741,6 +774,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             clydeUp = true;
             clydeDown = true;
             clydeLeft = true;
+        }
+        if (clyde.getXPos() / 26 == 0) {
+            clyde.setXPos(26 * 20);
+        }
+        if (clyde.getXPos()/ 26 == 21) {
+            clyde.setXPos(26 * 1);
         }
     }
 
