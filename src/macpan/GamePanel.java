@@ -163,9 +163,11 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
                     } else if (type.equals("pellet")) { //if it is a pellet 
                         b[x][y] = new Pellet(imgPellet, x * px, y * px);  //set to pellet
+                        pelletCount++; //adds to the pellet counter
 
                     } else if (type.equals("powerPellet")) { //if it is a Power pellet 
                         b[x][y] = new PowerPellet(imgPowerPellet, x * px, y * px);  //set to Power pellet
+                        pelletCount++; //adds to the pellet counter
 
                     } else if (type.equals("food")) { //if it is a Food object 
                         b[x][y] = new Food(imgFood, x * px, y * px);  //set to Food
@@ -233,6 +235,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
             foodTick++; //adds to the food tick
             addFood(); //adds food items to the map
+            
+            checkMapEmpty(); //checks if the user has cleared the board
 
             repaint();
 
@@ -465,6 +469,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         int y = pacman.getYPos() / px; //mid level of pacman
 
         if (b[x][y] instanceof Pellet == true) {
+            pelletCount--; //takes away from the total pellet count
             pacman.addScore(((Pellet) (b[x][y])).getPoints()); //adds the score of the pellet to pacmans score
             b[x][y] = new Empty(imgEmpty, x * px, y * px); //sets the old space to empty
 
@@ -474,6 +479,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
         } else if (b[x][y] instanceof PowerPellet == true) { //if the occupied space is a power pellet
             //additional power pellet code here
+            pelletCount--; //takes away from the total pellet count
             pacman.setPowerPellet(true); //notifies that it now has a power pellet state.
             pacman.addScore(((PowerPellet) (b[x][y])).getPoints()); //adds the score of the pellet to pacmans score
             b[x][y] = new Empty(imgEmpty, x * px, y * px); //sets the old space to empty
@@ -504,6 +510,37 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
+    private int pelletCount = 0; //used to remember win condition
+    
+    /**
+     * Will check to see if pacman has cleared the map
+     */
+    public void checkMapEmpty(){
+        if(pelletCount == 0){ //if all pellets have been consumed
+            //put sound effects here if were doing this
+            
+            pacman.setXPos(px*11);
+            pacman.setYPos(px*11);  //reset pacmans position
+            
+            blinky.setXSpeed(blinky.getXSpeed()+1);
+            blinky.setYSpeed(blinky.getYSpeed()+1);
+            
+            pinky.setXSpeed(pinky.getXSpeed()+2); //pinky is a menace.
+            pinky.setYSpeed(pinky.getYSpeed()+2);
+            
+            inky.setXSpeed(inky.getXSpeed()+1);
+            inky.setYSpeed(inky.getYSpeed()+1);
+            
+            clyde.setXSpeed(clyde.getXSpeed()+1);
+            clyde.setYSpeed(clyde.getYSpeed()+1);
+            
+            loadBoard(); //reset the board and fill it again
+            
+            
+        }
+    }
+    
+    
     /*
      * ***************************************************************************************************
      * ALL GHOST CODE 
