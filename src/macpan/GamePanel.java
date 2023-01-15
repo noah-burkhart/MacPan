@@ -68,6 +68,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      * data file to load the game board
      * ***************************************************************************************************
      */
+    
     /*
     Thing, the game board itself, utalizes interface called thing(meaning it is a thing/obkect on the gameboard)
     It includes the classes:
@@ -179,10 +180,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
-    /**
+    /*
      * ***************************************************************************************************
-     * G2D CODE AND FRAMES Includes: - code for drawing - code to run the frame
-     * / program
+    G2D CODE AND FRAMES 
+    Includes: 
+        - Code for drawing 
+        - Code to run the frame
      * ***************************************************************************************************
      */
     //overrides paintComponent in JPanel class
@@ -290,10 +293,14 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
-    /**
+    /*
      * ***************************************************************************************************
-     * ALL PACMAN CODE Includes: - movement - animation - adding points - Win
-     * conditions
+     * ALL PACMAN CODE 
+            Includes: 
+            - movement 
+            - animation 
+            - adding points 
+            - Win conditions
      * ***************************************************************************************************
      */
     Pacman pacman; //pacman himself
@@ -497,10 +504,13 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
-    /**
+    /*
      * ***************************************************************************************************
-     * ALL GHOST CODE Includes: - animation - movement - power pellet activated
-     * movement (maybe??)
+     * ALL GHOST CODE 
+            Includes: 
+            - animation 
+            - movement 
+            - power pellet activated movement of ghosts (maybe)?
      * ***************************************************************************************************
      */
     Blinky blinky;
