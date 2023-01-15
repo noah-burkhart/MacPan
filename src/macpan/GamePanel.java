@@ -24,7 +24,7 @@ import macpan.characters.Blinky;
 import macpan.characters.Clyde;
 import macpan.characters.Inky;
 import macpan.characters.Pacman;
-import macpan.characters.Pinky;
+import macpan.characters.Pinky;      //importing from exterior packages (only in packages for organization)
 import macpan.objects.Block;
 import macpan.objects.Pellet;
 import macpan.objects.Food;
@@ -35,20 +35,49 @@ import macpan.objects.Thing;
 public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private Thread animator;
-    private final int DELAY = 25, BUFFER_X = 48, BUFFER_Y = 41;
-    Thing[][] b = new Thing[23][21]; //the images
-
+    private final int DELAY = 25, BUFFER_X = 48, BUFFER_Y = 41; //the buffer for each animation in order to centre the gameboard
+     
     private final int px = 26; //the size of each grid spot (26x26 pixels)
 
-    private int blinkyCounter = px, pinkyCounter = px, inkyCounter = px, clydeCounter = px;
-    private String blinkyPossible = "", pinkyPossible = "", inkyPossible = "", clydePossible = "";
-    private String blinkyChoice = "", pinkyChoice = "", inkyChoice = "", clydeChoice = "";
+    JButton btnBack = new javax.swing.JButton(); //the back button
 
-    private int pacmanTick = 27;
+    /**
+     * The default constructor for the game panel
+     */
+    public GamePanel() {
+        loadImage(); //loads the images and the board
+        loadBoard();
+        setBackground(Color.black);
 
-    int[][] gridX = new int[23][21]; //parallel to images, holds the position the images are in on the X axis
-    int[][] gridY = new int[23][21]; //parallel to images, holds the position the images are in on the Y axis
+        pacman = new Pacman(3, imgPacUp1, px * 11, px * 11, 2, 2, "right"); 
 
+        blinky = new Blinky(imgBlinkyUp1, px * 3, px * 1, 2, 2, "right");
+        pinky = new Pinky(imgPinkyUp1, px * 19, px * 1, 2, 2, "right");
+        inky = new Inky(imgInkyUp1, px * 3, px * 19, 2, 2, "right");            //initializes the ghosts and pacman
+        clyde = new Clyde(imgClydeUp1, px * 19, px * 19, 2, 2, "right");
+
+        //attach the keyboard to the panel and give it "focus"
+        this.addKeyListener(this);
+        this.setFocusable(true);      //allows for keyboard input
+        this.requestFocus();
+    }
+
+    /*****************************************************************************************************
+    LOADING IN
+    Includes:
+     - creating images
+     - loading in images
+     - reading from data file to load the game board
+    *****************************************************************************************************/
+    
+    /*
+    Thing, the game board itself, utalizes interface called thing(meaning it is a thing/obkect on the gameboard)
+    It includes the classes:
+    Block, Empty, Pellet, PowerPellet, Food.
+    */
+    Thing[][] b = new Thing[23][21];
+    
+    
     //creating image files to be used
     private Image imgPellet, imgPowerPellet, imgFood, imgBlock, imgEmpty;
     private Image imgBlinkyUp1, imgBlinkyUp2, imgBlinkyDown1, imgBlinkyDown2, imgBlinkyLeft1, imgBlinkyLeft2, imgBlinkyRight1, imgBlinkyRight2;
@@ -56,34 +85,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     private Image imgInkyUp1, imgInkyUp2, imgInkyDown1, imgInkyDown2, imgInkyLeft1, imgInkyLeft2, imgInkyRight1, imgInkyRight2;
     private Image imgClydeUp1, imgClydeUp2, imgClydeDown1, imgClydeDown2, imgClydeLeft1, imgClydeLeft2, imgClydeRight1, imgClydeRight2;
     private Image imgPacWhole, imgPacUp1, imgPacUp2, imgPacDown1, imgPacDown2, imgPacLeft1, imgPacLeft2, imgPacRight1, imgPacRight2;
-
-    Pacman pacman;
-    Blinky blinky;
-    Pinky pinky;
-    Inky inky;
-    Clyde clyde;
-
-    JButton btnBack = new javax.swing.JButton();
-
-    // default constructor
-    public GamePanel() {
-        loadImage();
-        loadBoard();
-        setBackground(Color.black);
-
-        pacman = new Pacman(3, imgPacUp1, px * 11, px * 11, 2, 2, "right");
-
-        blinky = new Blinky(imgBlinkyUp1, px * 3, px * 1, 2, 2, "right");
-        pinky = new Pinky(imgPinkyUp1, px * 19, px * 1, 2, 2, "right");
-        inky = new Inky(imgInkyUp1, px * 3, px * 19, 2, 2, "right");
-        clyde = new Clyde(imgClydeUp1, px * 19, px * 19, 2, 2, "right");
-
-        //attach the keyboard to the panel and give it "focus"
-        this.addKeyListener(this);
-        this.setFocusable(true);
-        this.requestFocus();
-    }
-
+    
     /**
      * Loads the images and stores them for use.
      */
@@ -173,8 +175,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                     } else { //if not food, it is empty
                         b[x][y] = new Empty(imgEmpty, x * px, y * px);
                     }
-                    gridX[x][y] = x * px; //stores the x cooridnate at the image position
-                    gridY[x][y] = y * px; //stores the y coordinate at the image position (both used for pacman interaction)
                 }
             }
         } catch (FileNotFoundException e) { //cacthes file not found
@@ -182,38 +182,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
-    //does the actual drawing
-    private void doDrawing(Graphics g) {
-        //the Graphics2D class is the class that handles all the drawing
-        //must be casted from older Graphics class in order to have access to some newer methods
-
-        Graphics2D g2d = (Graphics2D) g;
-        for (int i = 2; i < 21; i++) {
-            for (int j = 0; j < 21; j++) {
-                g2d.drawImage(b[i][j].getSprite(), b[i][j].getX() + BUFFER_X, b[i][j].getY() + BUFFER_Y, px, px, Color.black, this);
-            }
-        }
-        g2d.setColor(Color.white);
-        g2d.setFont(new java.awt.Font("Monospaced", 1, 17));
-        g2d.drawString("HIGH-SCORE: " + 100000, 10, 28);
-        g2d.drawString("SCORE: " + pacman.getScore(), 375, 28);
-        g2d.drawString("LIVES: ", 10, 615);
-        g2d.drawImage(pacman.getSprite(), pacman.getXPos() + BUFFER_X, pacman.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
-        g2d.drawImage(blinky.getSprite(), blinky.getXPos() + BUFFER_X, blinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
-        g2d.drawImage(pinky.getSprite(), pinky.getXPos() + BUFFER_X, pinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
-        g2d.drawImage(inky.getSprite(), inky.getXPos() + BUFFER_X, inky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
-        g2d.drawImage(clyde.getSprite(), clyde.getXPos() + BUFFER_X, clyde.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 21; j++) {
-                g2d.drawImage(b[i][j].getSprite(), b[i][j].getX() + BUFFER_X, b[i][j].getY() + BUFFER_Y, px, px, Color.black, this);
-            }
-        }
-        for (int i = 21; i < 23; i++) {
-            for (int j = 0; j < 21; j++) {
-                g2d.drawImage(b[i][j].getSprite(), b[i][j].getX() + BUFFER_X, b[i][j].getY() + BUFFER_Y, px, px, Color.black, this);
-            }
-        }
-    }
+    /*****************************************************************************************************
+    G2D CODE AND FRAMES
+    Includes:
+     - code for drawing
+     - code to run the frame / program
+    *****************************************************************************************************/
 
     //overrides paintComponent in JPanel class
     //performs custom painting
@@ -279,6 +253,72 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             }
             //get the new current time
             beforeTime = System.currentTimeMillis();
+        }
+    }
+
+    //does the actual drawing
+    private void doDrawing(Graphics g) {
+        //the Graphics2D class is the class that handles all the drawing
+        //must be casted from older Graphics class in order to have access to some newer methods
+
+        Graphics2D g2d = (Graphics2D) g;
+        for (int i = 2; i < 21; i++) {
+            for (int j = 0; j < 21; j++) {
+                g2d.drawImage(b[i][j].getSprite(), b[i][j].getX() + BUFFER_X, b[i][j].getY() + BUFFER_Y, px, px, Color.black, this);
+            }
+        }
+        g2d.setColor(Color.white);
+        g2d.setFont(new java.awt.Font("Monospaced", 1, 17));
+        g2d.drawString("HIGH-SCORE: " + 100000, 10, 28);
+        g2d.drawString("SCORE: " + pacman.getScore(), 375, 28);
+        g2d.drawString("LIVES: ", 10, 615);
+        g2d.drawImage(pacman.getSprite(), pacman.getXPos() + BUFFER_X, pacman.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
+        g2d.drawImage(blinky.getSprite(), blinky.getXPos() + BUFFER_X, blinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
+        g2d.drawImage(pinky.getSprite(), pinky.getXPos() + BUFFER_X, pinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
+        g2d.drawImage(inky.getSprite(), inky.getXPos() + BUFFER_X, inky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
+        g2d.drawImage(clyde.getSprite(), clyde.getXPos() + BUFFER_X, clyde.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 21; j++) {
+                g2d.drawImage(b[i][j].getSprite(), b[i][j].getX() + BUFFER_X, b[i][j].getY() + BUFFER_Y, px, px, Color.black, this);
+            }
+        }
+        for (int i = 21; i < 23; i++) {
+            for (int j = 0; j < 21; j++) {
+                g2d.drawImage(b[i][j].getSprite(), b[i][j].getX() + BUFFER_X, b[i][j].getY() + BUFFER_Y, px, px, Color.black, this);
+            }
+        }
+    }
+    
+    
+    /*****************************************************************************************************
+    ALL PACMAN CODE
+    Includes:
+     - movement
+     - animation
+     - adding points
+     - Win conditions
+    *****************************************************************************************************/
+    
+    Pacman pacman; //pacman himself
+    
+    private String currentPressed = "", oldPressed = ""; //used to control what key was last pressed
+    private int pacmanTick = 27; //tick used to control pacmans animation
+    
+    @Override
+    /**
+     * Runs when a key is pressed
+     */
+    public void keyPressed(KeyEvent evt) {
+        int key = evt.getKeyCode();  // Keyboard code for the pressed key.
+
+        if (key == KeyEvent.VK_W) { //if key pressed is W meaning UP
+            currentPressed = "up";
+        } else if (key == KeyEvent.VK_S) { //if key pressed is S meaning DOWN
+            currentPressed = "down";
+        } else if (key == KeyEvent.VK_A) {//if key pressed is A meaning LEFT
+            currentPressed = "left";
+        } else if (key == KeyEvent.VK_D) {//if key pressed is D meaning RIGHT
+            currentPressed = "right";
         }
     }
 
@@ -369,21 +409,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     /**
-     * Checks to see if pacman is on a consumable, then adds points and erase
-     */
-    public void checkScored() {
-        Empty e = new Empty(imgEmpty, 0, 0);
-        int x = (pacman.getXPos()) / px;  //represents pacmans position on the 'grid' (the map array)
-        int y = (pacman.getYPos()) / px;
-
-        if (b[x][y] instanceof Pellet == true) {
-            pacman.addScore(((Pellet) (b[x][y])).getPoints()); //adds the score of the pellet to pacmans score
-            b[x][y] = new Empty(imgEmpty, x * px, y * px);
-        }
-
-    }
-
-    /**
      * Animates PacMan based on a tick systems swapping between sprites.
      */
     public void animatePacman() {
@@ -422,30 +447,53 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
-    private String currentPressed = "", oldPressed = ""; //used to control what key was last pressed
-
-    @Override
     /**
-     * Runs when a key is pressed
+     * Checks to see if pacman is on a consumable, then adds points and erase
      */
-    public void keyPressed(KeyEvent evt) {
-        int key = evt.getKeyCode();  // Keyboard code for the pressed key.
+    public void checkScored() {
 
-        if (key == KeyEvent.VK_W) { //if key pressed is W meaning UP
-            currentPressed = "up";
-        } else if (key == KeyEvent.VK_S) { //if key pressed is S meaning DOWN
-            currentPressed = "down";
-        } else if (key == KeyEvent.VK_A) {//if key pressed is A meaning LEFT
-            currentPressed = "left";
-        } else if (key == KeyEvent.VK_D) {//if key pressed is D meaning RIGHT
-            currentPressed = "right";
+        int x = pacman.getXPos() / px;  //represents pacmans position on the 'grid' (the map array)
+        int y = pacman.getYPos() / px; //mid level of pacman
+
+        if (b[x][y] instanceof Pellet == true) {
+            pacman.addScore(((Pellet) (b[x][y])).getPoints()); //adds the score of the pellet to pacmans score
+            b[x][y] = new Empty(imgEmpty, x * px, y * px); //sets the old space to empty
+
+        } else if (b[x][y] instanceof Food == true) { //if the occupied space is food
+            pacman.addScore(((Food) (b[x][y])).getPoints()); //adds the score of the pellet to pacmans score
+            b[x][y] = new Empty(imgEmpty, x * px, y * px); //sets the old space to empty
+        } else if (b[x][y] instanceof PowerPellet == true) { //if the occupied space is a power pellet
+            //additional power pellet code here
+            pacman.setPowerPellet(true); //notifies that it now has a power pellet state.
+
+            pacman.addScore(((PowerPellet) (b[x][y])).getPoints()); //adds the score of the pellet to pacmans score
+            b[x][y] = new Empty(imgEmpty, x * px, y * px); //sets the old space to empty
         }
+
     }
 
-    boolean blinkyUp = true, blinkyDown = true, blinkyLeft = true, blinkyRight = true; //Booleans for checking backward movement
-    boolean pinkyUp = true, pinkyDown = true, pinkyLeft = true, pinkyRight = true; //Booleans for checking backward movement
-    boolean inkyUp = true, inkyDown = true, inkyLeft = true, inkyRight = true; //Booleans for checking backward movement
-    boolean clydeUp = true, clydeDown = true, clydeLeft = true, clydeRight = true; //Booleans for checking backward movement
+   
+    /*****************************************************************************************************
+    ALL GHOST CODE
+    Includes:
+     - animation
+     - movement
+     - power pellet activated movement (maybe??)
+    *****************************************************************************************************/
+    
+    Blinky blinky;
+    Pinky pinky;
+    Inky inky;   //the ghosts
+    Clyde clyde;
+    
+    private boolean blinkyUp = true, blinkyDown = true, blinkyLeft = true, blinkyRight = true; //Booleans for checking backward movement
+    private boolean pinkyUp = true, pinkyDown = true, pinkyLeft = true, pinkyRight = true; //Booleans for checking backward movement
+    private boolean inkyUp = true, inkyDown = true, inkyLeft = true, inkyRight = true; //Booleans for checking backward movement
+    private boolean clydeUp = true, clydeDown = true, clydeLeft = true, clydeRight = true; //Booleans for checking backward movement
+    
+    private int blinkyCounter = px, pinkyCounter = px, inkyCounter = px, clydeCounter = px;
+    private String blinkyPossible = "", pinkyPossible = "", inkyPossible = "", clydePossible = "";
+    private String blinkyChoice = "", pinkyChoice = "", inkyChoice = "", clydeChoice = "";
 
     /**
      * Move Blinky by making a decision every time the counter has reached PX
@@ -800,6 +848,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
+    
     /*
     Abstract methods for key listener class
      */
@@ -807,7 +856,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     public void keyTyped(KeyEvent e) {
         //
     }
-
     @Override
     public void keyReleased(KeyEvent e) {
         //
