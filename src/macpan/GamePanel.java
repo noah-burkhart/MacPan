@@ -311,13 +311,13 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     public void keyPressed(KeyEvent evt) {
         int key = evt.getKeyCode();  // Keyboard code for the pressed key.
 
-        if (key == KeyEvent.VK_W) { //if key pressed is W meaning UP
+        if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) { //if key pressed is W meaning UP
             currentPressed = "up";
-        } else if (key == KeyEvent.VK_S) { //if key pressed is S meaning DOWN
+        } else if (key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN) { //if key pressed is S meaning DOWN
             currentPressed = "down";
-        } else if (key == KeyEvent.VK_A) {//if key pressed is A meaning LEFT
+        } else if (key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT) {//if key pressed is A meaning LEFT
             currentPressed = "left";
-        } else if (key == KeyEvent.VK_D) {//if key pressed is D meaning RIGHT
+        } else if (key == KeyEvent.VK_D || key == KeyEvent.VK_RIGHT) {//if key pressed is D meaning RIGHT
             currentPressed = "right";
         }
     }
