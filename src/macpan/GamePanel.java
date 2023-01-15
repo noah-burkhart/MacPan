@@ -36,7 +36,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private Thread animator;
     private final int DELAY = 25, BUFFER_X = 48, BUFFER_Y = 41; //the buffer for each animation in order to centre the gameboard
-     
+
     private final int px = 26; //the size of each grid spot (26x26 pixels)
 
     JButton btnBack = new javax.swing.JButton(); //the back button
@@ -49,7 +49,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         loadBoard();
         setBackground(Color.black);
 
-        pacman = new Pacman(3, imgPacUp1, px * 11, px * 11, 2, 2, "right"); 
+        pacman = new Pacman(3, imgPacUp1, px * 11, px * 11, 2, 2, "right");
 
         blinky = new Blinky(imgBlinkyUp1, px * 3, px * 1, 2, 2, "right");
         pinky = new Pinky(imgPinkyUp1, px * 19, px * 1, 2, 2, "right");
@@ -62,22 +62,19 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         this.requestFocus();
     }
 
-    /*****************************************************************************************************
-    LOADING IN
-    Includes:
-     - creating images
-     - loading in images
-     - reading from data file to load the game board
-    *****************************************************************************************************/
-    
+    /**
+     * ***************************************************************************************************
+     * LOADING IN Includes: - creating images - loading in images - reading from
+     * data file to load the game board
+     * ***************************************************************************************************
+     */
     /*
     Thing, the game board itself, utalizes interface called thing(meaning it is a thing/obkect on the gameboard)
     It includes the classes:
     Block, Empty, Pellet, PowerPellet, Food.
-    */
+     */
     Thing[][] b = new Thing[23][21];
-    
-    
+
     //creating image files to be used
     private Image imgPellet, imgPowerPellet, imgFood, imgBlock, imgEmpty;
     private Image imgBlinkyUp1, imgBlinkyUp2, imgBlinkyDown1, imgBlinkyDown2, imgBlinkyLeft1, imgBlinkyLeft2, imgBlinkyRight1, imgBlinkyRight2;
@@ -85,7 +82,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     private Image imgInkyUp1, imgInkyUp2, imgInkyDown1, imgInkyDown2, imgInkyLeft1, imgInkyLeft2, imgInkyRight1, imgInkyRight2;
     private Image imgClydeUp1, imgClydeUp2, imgClydeDown1, imgClydeDown2, imgClydeLeft1, imgClydeLeft2, imgClydeRight1, imgClydeRight2;
     private Image imgPacWhole, imgPacUp1, imgPacUp2, imgPacDown1, imgPacDown2, imgPacLeft1, imgPacLeft2, imgPacRight1, imgPacRight2;
-    
+
     /**
      * Loads the images and stores them for use.
      */
@@ -182,13 +179,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
-    /*****************************************************************************************************
-    G2D CODE AND FRAMES
-    Includes:
-     - code for drawing
-     - code to run the frame / program
-    *****************************************************************************************************/
-
+    /**
+     * ***************************************************************************************************
+     * G2D CODE AND FRAMES Includes: - code for drawing - code to run the frame
+     * / program
+     * ***************************************************************************************************
+     */
     //overrides paintComponent in JPanel class
     //performs custom painting
     @Override
@@ -228,7 +224,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             inkyCounter += inky.getXSpeed(); //Counter moves the same amount as the ghost each time
             clydeCounter += clyde.getXSpeed(); //Counter moves the same amount as the ghost each time
 
-            runPacman();
+            runPacman(); //runs pacman and his code
+
+            checkEaten(); //checks to see if pacman has eaten anything
+
+            foodTick++; //adds to the food tick
+            addFood(); //adds food items to the map
 
             repaint();
 
@@ -288,22 +289,18 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             }
         }
     }
-    
-    
-    /*****************************************************************************************************
-    ALL PACMAN CODE
-    Includes:
-     - movement
-     - animation
-     - adding points
-     - Win conditions
-    *****************************************************************************************************/
-    
+
+    /**
+     * ***************************************************************************************************
+     * ALL PACMAN CODE Includes: - movement - animation - adding points - Win
+     * conditions
+     * ***************************************************************************************************
+     */
     Pacman pacman; //pacman himself
-    
+
     private String currentPressed = "", oldPressed = ""; //used to control what key was last pressed
     private int pacmanTick = 27; //tick used to control pacmans animation
-    
+
     @Override
     /**
      * Runs when a key is pressed
@@ -352,7 +349,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             pacman.setXPos(26 * 1);
         }
         animatePacman(); //animate pacman
-        checkScored();
+
     }
 
     /**
@@ -447,10 +444,15 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
+    /*
+     Point Scoring and consumables
+     */
+    private int foodTick = 0; //used to control food spawning
+
     /**
      * Checks to see if pacman is on a consumable, then adds points and erase
      */
-    public void checkScored() {
+    public void checkEaten() {
 
         int x = pacman.getXPos() / px;  //represents pacmans position on the 'grid' (the map array)
         int y = pacman.getYPos() / px; //mid level of pacman
@@ -462,35 +464,55 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         } else if (b[x][y] instanceof Food == true) { //if the occupied space is food
             pacman.addScore(((Food) (b[x][y])).getPoints()); //adds the score of the pellet to pacmans score
             b[x][y] = new Empty(imgEmpty, x * px, y * px); //sets the old space to empty
+
         } else if (b[x][y] instanceof PowerPellet == true) { //if the occupied space is a power pellet
             //additional power pellet code here
             pacman.setPowerPellet(true); //notifies that it now has a power pellet state.
-
             pacman.addScore(((PowerPellet) (b[x][y])).getPoints()); //adds the score of the pellet to pacmans score
             b[x][y] = new Empty(imgEmpty, x * px, y * px); //sets the old space to empty
         }
 
     }
 
-   
-    /*****************************************************************************************************
-    ALL GHOST CODE
-    Includes:
-     - animation
-     - movement
-     - power pellet activated movement (maybe??)
-    *****************************************************************************************************/
-    
+    /**
+     * Decides when to add a food to the board in order to score more points
+     */
+    public void addFood() {
+        //the second conditon controls how long until spawing another piece of food
+
+        if (pacman.getScore() > 500 && foodTick >= 600) { //if pacman has eaten at least 50 pellets:
+
+            boolean run = true; //controls while loop
+
+            while (run) {
+                int x = (int) (Math.random() * 12) + 5; //creates a random x coordinate on the grid
+                int y = (int) (Math.random() * 20) + 1;  //creates a random y coordinate on the grid
+
+                if (b[x][y] instanceof Empty == true) { //if that spot is empty
+                    run = false; //stop looking for a spot
+                    b[x][y] = new Food(imgFood, x * px, y * px, 50); //set the spot to a piece of food
+                    foodTick = 0; //reset the food tick
+                }
+            }
+        }
+    }
+
+    /**
+     * ***************************************************************************************************
+     * ALL GHOST CODE Includes: - animation - movement - power pellet activated
+     * movement (maybe??)
+     * ***************************************************************************************************
+     */
     Blinky blinky;
     Pinky pinky;
     Inky inky;   //the ghosts
     Clyde clyde;
-    
+
     private boolean blinkyUp = true, blinkyDown = true, blinkyLeft = true, blinkyRight = true; //Booleans for checking backward movement
     private boolean pinkyUp = true, pinkyDown = true, pinkyLeft = true, pinkyRight = true; //Booleans for checking backward movement
     private boolean inkyUp = true, inkyDown = true, inkyLeft = true, inkyRight = true; //Booleans for checking backward movement
     private boolean clydeUp = true, clydeDown = true, clydeLeft = true, clydeRight = true; //Booleans for checking backward movement
-    
+
     private int blinkyCounter = px, pinkyCounter = px, inkyCounter = px, clydeCounter = px;
     private String blinkyPossible = "", pinkyPossible = "", inkyPossible = "", clydePossible = "";
     private String blinkyChoice = "", pinkyChoice = "", inkyChoice = "", clydeChoice = "";
@@ -848,7 +870,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
-    
     /*
     Abstract methods for key listener class
      */
@@ -856,6 +877,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     public void keyTyped(KeyEvent e) {
         //
     }
+
     @Override
     public void keyReleased(KeyEvent e) {
         //

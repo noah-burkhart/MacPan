@@ -17,7 +17,6 @@ public class Food extends AbstractConsumable{
      */
     public Food(int x, int y){
         super(x, y);
-        //sprite = foodImg;
         points = 50; //assigns the point value for the food
     }
     
@@ -29,6 +28,7 @@ public class Food extends AbstractConsumable{
      */
     public Food(Image sprite, int x, int y){
         super(sprite, x, y);
+        
     }
     
     /**
