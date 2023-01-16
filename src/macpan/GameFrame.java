@@ -5,13 +5,8 @@
  */
 package macpan;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -20,6 +15,7 @@ public class GameFrame extends javax.swing.JFrame {
 
     MenuFrame mainWindow;
     JButton btnBack = new javax.swing.JButton();
+    private Image icon  = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
     
     //constructor
     public GameFrame(MenuFrame m) {
@@ -31,7 +27,8 @@ public class GameFrame extends javax.swing.JFrame {
     //create the custom JFrame
     private void initUI() {        
         //set title of the JFrame
-        setTitle("MACPAN");      
+        setTitle("MacPan");
+        setIconImage(icon);
         
         //add a custom JPanel to draw on
         add(new GamePanel());

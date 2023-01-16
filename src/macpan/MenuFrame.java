@@ -6,6 +6,8 @@
 package macpan;
 
 import java.awt.Color;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class MenuFrame extends javax.swing.JFrame {
 
@@ -13,6 +15,8 @@ public class MenuFrame extends javax.swing.JFrame {
     private GameFrame firstWindow;
     private InstructionsFrame secondWindow;
     private HighscoreFrame thirdWindow;
+    
+    private Image icon  = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
     
     /**
      * Creates the menu frame with the gui builder
@@ -23,6 +27,7 @@ public class MenuFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("MacPan");
+        setIconImage(icon);
         getContentPane().setBackground(Color.BLACK);
     }
 

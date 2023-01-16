@@ -6,12 +6,15 @@
 package macpan;
 
 import java.awt.Color;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class InstructionsFrame extends javax.swing.JFrame {
 
     //Main window variable
     MenuFrame mainWindow;
     
+    private Image icon  = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
     /**
      * Creates the instructions frame with gui builder
      * @param m - the main window
@@ -22,6 +25,7 @@ public class InstructionsFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Instructions");
+        setIconImage(icon);
         getContentPane().setBackground(Color.BLACK);
         mainWindow = m;
         instructionArea.setText("""

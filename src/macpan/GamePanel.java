@@ -48,6 +48,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         loadImage(); //loads the images and the board
         loadBoard();
         setBackground(Color.black);
+        
 
         pacman = new Pacman(3, imgPacUp1, px * 11, px * 11, 2, 2, "right");
 
@@ -280,11 +281,14 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         g2d.drawString("HIGH-SCORE: " + 100000, 10, 28);
         g2d.drawString("SCORE: " + pacman.getScore(), 375, 28);
         g2d.drawString("LIVES: ", 10, 615);
+        
         g2d.drawImage(pacman.getSprite(), pacman.getXPos() + BUFFER_X, pacman.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
+        
         g2d.drawImage(blinky.getSprite(), blinky.getXPos() + BUFFER_X, blinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
         g2d.drawImage(pinky.getSprite(), pinky.getXPos() + BUFFER_X, pinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
         g2d.drawImage(inky.getSprite(), inky.getXPos() + BUFFER_X, inky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
         g2d.drawImage(clyde.getSprite(), clyde.getXPos() + BUFFER_X, clyde.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
+        
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 21; j++) {
                 g2d.drawImage(b[i][j].getSprite(), b[i][j].getX() + BUFFER_X, b[i][j].getY() + BUFFER_Y, px, px, Color.black, this);
@@ -461,7 +465,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     private int foodTick = 0; //used to control food spawning
 
     /**
-     * Checks to see if pacman is on a consumable, then adds points and erase
+     * Checks to see if Pacman is on a consumable, then adds points and erase
      */
     public void checkEaten() {
 

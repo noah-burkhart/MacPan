@@ -6,6 +6,7 @@
 package macpan;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -14,11 +15,14 @@ import java.io.BufferedWriter;
 import java.io.FileWriter; 
 import java.io.IOException; 
 import java.io.PrintWriter;
+import javax.swing.ImageIcon;
 
 public class HighscoreFrame extends javax.swing.JFrame {
     
     //Main window variable
     MenuFrame mainWindow;
+    
+    private Image icon  = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
     
     
     /**
@@ -31,6 +35,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("HI-SCORE List");
+        setIconImage(icon);
         getContentPane().setBackground(Color.BLACK);
         mainWindow = m;
         Score topScores[] = new Score[5];
