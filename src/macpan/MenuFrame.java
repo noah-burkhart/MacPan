@@ -6,8 +6,9 @@
 package macpan;
 
 import java.awt.Color;
-import java.awt.Image;
-import javax.swing.ImageIcon;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MenuFrame extends javax.swing.JFrame {
 
@@ -121,7 +122,11 @@ public class MenuFrame extends javax.swing.JFrame {
         //Open high score frame
         //Making sure there is actually an high score frame
         if (thirdWindow == null) {
-            thirdWindow = new HighscoreFrame(this);
+            try {
+                thirdWindow = new HighscoreFrame(this);
+            } catch (IOException ex) {
+                Logger.getLogger(MenuFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         this.setVisible(false); //Set main window to not visible
         thirdWindow.setVisible(true); //Set high score window to visible

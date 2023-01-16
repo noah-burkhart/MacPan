@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.ArrayList;
 import macpan.objects.Score;
 import java.io.BufferedWriter; 
 import java.io.FileWriter; 
@@ -29,7 +30,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
      * Creates the high score frame with gui builder
      * @param m - the main window
      */
-    public HighscoreFrame(MenuFrame m) {
+    public HighscoreFrame(MenuFrame m) throws IOException {
         initComponents();
         //Set frame to middle of screen, title, and disallow rezizing
         setLocationRelativeTo(null);
@@ -38,13 +39,51 @@ public class HighscoreFrame extends javax.swing.JFrame {
         setIconImage(icon);
         getContentPane().setBackground(Color.BLACK);
         mainWindow = m;
-        Score topScores[] = new Score[5];
-        //readFile(topScores);
+        //Score topScores[] = new Score[5];
+        ArrayList scores = new ArrayList();
+        //readFile(scores);
         
         
         FileWriter fw = null; 
         BufferedWriter bw = null; 
         PrintWriter pw = null;
+        
+         try {
+            fw = new FileWriter("src/macpan/score.data", true);
+            bw = new BufferedWriter(fw);
+            pw = new PrintWriter(bw);
+
+            pw.println("Hi This is a test");
+            pw.println("Root");
+            pw.println("Ben");
+
+            System.out.println("Data Successfully appended into file");
+            pw.flush();
+
+        } finally {
+            try {
+                pw.close();
+                bw.close();
+                fw.close();
+            } catch (IOException io) {// can't do anything }
+            }
+
+        }
+
+        // in Java 7 you can do it easily using try-with-resource
+        // statement as shown below
+
+        try (FileWriter f = new FileWriter("names.txt", true);
+                BufferedWriter b = new BufferedWriter(f);
+                PrintWriter p = new PrintWriter(b);) {
+
+            p.println("appending text into file");
+            p.println("Gaura");
+            p.println("Bori");
+
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
         
     }
 
@@ -57,6 +96,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
                int score = Integer.parseInt(s.nextLine());
                String name = s.nextLine();
                Score score_ = new Score(score, name);
+               //arr[i] = score_;
             }
             //quickSortD(arr, 0, 4);
             for (int i = 0; i < 5; i++) {
@@ -357,7 +397,6 @@ public class HighscoreFrame extends javax.swing.JFrame {
         this.setVisible(false); //HiScoreframe is not visible
         mainWindow.setVisible(true); //Main window is visible
     }//GEN-LAST:event_btnBackActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel HighScoreLabel;
