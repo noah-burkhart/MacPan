@@ -25,7 +25,6 @@ public class HighscoreFrame extends javax.swing.JFrame {
 
     private Image icon  = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
     
-    private Image icon  = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
     
     
     /**
