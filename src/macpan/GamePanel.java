@@ -83,6 +83,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     private Image imgClydeUp1, imgClydeUp2, imgClydeDown1, imgClydeDown2, imgClydeLeft1, imgClydeLeft2, imgClydeRight1, imgClydeRight2;
     private Image imgPacWhole, imgPacUp1, imgPacUp2, imgPacDown1, imgPacDown2, imgPacLeft1, imgPacLeft2, imgPacRight1, imgPacRight2;
 
+    private Image imgCherry, imgStrawberry, imgOrange, imgApple, imgMellon, imgGalaxian, imgBell, imgKey;
+    
     /**
      * Loads the images and stores them for use.
      */
@@ -94,6 +96,15 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         imgPowerPellet = new ImageIcon("src/macpan/images/Consumables/powerPellet.png").getImage();
         imgFood = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
 
+        imgCherry = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
+        imgStrawberry = new ImageIcon("src/macpan/images/Consumables/strawberry.png").getImage();
+        imgOrange = new ImageIcon("src/macpan/images/Consumables/orange.png").getImage();
+        imgApple = new ImageIcon("src/macpan/images/Consumables/apple.png").getImage();
+        imgMellon = new ImageIcon("src/macpan/images/Consumables/mellon.png").getImage(); //loads the food images in
+        imgGalaxian = new ImageIcon("src/macpan/images/Consumables/galaxian.png").getImage();
+        imgBell = new ImageIcon("src/macpan/images/Consumables/bell.png").getImage();
+        imgKey = new ImageIcon("src/macpan/images/Consumables/key.png").getImage();
+        
         imgBlinkyUp1 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyUp1.png").getImage();
         imgBlinkyUp2 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyUp2.png").getImage();
         imgBlinkyDown1 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyDown1.png").getImage();
@@ -516,6 +527,30 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                 }
             }
         }
+    }
+    
+    private int round = 1;
+    
+    public Food findRoundFood(){
+        Food f = new Food(imgFood, 0, 0, 50); //set the spot to a piece of food;
+        if(round==1){
+            
+        }else if(round==2){
+            
+        }else if(round==3){
+            
+        }else if(round==4){
+            
+        }else if(round==5){
+            
+        }else if(round==6){
+            
+        }else if(round==7){
+            
+        }else{ //must be 8
+            f = new Food(imgFood, 0, 0, 50); //set the spot to a piece of food 
+        } 
+        return f;
     }
 
     private int pelletCount = 0; //used to remember win condition
