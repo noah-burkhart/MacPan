@@ -35,7 +35,7 @@ import macpan.objects.Thing;
 public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private Thread animator;
-    private final int DELAY = 25, BUFFER_X = 48, BUFFER_Y = 41; //the buffer for each animation in order to centre the gameboard
+    private final int DELAY = 5, BUFFER_X = 48, BUFFER_Y = 41; //the buffer for each animation in order to centre the gameboard
 
     private final int px = 26; //the size of each grid spot (26x26 pixels)
 
@@ -82,6 +82,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     private Image imgInkyUp1, imgInkyUp2, imgInkyDown1, imgInkyDown2, imgInkyLeft1, imgInkyLeft2, imgInkyRight1, imgInkyRight2;
     private Image imgClydeUp1, imgClydeUp2, imgClydeDown1, imgClydeDown2, imgClydeLeft1, imgClydeLeft2, imgClydeRight1, imgClydeRight2;
     private Image imgPacWhole, imgPacUp1, imgPacUp2, imgPacDown1, imgPacDown2, imgPacLeft1, imgPacLeft2, imgPacRight1, imgPacRight2;
+
+    private Image imgCherry, imgStrawberry, imgOrange, imgApple, imgMelon, imgGalaxian, imgBell, imgKey;
 
     private Image imgCherry, imgStrawberry, imgOrange, imgApple, imgMelon, imgGalaxian, imgBell, imgKey;
 
@@ -273,10 +275,22 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             moveInky();
             moveClyde();
 
-            blinkyCounter += blinky.getXSpeed(); //Counter moves the same amount as the ghost each time
-            pinkyCounter += pinky.getXSpeed(); //Counter moves the same amount as the ghost each time
-            inkyCounter += inky.getXSpeed(); //Counter moves the same amount as the ghost each time
-            clydeCounter += clyde.getXSpeed(); //Counter moves the same amount as the ghost each time
+            //pacDeath = checkDeath();
+            pacDeath = false;
+            if (pacDeath) {
+                pacman.setXSpeed(0);
+                pacman.setYSpeed(0);
+                blinky.setXSpeed(0);
+                blinky.setYSpeed(0);
+                pinky.setXSpeed(0);
+                pinky.setYSpeed(0);
+                inky.setXSpeed(0);
+                inky.setYSpeed(0);
+                clyde.setXSpeed(0);
+                clyde.setYSpeed(0);
+                pacmanTick++;
+                deathAnimation();
+            } else {
 
             runPacman(); //runs pacman and his code
 
@@ -286,7 +300,9 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             addFood(); //adds food items to the map
 
             checkMapEmpty(); //checks if the user has cleared the board
-
+            checkEaten();
+            
+            }
             repaint();
 
             //calculate how much time has passed since the last call
@@ -715,7 +731,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             blinkyLeft = true;
         }
         if (blinky.getXPos() / 26 == 0) {
-            blinky.setXPos(26 * 20);
+            blinky.setXPos(26 * 20 - 1);
         }
         if (blinky.getXPos() / 26 == 21) {
             blinky.setXPos(26 * 1);
@@ -799,7 +815,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             pinkyLeft = true;
         }
         if (pinky.getXPos() / 26 == 0) {
-            pinky.setXPos(26 * 20);
+            pinky.setXPos(26 * 20 - 1);
         }
         if (pinky.getXPos() / 26 == 21) {
             pinky.setXPos(26 * 1);
@@ -883,7 +899,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             inkyLeft = true;
         }
         if (inky.getXPos() / 26 == 0) {
-            inky.setXPos(26 * 20);
+            inky.setXPos(26 * 20 - 1);
         }
         if (inky.getXPos() / 26 == 21) {
             inky.setXPos(26 * 1);
@@ -968,7 +984,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             clydeLeft = true;
         }
         if (clyde.getXPos() / 26 == 0) {
-            clyde.setXPos(26 * 20);
+            clyde.setXPos(26 * 20 - 1);
         }
         if (clyde.getXPos() / 26 == 21) {
             clyde.setXPos(26 * 1);
