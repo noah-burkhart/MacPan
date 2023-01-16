@@ -48,7 +48,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         loadImage(); //loads the images and the board
         loadBoard();
         setBackground(Color.black);
-        
 
         pacman = new Pacman(3, imgPacUp1, px * 11, px * 11, 2, 2, "right");
 
@@ -69,7 +68,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      * data file to load the game board
      * ***************************************************************************************************
      */
-    
     /*
     Thing, the game board itself, utalizes interface called thing(meaning it is a thing/obkect on the gameboard)
     It includes the classes:
@@ -236,7 +234,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
             foodTick++; //adds to the food tick
             addFood(); //adds food items to the map
-            
+
             checkMapEmpty(); //checks if the user has cleared the board
 
             repaint();
@@ -280,14 +278,20 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         g2d.setFont(new java.awt.Font("Monospaced", 1, 17));
         g2d.drawString("HIGH-SCORE: " + 100000, 10, 28);
         g2d.drawString("SCORE: " + pacman.getScore(), 375, 28);
-        g2d.drawString("LIVES: ", 10, 615);
-        
+       // g2d.drawString("LIVES: ", 10, 615);
+
         g2d.drawImage(pacman.getSprite(), pacman.getXPos() + BUFFER_X, pacman.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
-        
+
         g2d.drawImage(blinky.getSprite(), blinky.getXPos() + BUFFER_X, blinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
         g2d.drawImage(pinky.getSprite(), pinky.getXPos() + BUFFER_X, pinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
         g2d.drawImage(inky.getSprite(), inky.getXPos() + BUFFER_X, inky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
         g2d.drawImage(clyde.getSprite(), clyde.getXPos() + BUFFER_X, clyde.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
+
+        //The Drawing of pacmans lives
+        int num = pacman.getLives();
+        for (int i = 1; i <= num; i++) { //runs for the number of lives pacman has
+            g2d.drawImage(imgPacRight2, 75 + i*px, 590, 21, 21, Color.black, this);
+        }
         
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 21; j++) {
@@ -515,17 +519,17 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     private int pelletCount = 0; //used to remember win condition
-    
+
     /**
      * Will check to see if pacman has cleared the map
      */
-    public void checkMapEmpty(){
-        if(pelletCount == 0){ //if all pellets have been consumed
+    public void checkMapEmpty() {
+        if (pelletCount == 0) { //if all pellets have been consumed
             //put sound effects here if were doing this
-            
-            pacman.setXPos(px*11);
-            pacman.setYPos(px*11);  //reset pacmans position
-            
+
+            pacman.setXPos(px * 11);
+            pacman.setYPos(px * 11);  //reset pacmans position
+
             /*
             blinky.setXSpeed(blinky.getXSpeed()+1);
             blinky.setYSpeed(blinky.getYSpeed()+1);
@@ -539,15 +543,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             clyde.setXSpeed(clyde.getXSpeed()+1);
             clyde.setYSpeed(clyde.getYSpeed()+1);
             
-            */      //breaks the game with ghost movement
-            
+             */      //breaks the game with ghost movement
             loadBoard(); //reset the board and fill it again
-            
-            
+
         }
     }
-    
-    
+
     /*
      * ***************************************************************************************************
      * ALL GHOST CODE 
