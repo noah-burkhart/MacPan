@@ -288,7 +288,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         g2d.setColor(Color.white);
         g2d.setFont(new java.awt.Font("Monospaced", 1, 17));
         g2d.drawString("HIGH-SCORE: " + 100000, 10, 28);
-        g2d.drawString("SCORE: " + pacman.getScore(), 375, 28);
+        g2d.drawString("" + pacman.getScore(), 550, 28);
         // g2d.drawString("LIVES: ", 10, 615);
 
         g2d.drawImage(pacman.getSprite(), pacman.getXPos() + BUFFER_X, pacman.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
