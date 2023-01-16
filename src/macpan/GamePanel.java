@@ -522,6 +522,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             pacman.setXPos(px*11);
             pacman.setYPos(px*11);  //reset pacmans position
             
+            /*
             blinky.setXSpeed(blinky.getXSpeed()+1);
             blinky.setYSpeed(blinky.getYSpeed()+1);
             
@@ -533,6 +534,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             
             clyde.setXSpeed(clyde.getXSpeed()+1);
             clyde.setYSpeed(clyde.getYSpeed()+1);
+            
+            */      //breaks the game with ghost movement
             
             loadBoard(); //reset the board and fill it again
             
