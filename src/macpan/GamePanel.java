@@ -477,7 +477,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     /*
-     Point Scoring and consumables
+     POINT SCORING AND CONSUMABLES
      */
     private int foodTick = 0; //used to control food spawning
 
