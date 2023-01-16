@@ -486,8 +486,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      */
     public void checkEaten() {
 
-        int x = pacman.getXPos() / px;  //represents pacmans position on the 'grid' (the map array)
-        int y = pacman.getYPos() / px; //mid level of pacman
+        int x = (pacman.getXPos()+13) / px;  //represents pacmans position on the 'grid' (the map array)
+        int y = (pacman.getYPos()+13) / px; //mid level of pacman
 
         if (b[x][y] instanceof Pellet == true) {
             pelletCount--; //takes away from the total pellet count
@@ -569,24 +569,29 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         if (pelletCount == 0) { //if all pellets have been consumed
             //put sound effects here if were doing this
             round++; //adds to the round
+            
             pacman.setXPos(px * 11);
             pacman.setYPos(px * 11);  //reset pacmans position
 
             blinky.setXPos(px*3);
             blinky.setYPos(px*1);
             blinkyCounter = 0;
+            blinkyChoice = "right";
             
             pinky.setXPos(px*19);
             pinky.setYPos(px*1);     //resets ghost positions
             pinkyCounter = 0;
+            pinkyChoice = "left";
              
             inky.setXPos(px*3);
             inky.setYPos(px*19);
             inkyCounter = 0;
+            inkyChoice = "right";
             
             clyde.setXPos(px*19);
             clyde.setYPos(px*19);
             clydeCounter = 0;
+            clydeChoice = "left";
             
             
             
