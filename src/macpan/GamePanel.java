@@ -192,6 +192,45 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
+    /**
+     * Resets the positions of Pacman and the ghosts
+     */
+    public void resetPositions(){
+        pacman.setXPos(px * 11);
+            pacman.setYPos(px * 11);  //reset pacmans position
+
+            blinky.setXPos(px*3);
+            blinky.setYPos(px*1);
+            blinkyCounter = 0;
+            blinkyChoice = "right";
+            
+            pinky.setXPos(px*19);
+            pinky.setYPos(px*1);     //resets ghost positions
+            pinkyCounter = 0;
+            pinkyChoice = "left";
+             
+            inky.setXPos(px*3);
+            inky.setYPos(px*19);
+            inkyCounter = 0;
+            inkyChoice = "right";
+            
+            clyde.setXPos(px*19);
+            clyde.setYPos(px*19);
+            clydeCounter = 0;
+            clydeChoice = "left";
+    }
+    
+    public void resetGame(){
+       loadBoard();
+       resetPositions();
+       
+       pacman.setScore(0);
+       pacman.setLives(3);  //resets the score and pacmans lives
+       
+       pacmanTick = 0; //resets spawning ticks
+       foodTick = 0;
+       
+    }
     /*
      * ***************************************************************************************************
     G2D CODE AND FRAMES 
@@ -569,32 +608,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         if (pelletCount == 0) { //if all pellets have been consumed
             //put sound effects here if were doing this
             round++; //adds to the round
-            
-            pacman.setXPos(px * 11);
-            pacman.setYPos(px * 11);  //reset pacmans position
 
-            blinky.setXPos(px*3);
-            blinky.setYPos(px*1);
-            blinkyCounter = 0;
-            blinkyChoice = "right";
-            
-            pinky.setXPos(px*19);
-            pinky.setYPos(px*1);     //resets ghost positions
-            pinkyCounter = 0;
-            pinkyChoice = "left";
-             
-            inky.setXPos(px*3);
-            inky.setYPos(px*19);
-            inkyCounter = 0;
-            inkyChoice = "right";
-            
-            clyde.setXPos(px*19);
-            clyde.setYPos(px*19);
-            clydeCounter = 0;
-            clydeChoice = "left";
-            
-            
-            
+            resetPositions();
             loadBoard(); //reset the board and fill it again
 
         }
