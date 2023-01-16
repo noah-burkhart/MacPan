@@ -83,8 +83,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     private Image imgClydeUp1, imgClydeUp2, imgClydeDown1, imgClydeDown2, imgClydeLeft1, imgClydeLeft2, imgClydeRight1, imgClydeRight2;
     private Image imgPacWhole, imgPacUp1, imgPacUp2, imgPacDown1, imgPacDown2, imgPacLeft1, imgPacLeft2, imgPacRight1, imgPacRight2;
 
-    private Image imgCherry, imgStrawberry, imgOrange, imgApple, imgMellon, imgGalaxian, imgBell, imgKey;
-    
+    private Image imgCherry, imgStrawberry, imgOrange, imgApple, imgMelon, imgGalaxian, imgBell, imgKey;
+
     /**
      * Loads the images and stores them for use.
      */
@@ -99,12 +99,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         imgCherry = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
         imgStrawberry = new ImageIcon("src/macpan/images/Consumables/strawberry.png").getImage();
         imgOrange = new ImageIcon("src/macpan/images/Consumables/orange.png").getImage();
-        imgApple = new ImageIcon("src/macpan/images/Consumables/apple.png").getImage();
-        imgMellon = new ImageIcon("src/macpan/images/Consumables/mellon.png").getImage(); //loads the food images in
-        imgGalaxian = new ImageIcon("src/macpan/images/Consumables/galaxian.png").getImage();
+        imgApple = new ImageIcon("src/macpan/images/Consumables/apples.png").getImage();
+        imgMelon = new ImageIcon("src/macpan/images/Consumables/melon.png").getImage(); //loads the food images in
+        imgGalaxian = new ImageIcon("src/macpan/images/Consumables/galaga.png").getImage();
         imgBell = new ImageIcon("src/macpan/images/Consumables/bell.png").getImage();
         imgKey = new ImageIcon("src/macpan/images/Consumables/key.png").getImage();
-        
+
         imgBlinkyUp1 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyUp1.png").getImage();
         imgBlinkyUp2 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyUp2.png").getImage();
         imgBlinkyDown1 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyDown1.png").getImage();
@@ -289,7 +289,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         g2d.setFont(new java.awt.Font("Monospaced", 1, 17));
         g2d.drawString("HIGH-SCORE: " + 100000, 10, 28);
         g2d.drawString("SCORE: " + pacman.getScore(), 375, 28);
-       // g2d.drawString("LIVES: ", 10, 615);
+        // g2d.drawString("LIVES: ", 10, 615);
 
         g2d.drawImage(pacman.getSprite(), pacman.getXPos() + BUFFER_X, pacman.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
 
@@ -301,9 +301,11 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         //The Drawing of pacmans lives
         int num = pacman.getLives();
         for (int i = 1; i <= num; i++) { //runs for the number of lives pacman has
-            g2d.drawImage(imgPacRight2, 75 + i*px, 590, 21, 21, Color.black, this);
+            g2d.drawImage(imgPacRight2, 75 + i * px, 590, 21, 21, Color.black, this);
         }
-        
+        //drawing what food is avaliable
+        g2d.drawImage(findRoundFood().getSprite(), 570, 585, 25, 25, Color.black, this);
+
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 21; j++) {
                 g2d.drawImage(b[i][j].getSprite(), b[i][j].getX() + BUFFER_X, b[i][j].getY() + BUFFER_Y, px, px, Color.black, this);
@@ -522,46 +524,51 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
                 if (b[x][y] instanceof Empty == true) { //if that spot is empty
                     run = false; //stop looking for a spot
-                    b[x][y] = new Food(imgFood, x * px, y * px, 50); //set the spot to a piece of food
+                    Food f = findRoundFood(); //gets the current rounds food
+                    b[x][y] = new Food(f.getSprite(), x*px, y*px, f.getPoints());
                     foodTick = 0; //reset the food tick
                 }
             }
         }
     }
-    
-    private int round = 1;
-    
-    public Food findRoundFood(){
-        Food f = new Food(imgFood, 0, 0, 50); //set the spot to a piece of food;
-        if(round==1){
-            
-        }else if(round==2){
-            
-        }else if(round==3){
-            
-        }else if(round==4){
-            
-        }else if(round==5){
-            
-        }else if(round==6){
-            
-        }else if(round==7){
-            
-        }else{ //must be 8
-            f = new Food(imgFood, 0, 0, 50); //set the spot to a piece of food 
-        } 
+
+    private int round = 1; //controls what round the game is on, rounds switch every time the board is cleared
+
+    /**
+     * Will find what food item must be used given the round
+     * @return 
+     */
+    public Food findRoundFood() {
+        Food f; //set the spot to a piece of food;
+        if (round == 1) {
+            f = new Food(imgCherry, 0, 0, 100); //set the spot to a piece of food 
+        } else if (round == 2) {
+            f = new Food(imgStrawberry, 0, 0, 300); //set the spot to a piece of food         
+        } else if (round == 3) {
+            f = new Food(imgOrange, 0, 0, 500); //set the spot to a piece of food      
+        } else if (round == 4) {
+            f = new Food(imgApple, 0, 0, 700); //set the spot to a piece of food   
+        } else if (round == 5) {
+            f = new Food(imgMelon, 0, 0, 1000); //set the spot to a piece of food 
+        } else if (round == 6) {
+            f = new Food(imgGalaxian, 0, 0, 2000); //set the spot to a piece of food 
+        } else if (round == 7) {
+            f = new Food(imgBell, 0, 0, 3000); //set the spot to a piece of food 
+        } else { //must be 8
+            f = new Food(imgKey, 0, 0, 5000); //set the spot to a piece of food 
+        }
         return f;
     }
 
     private int pelletCount = 0; //used to remember win condition
 
     /**
-     * Will check to see if pacman has cleared the map
+     * Will check to see if Pacman has cleared the map
      */
     public void checkMapEmpty() {
         if (pelletCount == 0) { //if all pellets have been consumed
             //put sound effects here if were doing this
-
+            round++; //adds to the round
             pacman.setXPos(px * 11);
             pacman.setYPos(px * 11);  //reset pacmans position
 
