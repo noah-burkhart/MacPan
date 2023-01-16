@@ -565,27 +565,31 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     /**
      * Will check to see if Pacman has cleared the map
      */
-    public void checkMapEmpty() {
+    public void checkMapEmpty() { 
         if (pelletCount == 0) { //if all pellets have been consumed
             //put sound effects here if were doing this
             round++; //adds to the round
             pacman.setXPos(px * 11);
             pacman.setYPos(px * 11);  //reset pacmans position
 
-            /*
-            blinky.setXSpeed(blinky.getXSpeed()+1);
-            blinky.setYSpeed(blinky.getYSpeed()+1);
+            blinky.setXPos(px*3);
+            blinky.setYPos(px*1);
+            blinkyCounter = 0;
             
-            pinky.setXSpeed(pinky.getXSpeed()+2); //pinky is a menace.
-            pinky.setYSpeed(pinky.getYSpeed()+2);
+            pinky.setXPos(px*19);
+            pinky.setYPos(px*1);     //resets ghost positions
+            pinkyCounter = 0;
+             
+            inky.setXPos(px*3);
+            inky.setYPos(px*19);
+            inkyCounter = 0;
             
-            inky.setXSpeed(inky.getXSpeed()+1);
-            inky.setYSpeed(inky.getYSpeed()+1);
+            clyde.setXPos(px*19);
+            clyde.setYPos(px*19);
+            clydeCounter = 0;
             
-            clyde.setXSpeed(clyde.getXSpeed()+1);
-            clyde.setYSpeed(clyde.getYSpeed()+1);
             
-             */      //breaks the game with ghost movement
+            
             loadBoard(); //reset the board and fill it again
 
         }
