@@ -303,9 +303,14 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             moveInky();
             moveClyde();
 
+            if(pacman.getLives() == 0){
+                //game over conditions here
+                System.exit(0);
+            }
             //pacDeath = checkDeath();
             pacDeath = checkDeath();
             if (pacDeath) {
+                
                 pacman.setXSpeed(0);
                 pacman.setYSpeed(0);
                 blinky.setXSpeed(0);
@@ -319,14 +324,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                 pacmanTick++;
                 behaveDead();
             } else {
-
                 blinkyCounter += blinky.getXSpeed(); //Counter moves the same amount as the ghost each time
                 pinkyCounter += pinky.getXSpeed(); //Counter moves the same amount as the ghost each time
                 inkyCounter += inky.getXSpeed(); //Counter moves the same amount as the ghost each time
                 clydeCounter += clyde.getXSpeed(); //Counter moves the same amount as the ghost each time
 
                 runPacman(); //runs pacman and his code
-
                 checkEaten(); //checks to see if pacman has eaten anything
 
                 foodTick++; //adds to the food tick
@@ -616,6 +619,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             pacman.setSprite(imgPacDeath11);
         } else if (pacmanTick >= 180) { //no longer dead
             pacman.setSprite(imgPacWhole);
+            pacman.setLives(pacman.getLives()-1);
             resetPositions();
         }
     }
