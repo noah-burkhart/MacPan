@@ -303,12 +303,21 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         //get the current time
         beforeTime = System.currentTimeMillis();
 
+        int oldScore = 0, currentScore = 0;
+        
+        pacman.addScore(9800);
+        
         while (true) { //this loop runs once ever 25 ms (the DELAY)
             moveBlinky(); //Move ghosts
             movePinky();
             moveInky();
             moveClyde();
 
+            currentScore = pacman.getScore();  //stores the current score
+            System.out.println("Old: " + oldScore + " Current: " + currentScore);
+            checkAddLives(oldScore, currentScore);
+
+            
             if (pacman.getLives() == 0) {
                 //game over conditions here
                 //JOption Pane here
@@ -316,7 +325,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             //pacDeath = checkDeath();
             pacDeath = checkDeath();
             if (pacDeath) {
-
                 pacman.setXSpeed(0);
                 pacman.setYSpeed(0);
                 blinky.setXSpeed(0);
@@ -342,6 +350,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                 addFood(); //adds food items to the map
 
                 checkMapEmpty(); //checks if the user has cleared the board
+                
+                oldScore = currentScore; //stores the old score at the end of the frame
 
             }
             foodTick++; //adds to the food tick
@@ -735,10 +745,29 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         if (pelletCount == 0) { //if all pellets have been consumed
             //put sound effects here if were doing this
             round++; //adds to the round
+            if(round == 9){ //check to see if the round is impossible
+                round = 1; //if impossible, bring back to cherry
+            }
 
             resetPositions();
             loadBoard(); //reset the board and fill it again
 
+        }
+    }
+    
+    private int conditional = 10000; //controls what amount of points pacman has to reach to gain a life
+   
+    /**
+     * Checks to see if PacMan can gain a new life
+     * @param oldS - the old score
+     * @param newS - the new score
+     */
+    public void checkAddLives(int oldS, int newS){
+        if(newS >= conditional && oldS < conditional){ //score has gone over the 10k increment
+            if(pacman.getLives() < 3){ //if pacman has less than the maximum lives
+                pacman.setLives(pacman.getLives()+1); //adds a life
+            }
+            conditional += 10000; //sets a new conditon to meet
         }
     }
 
