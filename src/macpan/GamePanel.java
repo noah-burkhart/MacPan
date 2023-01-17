@@ -310,7 +310,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
             if(pacman.getLives() == 0){
                 //game over conditions here
-                System.exit(0);
+                //JOption Pane here
             }
             //pacDeath = checkDeath();
             pacDeath = checkDeath();
