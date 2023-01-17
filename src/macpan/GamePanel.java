@@ -594,6 +594,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         if (pacman.isPowerPellet()) { //If pacman ate the powerpellet
             //If pacman hasn't eaten the ghost, set their sprite to the scared animation
             if (!blinkyEaten) { 
+                if (powerPelletTick > 100) {
                 if (blinkyCounter >= 0 && blinkyCounter < 14 && num%2 == 0) {
                     blinky.setSprite(imgScared1);
                 } else if (blinkyCounter >= 14 && blinkyCounter < 27 && num%2 == 0) {
@@ -603,44 +604,123 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                 } else if (blinkyCounter >= 14 && blinkyCounter < 27 && num%2 == 1){
                     blinky.setSprite(imgScared4);
                 }
+                } else {
+                    if (blinkyCounter >= 0 && blinkyCounter < 3) {
+                    blinky.setSprite(imgScared1);
+                } else if (blinkyCounter >= 3 && blinkyCounter < 6) {
+                    blinky.setSprite(imgScared3);
+                } else if (blinkyCounter >= 6 && blinkyCounter < 9) {
+                    blinky.setSprite(imgScared2);
+                } else if (blinkyCounter >= 9 && blinkyCounter < 12){
+                    blinky.setSprite(imgScared4);
+                } else if (blinkyCounter >= 12 && blinkyCounter < 15) {
+                    blinky.setSprite(imgScared1);
+                } else if (blinkyCounter >= 15 && blinkyCounter < 18) {
+                    blinky.setSprite(imgScared3);
+                } else if (blinkyCounter >= 18 && blinkyCounter < 21) {
+                    blinky.setSprite(imgScared2);
+                } else {
+                    blinky.setSprite(imgScared4);
+                }
+                }
             } else { //If they have been eaten, set their image to just eyes
                 blinky.setSprite(imgEyesUp);
             }
             if (!pinkyEaten) {
-                if (pinkyCounter >= 0 && pinkyCounter < 14 && num%2 == 0) {
-                    pinky.setSprite(imgScared1);
-                } else if (pinkyCounter >= 14 && pinkyCounter < 27 && num%2 == 0) {
-                    pinky.setSprite(imgScared3);
-                } else if (pinkyCounter >= 0 && pinkyCounter < 14 && num%2 == 1) {
-                    pinky.setSprite(imgScared2);
-                } else if (pinkyCounter >= 14 && pinkyCounter < 27 && num%2 == 1){
-                    pinky.setSprite(imgScared4);
+                                if (powerPelletTick > 100) {
+                    if (pinkyCounter >= 0 && pinkyCounter < 14 && num % 2 == 0) {
+                        pinky.setSprite(imgScared1);
+                    } else if (pinkyCounter >= 14 && pinkyCounter < 27 && num % 2 == 0) {
+                        pinky.setSprite(imgScared3);
+                    } else if (pinkyCounter >= 0 && pinkyCounter < 14 && num % 2 == 1) {
+                        pinky.setSprite(imgScared2);
+                    } else if (pinkyCounter >= 14 && pinkyCounter < 27 && num % 2 == 1) {
+                        pinky.setSprite(imgScared4);
+                    }
+                } else {
+                    if (pinkyCounter >= 0 && pinkyCounter < 3) {
+                        pinky.setSprite(imgScared1);
+                    } else if (pinkyCounter >= 3 && pinkyCounter < 6) {
+                        pinky.setSprite(imgScared3);
+                    } else if (pinkyCounter >= 6 && pinkyCounter < 9) {
+                        pinky.setSprite(imgScared2);
+                    } else if (pinkyCounter >= 9 && pinkyCounter < 12) {
+                        pinky.setSprite(imgScared4);
+                    } else if (pinkyCounter >= 12 && pinkyCounter < 15) {
+                        pinky.setSprite(imgScared1);
+                    } else if (pinkyCounter >= 15 && pinkyCounter < 18) {
+                        pinky.setSprite(imgScared3);
+                    } else if (pinkyCounter >= 18 && pinkyCounter < 21) {
+                        pinky.setSprite(imgScared2);
+                    } else {
+                        pinky.setSprite(imgScared4);
+                    }
                 }
             } else {
                 pinky.setSprite(imgEyesUp);
             }
             if (!inkyEaten) {
-                if (inkyCounter >= 0 && inkyCounter < 14 && num%2 == 0) {
-                    inky.setSprite(imgScared1);
-                } else if (inkyCounter >= 14 && inkyCounter < 27 && num%2 == 0) {
-                    inky.setSprite(imgScared3);
-                } else if (inkyCounter >= 0 && inkyCounter < 14 && num%2 == 1) {
-                    inky.setSprite(imgScared2);
-                } else if (inkyCounter >= 14 && inkyCounter < 27 && num%2 == 1){
-                    inky.setSprite(imgScared4);
+                                if (powerPelletTick > 100) {
+                    if (inkyCounter >= 0 && inkyCounter < 14 && num % 2 == 0) {
+                        inky.setSprite(imgScared1);
+                    } else if (inkyCounter >= 14 && inkyCounter < 27 && num % 2 == 0) {
+                        inky.setSprite(imgScared3);
+                    } else if (inkyCounter >= 0 && inkyCounter < 14 && num % 2 == 1) {
+                        inky.setSprite(imgScared2);
+                    } else if (inkyCounter >= 14 && inkyCounter < 27 && num % 2 == 1) {
+                        inky.setSprite(imgScared4);
+                    }
+                } else {
+                    if (inkyCounter >= 0 && inkyCounter < 3) {
+                        inky.setSprite(imgScared1);
+                    } else if (inkyCounter >= 3 && inkyCounter < 6) {
+                        inky.setSprite(imgScared3);
+                    } else if (inkyCounter >= 6 && inkyCounter < 9) {
+                        inky.setSprite(imgScared2);
+                    } else if (inkyCounter >= 9 && inkyCounter < 12) {
+                        inky.setSprite(imgScared4);
+                    } else if (inkyCounter >= 12 && inkyCounter < 15) {
+                        inky.setSprite(imgScared1);
+                    } else if (inkyCounter >= 15 && inkyCounter < 18) {
+                        inky.setSprite(imgScared3);
+                    } else if (inkyCounter >= 18 && inkyCounter < 21) {
+                        inky.setSprite(imgScared2);
+                    } else {
+                        inky.setSprite(imgScared4);
+                    }
                 }
             } else {
                 inky.setSprite(imgEyesUp);
             }
             if (!clydeEaten) {
-                if (clydeCounter >= 0 && clydeCounter < 14 && num%2 == 0) {
-                    clyde.setSprite(imgScared1);
-                } else if (clydeCounter >= 14 && clydeCounter < 27 && num%2 == 0) {
-                    clyde.setSprite(imgScared3);
-                } else if (clydeCounter >= 0 && clydeCounter < 14 && num%2 == 1) {
-                    clyde.setSprite(imgScared2);
-                } else if (clydeCounter >= 14 && clydeCounter < 27 && num%2 == 1){
-                    clyde.setSprite(imgScared4);
+                                if (powerPelletTick > 100) {
+                    if (clydeCounter >= 0 && clydeCounter < 14 && num % 2 == 0) {
+                        clyde.setSprite(imgScared1);
+                    } else if (clydeCounter >= 14 && clydeCounter < 27 && num % 2 == 0) {
+                        clyde.setSprite(imgScared3);
+                    } else if (clydeCounter >= 0 && clydeCounter < 14 && num % 2 == 1) {
+                        clyde.setSprite(imgScared2);
+                    } else if (clydeCounter >= 14 && clydeCounter < 27 && num % 2 == 1) {
+                        clyde.setSprite(imgScared4);
+                    }
+                } else {
+                    if (clydeCounter >= 0 && clydeCounter < 3) {
+                        clyde.setSprite(imgScared1);
+                    } else if (clydeCounter >= 3 && clydeCounter < 6) {
+                        clyde.setSprite(imgScared3);
+                    } else if (clydeCounter >= 6 && clydeCounter < 9) {
+                        clyde.setSprite(imgScared2);
+                    } else if (clydeCounter >= 9 && clydeCounter < 12) {
+                        clyde.setSprite(imgScared4);
+                    } else if (clydeCounter >= 12 && clydeCounter < 15) {
+                        clyde.setSprite(imgScared1);
+                    } else if (clydeCounter >= 15 && clydeCounter < 18) {
+                        clyde.setSprite(imgScared3);
+                    } else if (clydeCounter >= 18 && clydeCounter < 21) {
+                        clyde.setSprite(imgScared2);
+                    } else {
+                        clyde.setSprite(imgScared4);
+                    }
                 }
             } else {
                 clyde.setSprite(imgEyesUp);
