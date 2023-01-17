@@ -68,7 +68,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      * data file to load the game board
      * ***************************************************************************************************
      */
-   
     /*
     Thing, the game board itself, utalizes interface called thing(meaning it is a thing/object on the gameboard)
     It includes the classes:
@@ -253,7 +252,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     /**
      * Resets the game to its original state.
      */
-    public void resetGame(){
+    public void resetGame() {
         loadBoard();
         resetPositions();
 
@@ -262,7 +261,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
         pacmanTick = 0; //resets spawning ticks
         foodTick = 0;
-        
+
         round = 1;
     }
 
@@ -308,14 +307,14 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             moveInky();
             moveClyde();
 
-            if(pacman.getLives() == 0){
+            if (pacman.getLives() == 0) {
                 //game over conditions here
                 //JOption Pane here
             }
             //pacDeath = checkDeath();
             pacDeath = checkDeath();
             if (pacDeath) {
-                
+
                 pacman.setXSpeed(0);
                 pacman.setYSpeed(0);
                 blinky.setXSpeed(0);
@@ -574,21 +573,22 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     /**
      * Checks to see if a ghost is on pacman, starting the death animation and
      * showing the end screen
+     *
+     * @return - if pacman is dead oe not.
      */
     public boolean checkDeath() {
-        int pacX = (pacman.getXPos()+13) / px;
-        int pacY = (pacman.getYPos()+13) / px;
-        int blinkyX = (blinky.getXPos()+13) / px;
-        int blinkyY = (blinky.getYPos()+13) / px;
-        int pinkyX = (pinky.getXPos()+13) / px;
-        int pinkyY = (pinky.getYPos()+13) / px;
-        int inkyX = (inky.getXPos()+13) / px;
-        int inkyY = (inky.getYPos()+13) / px;
-        int clydeX = (clyde.getXPos()+13) / px;
-        int clydeY = (clyde.getYPos()+13) / px;
 
-        int modBlinky = ((blinky.getXPos()+13) / px) % ((pacman.getXPos()+13) / px); //do later
-        
+        int pacX = (pacman.getXPos() + 13) / px;
+        int pacY = (pacman.getYPos() + 13) / px;
+        int blinkyX = (blinky.getXPos() + 13) / px;
+        int blinkyY = (blinky.getYPos() + 13) / px;
+        int pinkyX = (pinky.getXPos() + 13) / px;
+        int pinkyY = (pinky.getYPos() + 13) / px;
+        int inkyX = (inky.getXPos() + 13) / px;
+        int inkyY = (inky.getYPos() + 13) / px;
+        int clydeX = (clyde.getXPos() + 13) / px;
+        int clydeY = (clyde.getYPos() + 13) / px;
+
         if (pacX == blinkyX && pacY == blinkyY || pacX == pinkyX && pacY == pinkyY || pacX == inkyX && pacY == inkyY || pacX == clydeX && pacY == clydeY) {
             return true;
         } else {
@@ -627,7 +627,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         } else if (pacmanTick >= 180) { //no longer dead
             //gap in tick is used to leave the death animation running for longer before it returns to the regular game.
             pacman.setSprite(imgPacWhole);
-            pacman.setLives(pacman.getLives()-1);
+            pacman.setLives(pacman.getLives() - 1);
             resetPositions();
         }
     }
