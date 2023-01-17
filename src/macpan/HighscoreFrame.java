@@ -42,7 +42,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
         mainWindow = m;
         //Score topScores[] = new Score[5];
         //readFile();
-        
+    
         
         FileWriter fw = null; 
         BufferedWriter bw = null; 
@@ -53,7 +53,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
             bw = new BufferedWriter(fw);
             pw = new PrintWriter(bw);
 
-            pw.println("Hi This is a test");
+            pw.println("\nHi This is a test");
             pw.println("Clyde is very cool");
             pw.println("If you do not agree then idk wut to tell you");
 
@@ -78,8 +78,6 @@ public class HighscoreFrame extends javax.swing.JFrame {
                 PrintWriter p = new PrintWriter(b);) {
 
             p.println("appending text into file");
-            p.println("Gaura");
-            p.println("Bori");
 
         } catch (IOException i) {
             i.printStackTrace();

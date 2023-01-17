@@ -344,6 +344,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                 checkMapEmpty(); //checks if the user has cleared the board
 
             }
+            foodTick++; //adds to the food tick
+            addFood(); //adds food items to the map
+            
+            checkMapEmpty(); //checks if the user has cleared the board
+
+
             repaint();
 
             //calculate how much time has passed since the last call
@@ -579,18 +585,19 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      * @return - if pacman is dead oe not.
      */
     public boolean checkDeath() {
+        int pacX = (pacman.getXPos()+13) / px;
+        int pacY = (pacman.getYPos()+13) / px;
+        int blinkyX = (blinky.getXPos()+13) / px;
+        int blinkyY = (blinky.getYPos()+13) / px;
+        int pinkyX = (pinky.getXPos()+13) / px;
+        int pinkyY = (pinky.getYPos()+13) / px;
+        int inkyX = (inky.getXPos()+13) / px;
+        int inkyY = (inky.getYPos()+13) / px;
+        int clydeX = (clyde.getXPos()+13) / px;
+        int clydeY = (clyde.getYPos()+13) / px;
 
-        int pacX = (pacman.getXPos() + 13) / px;
-        int pacY = (pacman.getYPos() + 13) / px;
-        int blinkyX = (blinky.getXPos() + 13) / px;
-        int blinkyY = (blinky.getYPos() + 13) / px;
-        int pinkyX = (pinky.getXPos() + 13) / px;
-        int pinkyY = (pinky.getYPos() + 13) / px;
-        int inkyX = (inky.getXPos() + 13) / px;
-        int inkyY = (inky.getYPos() + 13) / px;
-        int clydeX = (clyde.getXPos() + 13) / px;
-        int clydeY = (clyde.getYPos() + 13) / px;
-
+        int modBlinky = ((blinky.getXPos()+13) / px) % ((pacman.getXPos()+13) / px); //do later
+        
         if (pacX == blinkyX && pacY == blinkyY || pacX == pinkyX && pacY == pinkyY || pacX == inkyX && pacY == inkyY || pacX == clydeX && pacY == clydeY) {
             return true;
         } else {
