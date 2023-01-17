@@ -12,10 +12,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import macpan.objects.Score;
-import java.io.BufferedWriter; 
-import java.io.FileWriter; 
 import java.io.IOException; 
-import java.io.PrintWriter;
 import javax.swing.ImageIcon;
 
 public class HighscoreFrame extends javax.swing.JFrame {
@@ -42,36 +39,8 @@ public class HighscoreFrame extends javax.swing.JFrame {
         mainWindow = m;
         //Score topScores[] = new Score[5];
         //readFile();
-    
-        
-        FileWriter fw = null; 
-        BufferedWriter bw = null; 
-        PrintWriter pw = null;
-        
-         try {
-            fw = new FileWriter("src/macpan/score.data", true);
-            bw = new BufferedWriter(fw);
-            pw = new PrintWriter(bw);
-
-            pw.println("\nHi This is a test");
-            pw.println("Clyde is very cool");
-            pw.println("If you do not agree then idk wut to tell you");
-
-            System.out.println("Data Successfully appended into file");
-            pw.flush();
-
-        } finally {
-            try {
-                pw.close();
-                bw.close();
-                fw.close();
-            } catch (IOException io) {// can't do anything }
-            }
-
-        }
-
     }
-
+    
     /**
      * Reads file of scores
      * First line is score value 
