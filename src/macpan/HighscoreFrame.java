@@ -20,12 +20,12 @@ import javax.swing.ImageIcon;
 
 public class HighscoreFrame extends javax.swing.JFrame {
     
-    //Main window variable
+    // Main window variable
     MenuFrame mainWindow;
-
+    // Cherry Icon
     private Image icon  = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
-    
-    
+    // Global arraylist for scores
+    static ArrayList scores = new ArrayList();
     
     /**
      * Creates the high score frame with gui builder
@@ -41,8 +41,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
         getContentPane().setBackground(Color.BLACK);
         mainWindow = m;
         //Score topScores[] = new Score[5];
-        ArrayList scores = new ArrayList();
-        //readFile(scores);
+        //readFile();
         
         
         FileWriter fw = null; 
@@ -55,8 +54,8 @@ public class HighscoreFrame extends javax.swing.JFrame {
             pw = new PrintWriter(bw);
 
             pw.println("Hi This is a test");
-            pw.println("Root");
-            pw.println("Ben");
+            pw.println("Clyde is very cool");
+            pw.println("If you do not agree then idk wut to tell you");
 
             System.out.println("Data Successfully appended into file");
             pw.flush();
@@ -85,26 +84,23 @@ public class HighscoreFrame extends javax.swing.JFrame {
         } catch (IOException i) {
             i.printStackTrace();
         }
-        
     }
 
+    /**
+     * Reads file of scores
+     * First line is score value 
+     * Second line is player's initials
+     * 
+     */
     public static void readFile(){
         try {
             File f = new File("src/macpan/score.data");
             Scanner s = new Scanner(f);
-            //int size = f.getLength;
-            for (int i = 0; i < 5; i++) {
-               int score = Integer.parseInt(s.nextLine());
-               String name = s.nextLine();
-               Score score_ = new Score(score, name);
-               //arr[i] = score_;
-            }
-            //quickSortD(arr, 0, 4);
-            for (int i = 0; i < 5; i++) {
-                //System.out.println(arr[i]);
-            }
             while (s.hasNextLine()){
-                
+                int value = Integer.parseInt(s.nextLine());
+                String name = s.nextLine();
+                Score score = new Score(value, name);
+                scores.add(score);
             }
             
         } catch (FileNotFoundException e) {
