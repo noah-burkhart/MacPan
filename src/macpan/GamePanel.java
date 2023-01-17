@@ -24,9 +24,15 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.event.*;
 import java.awt.Image;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import macpan.characters.Blinky;
@@ -57,7 +63,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         loadImage(); //loads the images and the board
         loadBoard();
         setBackground(Color.black);
-        
 
         pacman = new Pacman(3, imgPacUp1, px * 11, px * 11, 2, 2, "right");
 
@@ -78,7 +83,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      * data file to load the game board
      * ***************************************************************************************************
      */
-    
     /*
     Thing, the game board itself, utalizes interface called thing(meaning it is a thing/object on the gameboard)
     It includes the classes:
@@ -360,8 +364,32 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             checkGhostOnPacman();
             
             if (pacman.getLives() == 0) {
-                //game over conditions here
-                //JOption Pane here
+                FileWriter fw = null;
+                BufferedWriter bw = null;
+                PrintWriter pw = null;
+
+                try {
+                    fw = new FileWriter("src/macpan/score.data", true);
+                    bw = new BufferedWriter(fw);
+                    pw = new PrintWriter(bw);
+
+                    pw.println("\n" + pacman.getScore());
+                    pw.println("Clyde is very cool"); // initials
+
+                    System.out.println("Data Successfully appended into file");
+                    pw.flush();
+
+                } catch (IOException ex) {
+                    Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    try {
+                        pw.close();
+                        bw.close();
+                        fw.close();
+                    } catch (IOException io) {// can't do anything }
+                    }
+
+                }
             }
             if (!pacDeath) { //If pacman is not dead, keep running the game, if he is deadeverything stops until the characters are reset
                 runPacman(); //Move pacman
