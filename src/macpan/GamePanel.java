@@ -48,6 +48,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         loadImage(); //loads the images and the board
         loadBoard();
         setBackground(Color.black);
+        
 
         pacman = new Pacman(3, imgPacUp1, px * 11, px * 11, 2, 2, "right");
 
@@ -68,6 +69,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      * data file to load the game board
      * ***************************************************************************************************
      */
+    
     /*
     Thing, the game board itself, utalizes interface called thing(meaning it is a thing/object on the gameboard)
     It includes the classes:
