@@ -100,7 +100,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
      * @param low - lowest index
      * @param high - highest index
      */
-    public static void quickSortD(Score[] arr, int low, int high) {
+    public static void quickSortD(ArrayList<Score> arr, int low, int high) {
         if (low < high) {
 
             // pi is partitioning index, arr[p]
@@ -122,10 +122,10 @@ public class HighscoreFrame extends javax.swing.JFrame {
      * @param high - highest index
      * @return - the index of the last pivot
      */
-    public static int partitionD(Score[] arr, int low, int high) {
+    public static int partitionD(ArrayList<Score> arr, int low, int high) {
         // sets pivot as last index
-        int pivot = arr[high].getValue();
-
+        Score pivot = arr.get(high);
+        int pivotScore = pivot.getValue();
         // Index of smaller element and
         // indicates the right position
         // of pivot found so far
@@ -134,7 +134,9 @@ public class HighscoreFrame extends javax.swing.JFrame {
         for (int j = low; j <= high - 1; j++) {
             // If current element is smaller
             // than the pivot
-            if (arr[j].getValue() > pivot) { //if greater than pivot
+            Score current = arr.get(j);
+            int currentScore = current.getValue();
+            if (currentScore > pivotScore) { //if greater than pivot
 
                 // Increment index of
                 // smaller element
@@ -152,11 +154,10 @@ public class HighscoreFrame extends javax.swing.JFrame {
      * @param i - lower index number
      * @param j - higher index number
      */
-    public static void swap(Score[] arr, int i, int j) {
-        Score temp = arr[i].clone();
-        arr[i] = arr[j]; // sets them to the same value
-        System.out.println("");
-        arr[j] = temp; // places the stored temporary value into higher index number
+    public static void swap(ArrayList<Score> arr, int i, int j) {
+        Score temp = arr.get(i).clone();
+        arr.set(i, arr.get(j)); // sets them to the same value
+        arr.set(j, temp); // places the stored temporary value into higher index number
     }
     
     /**
