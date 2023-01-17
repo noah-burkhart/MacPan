@@ -68,8 +68,9 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      * data file to load the game board
      * ***************************************************************************************************
      */
+   
     /*
-    Thing, the game board itself, utalizes interface called thing(meaning it is a thing/obkect on the gameboard)
+    Thing, the game board itself, utalizes interface called thing(meaning it is a thing/object on the gameboard)
     It includes the classes:
     Block, Empty, Pellet, PowerPellet, Food.
      */
@@ -575,17 +576,19 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      * showing the end screen
      */
     public boolean checkDeath() {
-        int pacX = pacman.getXPos() / px;
-        int pacY = pacman.getYPos() / px;
-        int blinkyX = blinky.getXPos() / px;
-        int blinkyY = blinky.getYPos() / px;
-        int pinkyX = pinky.getXPos() / px;
-        int pinkyY = pinky.getYPos() / px;
-        int inkyX = inky.getXPos() / px;
-        int inkyY = inky.getYPos() / px;
-        int clydeX = clyde.getXPos() / px;
-        int clydeY = clyde.getYPos() / px;
+        int pacX = (pacman.getXPos()+13) / px;
+        int pacY = (pacman.getYPos()+13) / px;
+        int blinkyX = (blinky.getXPos()+13) / px;
+        int blinkyY = (blinky.getYPos()+13) / px;
+        int pinkyX = (pinky.getXPos()+13) / px;
+        int pinkyY = (pinky.getYPos()+13) / px;
+        int inkyX = (inky.getXPos()+13) / px;
+        int inkyY = (inky.getYPos()+13) / px;
+        int clydeX = (clyde.getXPos()+13) / px;
+        int clydeY = (clyde.getYPos()+13) / px;
 
+        int modBlinky = ((blinky.getXPos()+13) / px) % ((pacman.getXPos()+13) / px); //do later
+        
         if (pacX == blinkyX && pacY == blinkyY || pacX == pinkyX && pacY == pinkyY || pacX == inkyX && pacY == inkyY || pacX == clydeX && pacY == clydeY) {
             return true;
         } else {
