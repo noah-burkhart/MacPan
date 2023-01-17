@@ -303,9 +303,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         //get the current time
         beforeTime = System.currentTimeMillis();
 
-        int oldScore = 0, currentScore = 0;
-        
-        pacman.addScore(9800);
+        int oldScore = 0, currentScore; //used to control adding lives
         
         while (true) { //this loop runs once ever 25 ms (the DELAY)
             moveBlinky(); //Move ghosts
@@ -314,8 +312,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             moveClyde();
 
             currentScore = pacman.getScore();  //stores the current score
-            System.out.println("Old: " + oldScore + " Current: " + currentScore);
-            checkAddLives(oldScore, currentScore);
+            checkAddLives(oldScore, currentScore); //checks if we need to add lives
 
             
             if (pacman.getLives() == 0) {
@@ -498,8 +495,10 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     /**
      * Moves PacMan given a certain position on the grid
      *
-     * @param xTop - the x position on the grid
-     * @param yTop - the y position on the grid.
+     * @param xTop - the top x position on the grid
+     * @param yTop - the top y position on the grid.
+     * @param xBottom - the bottom right x on the grid
+     * @param yBottom - the bottom right y on the grid
      */
     public void movePacman(int xTop, int yTop, int xBottom, int yBottom) {
         double inBlockX = (double) (pacman.getXPos() % px);
