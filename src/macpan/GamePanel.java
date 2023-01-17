@@ -252,7 +252,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     /**
      * Resets the game to its original state.
      */
-    public void resetGame() {
+    public void resetGame(){
         loadBoard();
         resetPositions();
 
@@ -382,7 +382,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
         g2d.setColor(Color.white);
         g2d.setFont(new java.awt.Font("Monospaced", 1, 17));
-        g2d.drawString("HIGH-SCORE: " + 100000, 10, 28);
+        g2d.drawString("HIGH-SCORE: " + 100000, 10, 28);             //display the highscore
         g2d.drawString("" + pacman.getScore(), 550, 28);
         // g2d.drawString("LIVES: ", 10, 615);
         g2d.drawImage(blinky.getSprite(), blinky.getXPos() + BUFFER_X, blinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
@@ -495,14 +495,14 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             pacmanTick += 3;
         } else if (inBlockY == 0 && b[xTop + 1][yTop] instanceof Block == false && oldPressed.equals("right")) { //If right key is pressed and pacman is in center of space with no block to the right
             pacman.moveRight(); //Move right
-            pacmanTick += 3; //add two every time
+            pacmanTick += 3; //add 3 every time
         } else if (inBlockY == 0 && b[xBottom - 1][yBottom] instanceof Block == false && oldPressed.equals("left")) { //If left key is pressed and pacman is in center of space with no block to the left
             //System.out.println(b[xGrid - 1][yGrid] instanceof Block);
             pacman.moveLeft(); //move left
             pacmanTick += 3;
             // System.out.println("done");
         }
-        //add two every time
+        //resets pacmanTick
         if (pacmanTick >= 36) {
             pacmanTick = 0;
         }
@@ -603,15 +603,15 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             pacman.setSprite(imgPacDeath1);
         } else if (pacmanTick <= 30) {
             pacman.setSprite(imgPacDeath2);
-        } else if (pacmanTick <= 40) { //sprite 2
+        } else if (pacmanTick <= 40) { //sprite 3
             pacman.setSprite(imgPacDeath3);
         } else if (pacmanTick <= 50) {
             pacman.setSprite(imgPacDeath4);
-        } else if (pacmanTick <= 60) { //sprite 2
+        } else if (pacmanTick <= 60) { //sprite 4
             pacman.setSprite(imgPacDeath5);
         } else if (pacmanTick <= 70) {
             pacman.setSprite(imgPacDeath6);
-        } else if (pacmanTick <= 80) { //sprite 2
+        } else if (pacmanTick <= 80) { //sprite 5
             pacman.setSprite(imgPacDeath7);
         } else if (pacmanTick <= 90) {
             pacman.setSprite(imgPacDeath8);
@@ -622,6 +622,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         } else if (pacmanTick <= 120) {
             pacman.setSprite(imgPacDeath11);
         } else if (pacmanTick >= 180) { //no longer dead
+            //gap in tick is used to leave the death animation running for longer before it returns to the regular game.
             pacman.setSprite(imgPacWhole);
             pacman.setLives(pacman.getLives()-1);
             resetPositions();
