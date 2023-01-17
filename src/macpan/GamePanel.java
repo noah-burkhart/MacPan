@@ -308,6 +308,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     boolean pacDeath; //Boolean for if pacman is dead or not
+    long num;
     
     //this method is called only once, when the Thread starts
     @Override
@@ -317,6 +318,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         beforeTime = System.currentTimeMillis();
 
         while (true) { //this loop runs once ever 25 ms (the DELAY)
+            num++;
             moveBlinky(); //Move ghosts
             movePinky();
             moveInky();
@@ -574,10 +576,10 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     boolean ghostEaten1 = false, ghostEaten2 = false, ghostEaten3 = false, ghostEaten4 = false;
     
     /**
-     * Checks to see if a ghost is on pacman, starting the death animation and
-     * showing the end screen
+     * Checks to see if a ghost is on pacman, and result depends on if pacman has powerpellet
      */
     public void checkGhostOnPacman() {
+        //Get positions of everyone
         int pacX = pacman.getXPos() / px;
         int pacY = pacman.getYPos() / px;
         int blinkyX = blinky.getXPos() / px;
@@ -589,62 +591,100 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         int clydeX = clyde.getXPos() / px;
         int clydeY = clyde.getYPos() / px;
 
-        if (pacman.isPowerPellet()) {
-            if (!blinkyEaten) {
-                blinky.setSprite(imgScared1);
-            } else {
+        if (pacman.isPowerPellet()) { //If pacman ate the powerpellet
+            //If pacman hasn't eaten the ghost, set their sprite to the scared animation
+            if (!blinkyEaten) { 
+                if (blinkyCounter >= 0 && blinkyCounter < 14 && num%2 == 0) {
+                    blinky.setSprite(imgScared1);
+                } else if (blinkyCounter >= 14 && blinkyCounter < 27 && num%2 == 0) {
+                    blinky.setSprite(imgScared3);
+                } else if (blinkyCounter >= 0 && blinkyCounter < 14 && num%2 == 1) {
+                    blinky.setSprite(imgScared2);
+                } else if (blinkyCounter >= 14 && blinkyCounter < 27 && num%2 == 1){
+                    blinky.setSprite(imgScared4);
+                }
+            } else { //If they have been eaten, set their image to just eyes
                 blinky.setSprite(imgEyesUp);
             }
             if (!pinkyEaten) {
-                pinky.setSprite(imgScared1);
+                if (pinkyCounter >= 0 && pinkyCounter < 14 && num%2 == 0) {
+                    pinky.setSprite(imgScared1);
+                } else if (pinkyCounter >= 14 && pinkyCounter < 27 && num%2 == 0) {
+                    pinky.setSprite(imgScared3);
+                } else if (pinkyCounter >= 0 && pinkyCounter < 14 && num%2 == 1) {
+                    pinky.setSprite(imgScared2);
+                } else if (pinkyCounter >= 14 && pinkyCounter < 27 && num%2 == 1){
+                    pinky.setSprite(imgScared4);
+                }
             } else {
                 pinky.setSprite(imgEyesUp);
             }
             if (!inkyEaten) {
-                inky.setSprite(imgScared1);
+                if (inkyCounter >= 0 && inkyCounter < 14 && num%2 == 0) {
+                    inky.setSprite(imgScared1);
+                } else if (inkyCounter >= 14 && inkyCounter < 27 && num%2 == 0) {
+                    inky.setSprite(imgScared3);
+                } else if (inkyCounter >= 0 && inkyCounter < 14 && num%2 == 1) {
+                    inky.setSprite(imgScared2);
+                } else if (inkyCounter >= 14 && inkyCounter < 27 && num%2 == 1){
+                    inky.setSprite(imgScared4);
+                }
             } else {
                 inky.setSprite(imgEyesUp);
             }
             if (!clydeEaten) {
-                clyde.setSprite(imgScared1);
+                if (clydeCounter >= 0 && clydeCounter < 14 && num%2 == 0) {
+                    clyde.setSprite(imgScared1);
+                } else if (clydeCounter >= 14 && clydeCounter < 27 && num%2 == 0) {
+                    clyde.setSprite(imgScared3);
+                } else if (clydeCounter >= 0 && clydeCounter < 14 && num%2 == 1) {
+                    clyde.setSprite(imgScared2);
+                } else if (clydeCounter >= 14 && clydeCounter < 27 && num%2 == 1){
+                    clyde.setSprite(imgScared4);
+                }
             } else {
                 clyde.setSprite(imgEyesUp);
             }
-            if (powerPelletTick > 0) {
+            if (powerPelletTick > 0) { //While the powerpellet is active
                 System.out.println(powerPelletTick);
-                powerPelletTick--;
-                if (numGhostEaten == 1 && !ghostEaten1) {
-                    pacman.addScore(200);
-                    ghostEaten1 = true;
-                } else if (numGhostEaten == 2 && !ghostEaten2) {
-                    pacman.addScore(400);
-                    ghostEaten2 = true;
-                } else if (numGhostEaten == 3 && !ghostEaten3) {
-                    pacman.addScore(800);
-                    ghostEaten3 = true;
-                } else if (numGhostEaten == 4 && !ghostEaten4) {
-                    pacman.addScore(1600);
-                    ghostEaten4 = true;
+                powerPelletTick--; //Make the time left decrease
+                if (numGhostEaten == 1 && !ghostEaten1) { //If total number of ghosts eaten is 1, and the 200 points haven't been scored yet
+                    pacman.addScore(200); //Add 200 points
+                    ghostEaten1 = true; //Make it unable to score 200 again while this powerpellet is active
+                } else if (numGhostEaten == 2 && !ghostEaten2) { //If total number of ghosts eaten is 2, and the 400 points haven't been scored yet
+                    pacman.addScore(400); //Add 400 points
+                    ghostEaten2 = true; //Make it unable to score 400 again while this powerpellet is active
+                } else if (numGhostEaten == 3 && !ghostEaten3) { //If total number of ghosts eaten is 3, and the 800 points haven't been scored yet
+                    pacman.addScore(800); //Add 800 points
+                    ghostEaten3 = true; //Make it unable to score 800 again while this powerpellet is active
+                } else if (numGhostEaten == 4 && !ghostEaten4) { //If total number of ghosts eaten is 4, and the 1600 points haven't been scored yet
+                    pacman.addScore(1600); //Add 1600 points
+                    ghostEaten4 = true; //Make it unable to score 1600 again while this powerpellet is active
                 } else {
                 }
 
+                //If Blinky is on pacman and he hasn't been eaten yet
                 if (pacX == blinkyX && pacY == blinkyY && blinkyEaten == false) {
-                    numGhostEaten++;
-                    blinkyEaten = true;
+                    numGhostEaten++; //Add to total ghosts eaten
+                    blinkyEaten = true; //Set them as being eaten
                 }
+                //If pinky is on pacman and she hasn't been eaten yet
                 if (pacX == pinkyX && pacY == pinkyY && pinkyEaten == false) {
-                    numGhostEaten++;
-                    pinkyEaten = true;
+                    numGhostEaten++; //Add to total ghosts eaten
+                    pinkyEaten = true; //Set them as being eaten
                 }
+                //If inky is on pacman and he hasn't been eaten yet
                 if (pacX == inkyX && pacY == inkyY && inkyEaten == false) {
-                    numGhostEaten++;
-                    inkyEaten = true;
+                    numGhostEaten++; //Add to total ghosts eaten
+                    inkyEaten = true; //Set them as being eaten
                 }
+                //If clyde is on pacman and he hasn't been eaten yet
                 if (pacX == clydeX && pacY == clydeY && clydeEaten == false) {
-                    numGhostEaten++;
-                    clydeEaten = true;
+                    numGhostEaten++; //Add to total ghosts eaten
+                    clydeEaten = true; //Set them as being eaten
                 }
-            } else {
+            } else { //If powerpellet has run out
+                //Reset all variables and set pacman to not being in powerpellet form
                 ghostEaten1 = false;
                 ghostEaten2 = false;
                 ghostEaten3 = false;
@@ -656,8 +696,10 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                 clydeEaten = false;
                 pacman.setPowerPellet(false);
             }
-        } else {
+        } else { //If pacman is not in power pellet form
+            //And he is touched by a ghost
             if (pacX == blinkyX && pacY == blinkyY || pacX == pinkyX && pacY == pinkyY || pacX == inkyX && pacY == inkyY || pacX == clydeX && pacY == clydeY) {
+                //Stop all ghosts
                 pacman.setXSpeed(0);
                 pacman.setYSpeed(0);
                 blinky.setXSpeed(0);
@@ -668,9 +710,9 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                 inky.setYSpeed(0);
                 clyde.setXSpeed(0);
                 clyde.setYSpeed(0);
-                pacmanTick++;
-                pacDeath = true;
-                behaveDead();
+                pacmanTick++; //Run the pacman tick for the death animation
+                pacDeath = true; //Set pacman as dead
+                behaveDead(); //Run the behave dead method
             }
         }
     }
