@@ -70,18 +70,6 @@ public class HighscoreFrame extends javax.swing.JFrame {
 
         }
 
-        // in Java 7 you can do it easily using try-with-resource
-        // statement as shown below
-
-        try (FileWriter f = new FileWriter("names.txt", true);
-                BufferedWriter b = new BufferedWriter(f);
-                PrintWriter p = new PrintWriter(b);) {
-
-            p.println("appending text into file");
-
-        } catch (IOException i) {
-            i.printStackTrace();
-        }
     }
 
     /**
