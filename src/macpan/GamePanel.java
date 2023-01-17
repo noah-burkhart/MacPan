@@ -35,7 +35,7 @@ import macpan.objects.Thing;
 public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private Thread animator;
-    private final int DELAY = 5, BUFFER_X = 48, BUFFER_Y = 41; //the buffer for each animation in order to centre the gameboard
+    private final int DELAY = 25, BUFFER_X = 48, BUFFER_Y = 41; //the buffer for each animation in order to centre the gameboard
 
     private final int px = 26; //the size of each grid spot (26x26 pixels)
 
@@ -82,8 +82,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     private Image imgInkyUp1, imgInkyUp2, imgInkyDown1, imgInkyDown2, imgInkyLeft1, imgInkyLeft2, imgInkyRight1, imgInkyRight2;
     private Image imgClydeUp1, imgClydeUp2, imgClydeDown1, imgClydeDown2, imgClydeLeft1, imgClydeLeft2, imgClydeRight1, imgClydeRight2;
     private Image imgPacWhole, imgPacUp1, imgPacUp2, imgPacDown1, imgPacDown2, imgPacLeft1, imgPacLeft2, imgPacRight1, imgPacRight2;
+    private Image imgPacDeath1, imgPacDeath2, imgPacDeath3, imgPacDeath4, imgPacDeath5, imgPacDeath6, imgPacDeath7, imgPacDeath8, imgPacDeath9, imgPacDeath10, imgPacDeath11;
 
-    private Image imgCherry, imgStrawberry, imgOrange, imgApple, imgMelon, imgGalaxian, imgBell, imgKey;
 
     private Image imgCherry, imgStrawberry, imgOrange, imgApple, imgMelon, imgGalaxian, imgBell, imgKey;
 
@@ -153,12 +153,27 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         imgPacLeft2 = new ImageIcon("src/macpan/images/Pacman/pacBack2.png").getImage();
         imgPacRight1 = new ImageIcon("src/macpan/images/Pacman/pacman1.png").getImage();
         imgPacRight2 = new ImageIcon("src/macpan/images/Pacman/pacman2.png").getImage();
+        
+         //pacman death
+        imgPacDeath1 = new ImageIcon("src/macpan/images/Pacman/die1.png").getImage();
+        imgPacDeath2 = new ImageIcon("src/macpan/images/Pacman/die2.png").getImage();
+        imgPacDeath3 = new ImageIcon("src/macpan/images/Pacman/die3.png").getImage();
+        imgPacDeath4 = new ImageIcon("src/macpan/images/Pacman/die4.png").getImage();
+        imgPacDeath5 = new ImageIcon("src/macpan/images/Pacman/die5.png").getImage();
+        imgPacDeath6 = new ImageIcon("src/macpan/images/Pacman/die6.png").getImage();
+        imgPacDeath7 = new ImageIcon("src/macpan/images/Pacman/die7.png").getImage();
+        imgPacDeath8 = new ImageIcon("src/macpan/images/Pacman/die8.png").getImage();
+        imgPacDeath9 = new ImageIcon("src/macpan/images/Pacman/die9.png").getImage();
+        imgPacDeath10 = new ImageIcon("src/macpan/images/Pacman/die10.png").getImage();
+        imgPacDeath11 = new ImageIcon("src/macpan/images/Pacman/die11.png").getImage();
+        
     }
 
     /**
      * Reads from the file of game board data and creates the game board.
      */
     public void loadBoard() {
+        currentPressed = "";
         String type = "";
 
         try {
@@ -264,7 +279,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     //this method is called only once, when the Thread starts
     @Override
     public void run() {
-
+        boolean pacDeath;
         long beforeTime, timeDiff, sleep;
         //get the current time
         beforeTime = System.currentTimeMillis();
@@ -276,7 +291,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             moveClyde();
 
             //pacDeath = checkDeath();
-            pacDeath = false;
+            pacDeath = checkDeath();
             if (pacDeath) {
                 pacman.setXSpeed(0);
                 pacman.setYSpeed(0);
@@ -291,6 +306,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                 pacmanTick++;
                 deathAnimation();
             } else {
+                
+                 blinkyCounter += blinky.getXSpeed(); //Counter moves the same amount as the ghost each time
+            pinkyCounter += pinky.getXSpeed(); //Counter moves the same amount as the ghost each time
+            inkyCounter += inky.getXSpeed(); //Counter moves the same amount as the ghost each time
+            clydeCounter += clyde.getXSpeed(); //Counter moves the same amount as the ghost each time
+
 
             runPacman(); //runs pacman and his code
 
@@ -300,11 +321,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             addFood(); //adds food items to the map
 
             checkMapEmpty(); //checks if the user has cleared the board
-            checkEaten();
             
+            
+                                          
             }
             repaint();
-
+            
             //calculate how much time has passed since the last call
             //this allows smooth updates and our ball will move at a constant speed (as opposed to being dependent on processor availability)
             timeDiff = System.currentTimeMillis() - beforeTime;
@@ -316,7 +338,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             if (sleep < 0) {
                 sleep = 2;
             }
-
+            
             //try to actually wait
             try {
                 Thread.sleep(sleep);
@@ -326,6 +348,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             }
             //get the new current time
             beforeTime = System.currentTimeMillis();
+        
+        
         }
     }
 
@@ -345,13 +369,11 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         g2d.drawString("HIGH-SCORE: " + 100000, 10, 28);
         g2d.drawString("" + pacman.getScore(), 550, 28);
         // g2d.drawString("LIVES: ", 10, 615);
-
-        g2d.drawImage(pacman.getSprite(), pacman.getXPos() + BUFFER_X, pacman.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
-
         g2d.drawImage(blinky.getSprite(), blinky.getXPos() + BUFFER_X, blinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
         g2d.drawImage(pinky.getSprite(), pinky.getXPos() + BUFFER_X, pinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
         g2d.drawImage(inky.getSprite(), inky.getXPos() + BUFFER_X, inky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
         g2d.drawImage(clyde.getSprite(), clyde.getXPos() + BUFFER_X, clyde.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
+        g2d.drawImage(pacman.getSprite(), pacman.getXPos() + BUFFER_X, pacman.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
 
         //The Drawing of pacmans lives
         int num = pacman.getLives();
@@ -528,7 +550,60 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             } else {
                 pacman.setSprite(imgPacWhole);
             }
+            
         }
+    }
+    
+    /**
+     * Checks to see if a ghost is on pacman, starting the death animation and
+     * showing the end screen
+     */
+    public boolean checkDeath() {
+        int pacX = pacman.getXPos() / px;
+        int pacY = pacman.getYPos() / px;
+        int blinkyX = blinky.getXPos() / px;
+        int blinkyY = blinky.getYPos() / px;
+        int pinkyX = pinky.getXPos() / px;
+        int pinkyY = pinky.getYPos() / px;
+        int inkyX = inky.getXPos() / px;
+        int inkyY = inky.getYPos() / px;
+        int clydeX = clyde.getXPos() / px;
+        int clydeY = clyde.getYPos() / px;
+
+        if (pacX == blinkyX && pacY == blinkyY || pacX == pinkyX && pacY == pinkyY || pacX == inkyX && pacY == inkyY || pacX == clydeX && pacY == clydeY) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void deathAnimation() {
+        if (pacmanTick <= 10) { //sprite 1
+            pacman.setSprite(imgPacWhole);
+        } else if (pacmanTick <= 20) { //sprite 2
+            pacman.setSprite(imgPacDeath1);
+        } else if (pacmanTick <= 30) {
+            pacman.setSprite(imgPacDeath2);
+        } else if (pacmanTick <= 40) { //sprite 2
+            pacman.setSprite(imgPacDeath3);
+        } else if (pacmanTick <= 50) {
+            pacman.setSprite(imgPacDeath4);
+        } else if (pacmanTick <= 60) { //sprite 2
+            pacman.setSprite(imgPacDeath5);
+        } else if (pacmanTick <= 70) {
+            pacman.setSprite(imgPacDeath6);
+        } else if (pacmanTick <= 80) { //sprite 2
+            pacman.setSprite(imgPacDeath7);
+        } else if (pacmanTick <= 90) {
+            pacman.setSprite(imgPacDeath8);
+        } else if (pacmanTick <= 100) { //sprite 2
+            pacman.setSprite(imgPacDeath9);
+        } else if (pacmanTick <= 110) {
+            pacman.setSprite(imgPacDeath10);
+        } else {
+            pacman.setSprite(imgPacDeath11);
+        }
+        
     }
 
     /*
