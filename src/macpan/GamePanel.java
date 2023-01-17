@@ -83,6 +83,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     private Image imgClydeUp1, imgClydeUp2, imgClydeDown1, imgClydeDown2, imgClydeLeft1, imgClydeLeft2, imgClydeRight1, imgClydeRight2;
     private Image imgPacWhole, imgPacUp1, imgPacUp2, imgPacDown1, imgPacDown2, imgPacLeft1, imgPacLeft2, imgPacRight1, imgPacRight2;
     private Image imgPacDeath1, imgPacDeath2, imgPacDeath3, imgPacDeath4, imgPacDeath5, imgPacDeath6, imgPacDeath7, imgPacDeath8, imgPacDeath9, imgPacDeath10, imgPacDeath11;
+    private Image imgScared1, imgScared2, imgScared3, imgScared4, imgEyesUp, imgEyesDown, imgEyesRight, imgEyesLeft;
 
     private Image imgCherry, imgStrawberry, imgOrange, imgApple, imgMelon, imgGalaxian, imgBell, imgKey;
 
@@ -141,6 +142,18 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         imgClydeLeft2 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clydeBack2.png").getImage();
         imgClydeRight1 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clyde1.png").getImage();
         imgClydeRight2 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clyde2.png").getImage();
+
+        //Ghost scared images
+        imgScared1 = new ImageIcon("src/macpan/images/Ghosts/scared1.png").getImage();
+        imgScared2 = new ImageIcon("src/macpan/images/Ghosts/scared2.png").getImage();
+        imgScared3 = new ImageIcon("src/macpan/images/Ghosts/scared3.png").getImage();
+        imgScared4 = new ImageIcon("src/macpan/images/Ghosts/scared4.png").getImage();
+
+        //Ghost dead images
+        imgEyesUp = new ImageIcon("src/macpan/images/Ghosts/eyesUp.png").getImage();
+        imgEyesDown = new ImageIcon("src/macpan/images/Ghosts/eyesDown.png").getImage();
+        imgEyesRight = new ImageIcon("src/macpan/images/Ghosts/eyes.png").getImage();
+        imgEyesLeft = new ImageIcon("src/macpan/images/Ghosts/eyesBack.png").getImage();
 
         //pacman images
         imgPacWhole = new ImageIcon("src/macpan/images/Pacman/pacmanWhole.png").getImage();
@@ -212,6 +225,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      * Resets the positions of Pacman and the ghosts
      */
     public void resetPositions() {
+        pacDeath = false; //Set pacman to not dead after resetting the positions
         pacman.setXPos(px * 11);
         pacman.setYPos(px * 11);  //reset pacmans position
 
@@ -261,7 +275,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
         pacmanTick = 0; //resets spawning ticks
         foodTick = 0;
-        
+
         round = 1;
     }
 
@@ -293,10 +307,11 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         animator.start();
     }
 
+    boolean pacDeath; //Boolean for if pacman is dead or not
+    
     //this method is called only once, when the Thread starts
     @Override
     public void run() {
-        boolean pacDeath;
         long beforeTime, timeDiff, sleep;
         //get the current time
         beforeTime = System.currentTimeMillis();
@@ -306,41 +321,25 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             movePinky();
             moveInky();
             moveClyde();
+            blinkyCounter += blinky.getXSpeed(); //Counter moves the same amount as the ghost each time
+            pinkyCounter += pinky.getXSpeed(); //Counter moves the same amount as the ghost each time
+            inkyCounter += inky.getXSpeed(); //Counter moves the same amount as the ghost each time
+            clydeCounter += clyde.getXSpeed(); //Counter moves the same amount as the ghost each time
 
-            if(pacman.getLives() == 0){
-                //game over conditions here
-                System.exit(0);
-            }
-            //pacDeath = checkDeath();
-            pacDeath = checkDeath();
-            if (pacDeath) {
-                
-                pacman.setXSpeed(0);
-                pacman.setYSpeed(0);
-                blinky.setXSpeed(0);
-                blinky.setYSpeed(0);
-                pinky.setXSpeed(0);
-                pinky.setYSpeed(0);
-                inky.setXSpeed(0);
-                inky.setYSpeed(0);
-                clyde.setXSpeed(0);
-                clyde.setYSpeed(0);
-                pacmanTick++;
-                behaveDead();
-            } else {
-                blinkyCounter += blinky.getXSpeed(); //Counter moves the same amount as the ghost each time
-                pinkyCounter += pinky.getXSpeed(); //Counter moves the same amount as the ghost each time
-                inkyCounter += inky.getXSpeed(); //Counter moves the same amount as the ghost each time
-                clydeCounter += clyde.getXSpeed(); //Counter moves the same amount as the ghost each time
+            checkGhostOnPacman(); //Check if pacman is on top of a ghost, will result in death or eating them depending on if pacman has eaten a power pellet
 
-                runPacman(); //runs pacman and his code
+            if (!pacDeath) { //If pacman is not dead, keep running the game, if he is deadeverything stops until the characters are reset
+                runPacman(); //Move pacman
+                if (pacman.getLives() == 0) {
+                    //game over conditions here
+                    System.exit(0);
+                }
                 checkEaten(); //checks to see if pacman has eaten anything
 
                 foodTick++; //adds to the food tick
                 addFood(); //adds food items to the map
 
                 checkMapEmpty(); //checks if the user has cleared the board
-
             }
             repaint();
 
@@ -425,6 +424,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private String currentPressed = "", oldPressed = ""; //used to control what key was last pressed
     private int pacmanTick = 27; //tick used to control pacmans animation
+    private int numGhostEaten = 0;
 
     @Override
     /**
@@ -570,11 +570,14 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
+    boolean blinkyEaten = false, pinkyEaten = false, inkyEaten = false, clydeEaten = false;
+    boolean ghostEaten1 = false, ghostEaten2 = false, ghostEaten3 = false, ghostEaten4 = false;
+    
     /**
      * Checks to see if a ghost is on pacman, starting the death animation and
      * showing the end screen
      */
-    public boolean checkDeath() {
+    public void checkGhostOnPacman() {
         int pacX = pacman.getXPos() / px;
         int pacY = pacman.getYPos() / px;
         int blinkyX = blinky.getXPos() / px;
@@ -586,10 +589,89 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         int clydeX = clyde.getXPos() / px;
         int clydeY = clyde.getYPos() / px;
 
-        if (pacX == blinkyX && pacY == blinkyY || pacX == pinkyX && pacY == pinkyY || pacX == inkyX && pacY == inkyY || pacX == clydeX && pacY == clydeY) {
-            return true;
+        if (pacman.isPowerPellet()) {
+            if (!blinkyEaten) {
+                blinky.setSprite(imgScared1);
+            } else {
+                blinky.setSprite(imgEyesUp);
+            }
+            if (!pinkyEaten) {
+                pinky.setSprite(imgScared1);
+            } else {
+                pinky.setSprite(imgEyesUp);
+            }
+            if (!inkyEaten) {
+                inky.setSprite(imgScared1);
+            } else {
+                inky.setSprite(imgEyesUp);
+            }
+            if (!clydeEaten) {
+                clyde.setSprite(imgScared1);
+            } else {
+                clyde.setSprite(imgEyesUp);
+            }
+            if (powerPelletTick > 0) {
+                System.out.println(powerPelletTick);
+                powerPelletTick--;
+                if (numGhostEaten == 1 && !ghostEaten1) {
+                    pacman.addScore(200);
+                    ghostEaten1 = true;
+                } else if (numGhostEaten == 2 && !ghostEaten2) {
+                    pacman.addScore(400);
+                    ghostEaten2 = true;
+                } else if (numGhostEaten == 3 && !ghostEaten3) {
+                    pacman.addScore(800);
+                    ghostEaten3 = true;
+                } else if (numGhostEaten == 4 && !ghostEaten4) {
+                    pacman.addScore(1600);
+                    ghostEaten4 = true;
+                } else {
+                }
+
+                if (pacX == blinkyX && pacY == blinkyY && blinkyEaten == false) {
+                    numGhostEaten++;
+                    blinkyEaten = true;
+                }
+                if (pacX == pinkyX && pacY == pinkyY && pinkyEaten == false) {
+                    numGhostEaten++;
+                    pinkyEaten = true;
+                }
+                if (pacX == inkyX && pacY == inkyY && inkyEaten == false) {
+                    numGhostEaten++;
+                    inkyEaten = true;
+                }
+                if (pacX == clydeX && pacY == clydeY && clydeEaten == false) {
+                    numGhostEaten++;
+                    clydeEaten = true;
+                }
+            } else {
+                ghostEaten1 = false;
+                ghostEaten2 = false;
+                ghostEaten3 = false;
+                ghostEaten4 = false;
+                numGhostEaten = 0;
+                blinkyEaten = false;
+                pinkyEaten = false;
+                inkyEaten = false;
+                clydeEaten = false;
+                pacman.setPowerPellet(false);
+            }
         } else {
-            return false;
+            if (pacX == blinkyX && pacY == blinkyY || pacX == pinkyX && pacY == pinkyY || pacX == inkyX && pacY == inkyY || pacX == clydeX && pacY == clydeY) {
+                pacman.setXSpeed(0);
+                pacman.setYSpeed(0);
+                blinky.setXSpeed(0);
+                blinky.setYSpeed(0);
+                pinky.setXSpeed(0);
+                pinky.setYSpeed(0);
+                inky.setXSpeed(0);
+                inky.setYSpeed(0);
+                clyde.setXSpeed(0);
+                clyde.setYSpeed(0);
+                pacmanTick++;
+                pacDeath = true;
+                behaveDead();
+            }
         }
     }
 
@@ -623,7 +705,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             pacman.setSprite(imgPacDeath11);
         } else if (pacmanTick >= 180) { //no longer dead
             pacman.setSprite(imgPacWhole);
-            pacman.setLives(pacman.getLives()-1);
+            pacman.setLives(pacman.getLives() - 1);
             resetPositions();
         }
     }
@@ -632,12 +714,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      POINT SCORING AND CONSUMABLES
      */
     private int foodTick = 0; //used to control food spawning
+    private int powerPelletTick = 0; //Used to control how long pacman has the powerpellet
 
     /**
      * Checks to see if Pacman is on a consumable, then adds points and erase
      */
     public void checkEaten() {
-
         int x = (pacman.getXPos() + 13) / px;  //represents pacmans position on the 'grid' (the map array)
         int y = (pacman.getYPos() + 13) / px; //mid level of pacman
 
@@ -654,10 +736,10 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             //additional power pellet code here
             pelletCount--; //takes away from the total pellet count
             pacman.setPowerPellet(true); //notifies that it now has a power pellet state.
+            powerPelletTick = 400;
             pacman.addScore(((PowerPellet) (b[x][y])).getPoints()); //adds the score of the pellet to pacmans score
             b[x][y] = new Empty(imgEmpty, x * px, y * px); //sets the old space to empty
         }
-
     }
 
     /**
@@ -829,7 +911,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             blinkyLeft = true;
         }
         if (blinky.getXPos() / 26 == 0) {
-            blinky.setXPos(26 * 20 - 1);
+            blinky.setXPos(26 * 21 - 1);
         }
         if (blinky.getXPos() / 26 == 21) {
             blinky.setXPos(26 * 1);
@@ -913,7 +995,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             pinkyLeft = true;
         }
         if (pinky.getXPos() / 26 == 0) {
-            pinky.setXPos(26 * 20 - 1);
+            pinky.setXPos(26 * 21 - 1);
         }
         if (pinky.getXPos() / 26 == 21) {
             pinky.setXPos(26 * 1);
@@ -997,7 +1079,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             inkyLeft = true;
         }
         if (inky.getXPos() / 26 == 0) {
-            inky.setXPos(26 * 20 - 1);
+            inky.setXPos(26 * 21 - 1);
         }
         if (inky.getXPos() / 26 == 21) {
             inky.setXPos(26 * 1);
@@ -1082,7 +1164,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             clydeLeft = true;
         }
         if (clyde.getXPos() / 26 == 0) {
-            clyde.setXPos(26 * 20 - 1);
+            clyde.setXPos(26 * 21 - 1);
         }
         if (clyde.getXPos() / 26 == 21) {
             clyde.setXPos(26 * 1);
