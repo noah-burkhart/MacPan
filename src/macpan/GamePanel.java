@@ -84,7 +84,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     private Image imgPacWhole, imgPacUp1, imgPacUp2, imgPacDown1, imgPacDown2, imgPacLeft1, imgPacLeft2, imgPacRight1, imgPacRight2;
     private Image imgPacDeath1, imgPacDeath2, imgPacDeath3, imgPacDeath4, imgPacDeath5, imgPacDeath6, imgPacDeath7, imgPacDeath8, imgPacDeath9, imgPacDeath10, imgPacDeath11;
 
-
     private Image imgCherry, imgStrawberry, imgOrange, imgApple, imgMelon, imgGalaxian, imgBell, imgKey;
 
     /**
@@ -153,8 +152,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         imgPacLeft2 = new ImageIcon("src/macpan/images/Pacman/pacBack2.png").getImage();
         imgPacRight1 = new ImageIcon("src/macpan/images/Pacman/pacman1.png").getImage();
         imgPacRight2 = new ImageIcon("src/macpan/images/Pacman/pacman2.png").getImage();
-        
-         //pacman death
+
+        //pacman death
         imgPacDeath1 = new ImageIcon("src/macpan/images/Pacman/die1.png").getImage();
         imgPacDeath2 = new ImageIcon("src/macpan/images/Pacman/die2.png").getImage();
         imgPacDeath3 = new ImageIcon("src/macpan/images/Pacman/die3.png").getImage();
@@ -166,7 +165,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         imgPacDeath9 = new ImageIcon("src/macpan/images/Pacman/die9.png").getImage();
         imgPacDeath10 = new ImageIcon("src/macpan/images/Pacman/die10.png").getImage();
         imgPacDeath11 = new ImageIcon("src/macpan/images/Pacman/die11.png").getImage();
-        
+
     }
 
     /**
@@ -212,42 +211,56 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     /**
      * Resets the positions of Pacman and the ghosts
      */
-    public void resetPositions(){
+    public void resetPositions() {
         pacman.setXPos(px * 11);
-            pacman.setYPos(px * 11);  //reset pacmans position
+        pacman.setYPos(px * 11);  //reset pacmans position
 
-            blinky.setXPos(px*3);
-            blinky.setYPos(px*1);
-            blinkyCounter = 0;
-            blinkyChoice = "right";
-            
-            pinky.setXPos(px*19);
-            pinky.setYPos(px*1);     //resets ghost positions
-            pinkyCounter = 0;
-            pinkyChoice = "left";
-             
-            inky.setXPos(px*3);
-            inky.setYPos(px*19);
-            inkyCounter = 0;
-            inkyChoice = "right";
-            
-            clyde.setXPos(px*19);
-            clyde.setYPos(px*19);
-            clydeCounter = 0;
-            clydeChoice = "left";
+        blinky.setXPos(px * 3);
+        blinky.setYPos(px * 1);
+        blinkyCounter = 0;
+        blinkyChoice = "right";
+
+        pinky.setXPos(px * 19);
+        pinky.setYPos(px * 1);     //resets ghost positions
+        pinkyCounter = 0;
+        pinkyChoice = "left";
+
+        inky.setXPos(px * 3);
+        inky.setYPos(px * 19);
+        inkyCounter = 0;
+        inkyChoice = "right";
+
+        clyde.setXPos(px * 19);
+        clyde.setYPos(px * 19);
+        clydeCounter = 0;
+        clydeChoice = "left";
+
+        //resets the speeds
+        pacman.setXSpeed(2);
+        pacman.setYSpeed(2);
+        blinky.setXSpeed(2);
+        blinky.setYSpeed(2);
+        pinky.setXSpeed(2);
+        pinky.setYSpeed(2);
+        inky.setXSpeed(2);
+        inky.setYSpeed(2);
+        clyde.setXSpeed(2);
+        clyde.setYSpeed(2);
+
     }
-    
-    public void resetGame(){
-       loadBoard();
-       resetPositions();
-       
-       pacman.setScore(0);
-       pacman.setLives(3);  //resets the score and pacmans lives
-       
-       pacmanTick = 0; //resets spawning ticks
-       foodTick = 0;
-       
+
+    public void resetGame() {
+        loadBoard();
+        resetPositions();
+
+        pacman.setScore(0);
+        pacman.setLives(3);  //resets the score and pacmans lives
+
+        pacmanTick = 0; //resets spawning ticks
+        foodTick = 0;
+
     }
+
     /*
      * ***************************************************************************************************
     G2D CODE AND FRAMES 
@@ -304,29 +317,26 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                 clyde.setXSpeed(0);
                 clyde.setYSpeed(0);
                 pacmanTick++;
-                deathAnimation();
+                behaveDead();
             } else {
-                
-                 blinkyCounter += blinky.getXSpeed(); //Counter moves the same amount as the ghost each time
-            pinkyCounter += pinky.getXSpeed(); //Counter moves the same amount as the ghost each time
-            inkyCounter += inky.getXSpeed(); //Counter moves the same amount as the ghost each time
-            clydeCounter += clyde.getXSpeed(); //Counter moves the same amount as the ghost each time
 
+                blinkyCounter += blinky.getXSpeed(); //Counter moves the same amount as the ghost each time
+                pinkyCounter += pinky.getXSpeed(); //Counter moves the same amount as the ghost each time
+                inkyCounter += inky.getXSpeed(); //Counter moves the same amount as the ghost each time
+                clydeCounter += clyde.getXSpeed(); //Counter moves the same amount as the ghost each time
 
-            runPacman(); //runs pacman and his code
+                runPacman(); //runs pacman and his code
 
-            checkEaten(); //checks to see if pacman has eaten anything
+                checkEaten(); //checks to see if pacman has eaten anything
 
-            foodTick++; //adds to the food tick
-            addFood(); //adds food items to the map
+                foodTick++; //adds to the food tick
+                addFood(); //adds food items to the map
 
-            checkMapEmpty(); //checks if the user has cleared the board
-            
-            
-                                          
+                checkMapEmpty(); //checks if the user has cleared the board
+
             }
             repaint();
-            
+
             //calculate how much time has passed since the last call
             //this allows smooth updates and our ball will move at a constant speed (as opposed to being dependent on processor availability)
             timeDiff = System.currentTimeMillis() - beforeTime;
@@ -338,7 +348,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             if (sleep < 0) {
                 sleep = 2;
             }
-            
+
             //try to actually wait
             try {
                 Thread.sleep(sleep);
@@ -348,8 +358,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             }
             //get the new current time
             beforeTime = System.currentTimeMillis();
-        
-        
+
         }
     }
 
@@ -550,10 +559,10 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             } else {
                 pacman.setSprite(imgPacWhole);
             }
-            
+
         }
     }
-    
+
     /**
      * Checks to see if a ghost is on pacman, starting the death animation and
      * showing the end screen
@@ -577,7 +586,10 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
-    public void deathAnimation() {
+    /**
+     * Animates pacmans death then resets position
+     */
+    public void behaveDead() {
         if (pacmanTick <= 10) { //sprite 1
             pacman.setSprite(imgPacWhole);
         } else if (pacmanTick <= 20) { //sprite 2
@@ -600,10 +612,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             pacman.setSprite(imgPacDeath9);
         } else if (pacmanTick <= 110) {
             pacman.setSprite(imgPacDeath10);
-        } else {
+        } else if (pacmanTick <= 120) {
             pacman.setSprite(imgPacDeath11);
+        } else if (pacmanTick >= 180) { //no longer dead
+            pacman.setSprite(imgPacWhole);
+            resetPositions();
         }
-        
     }
 
     /*
@@ -616,8 +630,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      */
     public void checkEaten() {
 
-        int x = (pacman.getXPos()+13) / px;  //represents pacmans position on the 'grid' (the map array)
-        int y = (pacman.getYPos()+13) / px; //mid level of pacman
+        int x = (pacman.getXPos() + 13) / px;  //represents pacmans position on the 'grid' (the map array)
+        int y = (pacman.getYPos() + 13) / px; //mid level of pacman
 
         if (b[x][y] instanceof Pellet == true) {
             pelletCount--; //takes away from the total pellet count
@@ -655,7 +669,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                 if (b[x][y] instanceof Empty == true) { //if that spot is empty
                     run = false; //stop looking for a spot
                     Food f = findRoundFood(); //gets the current rounds food
-                    b[x][y] = new Food(f.getSprite(), x*px, y*px, f.getPoints());
+                    b[x][y] = new Food(f.getSprite(), x * px, y * px, f.getPoints());
                     foodTick = 0; //reset the food tick
                 }
             }
@@ -666,7 +680,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     /**
      * Will find what food item must be used given the round
-     * @return 
+     *
+     * @return
      */
     public Food findRoundFood() {
         Food f; //set the spot to a piece of food;
@@ -695,7 +710,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     /**
      * Will check to see if Pacman has cleared the map
      */
-    public void checkMapEmpty() { 
+    public void checkMapEmpty() {
         if (pelletCount == 0) { //if all pellets have been consumed
             //put sound effects here if were doing this
             round++; //adds to the round
