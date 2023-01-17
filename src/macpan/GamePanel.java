@@ -249,6 +249,9 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     }
 
+    /**
+     * Resets the game to its original state.
+     */
     public void resetGame() {
         loadBoard();
         resetPositions();
@@ -258,7 +261,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
         pacmanTick = 0; //resets spawning ticks
         foodTick = 0;
-
+        
+        round = 1;
     }
 
     /*
