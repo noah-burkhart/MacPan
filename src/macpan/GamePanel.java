@@ -1,10 +1,19 @@
 /*
  * N Burkhart, J Luhta, V He
     December 2022 - January 2023
-    A class which allows drawing, because it extends JPanel, by way of the 
-    Graphics2D class
+   
+    The main frame for the MacPan Game. All code for movement and animation is divided into
+    subsections in the code. Each subsection header explains briefly what is contained in it.
+    
+    All methods and code is called from the run() method.
+    
+    Authors of methods will be displayed in the video explination.
+    
+    Also, a class which allows drawing, because it extends JPanel, by way of the 
+    Graphics2D class.
+
     This panel is repainted regulary by implementing the Runnable interface and 
-    running in a Thread. This allows it to be animated
+    running in a Thread. This allows it to be animated.
  */
 package macpan;
 
@@ -302,6 +311,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         - Code to run the frame
      * ***************************************************************************************************
      */
+    
     //overrides paintComponent in JPanel class
     //performs custom painting
     @Override
@@ -451,7 +461,9 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             - movement 
             - animation 
             - adding points 
-            - Win conditions
+            - checking death conditions
+            - eating ghosts
+            - death behaviour and animation
      * ***************************************************************************************************
      */
     Pacman pacman; //pacman himself
@@ -1005,12 +1017,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             Includes: 
             - animation 
             - movement 
-            - power pellet activated movement of ghosts (maybe)?
+            - power pellet activated movement of ghosts
      * ***************************************************************************************************
      */
     Blinky blinky;
     Pinky pinky;
-    Inky inky;   //the ghosts
+    Inky inky;   //creates the ghosts
     Clyde clyde;
 
     private boolean blinkyUp = true, blinkyDown = true, blinkyLeft = true, blinkyRight = true; //Booleans for checking backward movement
