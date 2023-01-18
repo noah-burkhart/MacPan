@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import macpan.objects.Score;
 import java.io.IOException; 
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class HighscoreFrame extends javax.swing.JFrame {
     
@@ -49,8 +51,18 @@ public class HighscoreFrame extends javax.swing.JFrame {
      * 
      */
     public static void readFile(){
+        
+        JFileChooser fileChooser = new JFileChooser("src/macpan"); //prompt doesn't matter
+        
+        //makes it so the user can only choose data files from score
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("*.data", "data"));
+        fileChooser.setAcceptAllFileFilterUsed(true);
+        
+        fileChooser.showOpenDialog(null);
+        
         try {
-            File f = new File("src/macpan/score.data");
+            File f = fileChooser.getSelectedFile();
             Scanner s = new Scanner(f);
             while (s.hasNextLine()){
                 int value = Integer.parseInt(s.nextLine());
