@@ -48,6 +48,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         loadImage(); //loads the images and the board
         loadBoard();
         setBackground(Color.black);
+        
 
         pacman = new Pacman(3, imgPacUp1, px * 11, px * 11, 2, 2, "right");
 
@@ -68,8 +69,9 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      * data file to load the game board
      * ***************************************************************************************************
      */
+    
     /*
-    Thing, the game board itself, utalizes interface called thing(meaning it is a thing/obkect on the gameboard)
+    Thing, the game board itself, utalizes interface called thing(meaning it is a thing/object on the gameboard)
     It includes the classes:
     Block, Empty, Pellet, PowerPellet, Food.
      */
@@ -317,6 +319,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         //get the current time
         beforeTime = System.currentTimeMillis();
 
+        int oldScore = 0, currentScore; //used to control adding lives
+        
         while (true) { //this loop runs once ever 25 ms (the DELAY)
             num++;
             moveBlinky(); //Move ghosts
@@ -328,8 +332,14 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             inkyCounter += inky.getXSpeed(); //Counter moves the same amount as the ghost each time
             clydeCounter += clyde.getXSpeed(); //Counter moves the same amount as the ghost each time
 
-            checkGhostOnPacman(); //Check if pacman is on top of a ghost, will result in death or eating them depending on if pacman has eaten a power pellet
-
+            currentScore = pacman.getScore();  //stores the current score
+            checkAddLives(oldScore, currentScore); //checks if we need to add lives
+            checkGhostOnPacman();
+            
+            if (pacman.getLives() == 0) {
+                //game over conditions here
+                //JOption Pane here
+            }
             if (!pacDeath) { //If pacman is not dead, keep running the game, if he is deadeverything stops until the characters are reset
                 runPacman(); //Move pacman
                 if (pacman.getLives() == 0) {
@@ -343,6 +353,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
                 checkMapEmpty(); //checks if the user has cleared the board
             }
+            foodTick++; //adds to the food tick
+            addFood(); //adds food items to the map
+            
+            checkMapEmpty(); //checks if the user has cleared the board
+
+
             repaint();
 
             //calculate how much time has passed since the last call
@@ -383,7 +399,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
         g2d.setColor(Color.white);
         g2d.setFont(new java.awt.Font("Monospaced", 1, 17));
-        g2d.drawString("HIGH-SCORE: " + 100000, 10, 28);
+        g2d.drawString("HIGH-SCORE: " + 100000, 10, 28);             //display the highscore
         g2d.drawString("" + pacman.getScore(), 550, 28);
         // g2d.drawString("LIVES: ", 10, 615);
         g2d.drawImage(blinky.getSprite(), blinky.getXPos() + BUFFER_X, blinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
@@ -482,8 +498,10 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     /**
      * Moves PacMan given a certain position on the grid
      *
-     * @param xTop - the x position on the grid
-     * @param yTop - the y position on the grid.
+     * @param xTop - the top x position on the grid
+     * @param yTop - the top y position on the grid.
+     * @param xBottom - the bottom right x on the grid
+     * @param yBottom - the bottom right y on the grid
      */
     public void movePacman(int xTop, int yTop, int xBottom, int yBottom) {
         double inBlockX = (double) (pacman.getXPos() % px);
@@ -497,14 +515,14 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             pacmanTick += 3;
         } else if (inBlockY == 0 && b[xTop + 1][yTop] instanceof Block == false && oldPressed.equals("right")) { //If right key is pressed and pacman is in center of space with no block to the right
             pacman.moveRight(); //Move right
-            pacmanTick += 3; //add two every time
+            pacmanTick += 3; //add 3 every time
         } else if (inBlockY == 0 && b[xBottom - 1][yBottom] instanceof Block == false && oldPressed.equals("left")) { //If left key is pressed and pacman is in center of space with no block to the left
             //System.out.println(b[xGrid - 1][yGrid] instanceof Block);
             pacman.moveLeft(); //move left
             pacmanTick += 3;
             // System.out.println("done");
         }
-        //add two every time
+        //resets pacmanTick
         if (pacmanTick >= 36) {
             pacmanTick = 0;
         }
@@ -807,15 +825,15 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             pacman.setSprite(imgPacDeath1);
         } else if (pacmanTick <= 30) {
             pacman.setSprite(imgPacDeath2);
-        } else if (pacmanTick <= 40) { //sprite 2
+        } else if (pacmanTick <= 40) { //sprite 3
             pacman.setSprite(imgPacDeath3);
         } else if (pacmanTick <= 50) {
             pacman.setSprite(imgPacDeath4);
-        } else if (pacmanTick <= 60) { //sprite 2
+        } else if (pacmanTick <= 60) { //sprite 4
             pacman.setSprite(imgPacDeath5);
         } else if (pacmanTick <= 70) {
             pacman.setSprite(imgPacDeath6);
-        } else if (pacmanTick <= 80) { //sprite 2
+        } else if (pacmanTick <= 80) { //sprite 5
             pacman.setSprite(imgPacDeath7);
         } else if (pacmanTick <= 90) {
             pacman.setSprite(imgPacDeath8);
@@ -826,6 +844,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         } else if (pacmanTick <= 120) {
             pacman.setSprite(imgPacDeath11);
         } else if (pacmanTick >= 180) { //no longer dead
+            //gap in tick is used to leave the death animation running for longer before it returns to the regular game.
             pacman.setSprite(imgPacWhole);
             pacman.setLives(pacman.getLives() - 1);
             resetPositions();
@@ -926,10 +945,29 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         if (pelletCount == 0) { //if all pellets have been consumed
             //put sound effects here if were doing this
             round++; //adds to the round
+            if(round == 9){ //check to see if the round is impossible
+                round = 1; //if impossible, bring back to cherry
+            }
 
             resetPositions();
             loadBoard(); //reset the board and fill it again
 
+        }
+    }
+    
+    private int conditional = 10000; //controls what amount of points pacman has to reach to gain a life
+   
+    /**
+     * Checks to see if PacMan can gain a new life
+     * @param oldS - the old score
+     * @param newS - the new score
+     */
+    public void checkAddLives(int oldS, int newS){
+        if(newS >= conditional && oldS < conditional){ //score has gone over the 10k increment
+            if(pacman.getLives() < 3){ //if pacman has less than the maximum lives
+                pacman.setLives(pacman.getLives()+1); //adds a life
+            }
+            conditional += 10000; //sets a new conditon to meet
         }
     }
 

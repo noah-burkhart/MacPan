@@ -13,10 +13,12 @@ public class InstructionsFrame extends javax.swing.JFrame {
 
     //Main window variable
     MenuFrame mainWindow;
-    
-    private Image icon  = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
+
+    private Image icon = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
+
     /**
      * Creates the instructions frame with gui builder
+     *
      * @param m - the main window
      */
     public InstructionsFrame(MenuFrame m) {
@@ -30,19 +32,26 @@ public class InstructionsFrame extends javax.swing.JFrame {
         mainWindow = m;
         instructionArea.setText("""
                                 Instructions:
-                                Eat all of the pellets to clear the entire maze
+                                \nEat all of the pellets to clear the entire maze
                                 You have 3 lives at the start
                                 If a ghost catches you, you lose a life
                                 When you lose all your lives, the game is over
                                 
                                 Tips and Tricks:
+                                
                                 Power Pellets: 
                                 When PacMan eats power pellets, he can now eat the ghosts!
                                 But he can only eat them when the ghosts become\nscared 
                                 but this will only last for a limited time so \nbe careful!
-                                Fruit Treats:
-                                Two fruits appear in each maze. 
-                                As you complete more levels, the more they are worth
+                                
+                                Food:
+                                Food will begin to appear in the maze when 
+                                PacMan gains 500 points.
+                                As you complete more levels, food will change!
+                                Different foods are worth different 
+                                amounts of points. So clear the board to unlock
+                                others.
+                                
                                 Warp Tunnels:
                                 Go through one end and you will warp out the \nother end
                                 Use these tunnels to your advantage!
@@ -50,17 +59,30 @@ public class InstructionsFrame extends javax.swing.JFrame {
                                 Scoring:
                                 Pellet: 10 points
                                 Power Pellet: 50 points
+                                
                                 Ghosts:
                                 1st Ghost - 200 points
                                 2nd Ghost 400 points
                                 3rd Ghost - 800 points
                                 4th Ghost - 1600 points
-                                Fruit:
-                                Cherry - 100 points
-                                Strawberry - 200 points
-                                Orange - 300 points
+                                
+                                Food:
+                                Cherry - 100 points 
+                                Strawberry - 200 points 
+                                Orange - 300 points 
+                                Apple - 700 points
+                                Melon - 1000 points
+                                Galaxian - 2000 points
+                                Bell - 3000 points
+                                Key - 5000 points
+                                
                                 Extra Life:
-                                You gain an extra life at every 10,000 points!""");
+                                You gain an extra life at every 10,000 points!
+                                \n\nCredits:
+                                Jack - Project Manager, Systems Analyst
+                                Noah - Lead Programmer
+                                Victoria - Graphic Artist, Technical Writer
+                                """);
     }
 
     /**

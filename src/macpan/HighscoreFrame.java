@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.ArrayList;
 import macpan.objects.Score;
 import java.io.BufferedWriter; 
 import java.io.FileWriter; 
@@ -19,17 +20,18 @@ import javax.swing.ImageIcon;
 
 public class HighscoreFrame extends javax.swing.JFrame {
     
-    //Main window variable
+    // Main window variable
     MenuFrame mainWindow;
-    
+    // Cherry Icon
     private Image icon  = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
-    
+    // Global arraylist for scores
+    static ArrayList scores = new ArrayList();
     
     /**
      * Creates the high score frame with gui builder
      * @param m - the main window
      */
-    public HighscoreFrame(MenuFrame m) {
+    public HighscoreFrame(MenuFrame m) throws IOException {
         initComponents();
         //Set frame to middle of screen, title, and disallow rezizing
         setLocationRelativeTo(null);
@@ -38,32 +40,53 @@ public class HighscoreFrame extends javax.swing.JFrame {
         setIconImage(icon);
         getContentPane().setBackground(Color.BLACK);
         mainWindow = m;
-        Score topScores[] = new Score[5];
-        //readFile(topScores);
-        
+        //Score topScores[] = new Score[5];
+        //readFile();
+    
         
         FileWriter fw = null; 
         BufferedWriter bw = null; 
         PrintWriter pw = null;
         
+         try {
+            fw = new FileWriter("src/macpan/score.data", true);
+            bw = new BufferedWriter(fw);
+            pw = new PrintWriter(bw);
+
+            pw.println("\nHi This is a test");
+            pw.println("Clyde is very cool");
+            pw.println("If you do not agree then idk wut to tell you");
+
+            System.out.println("Data Successfully appended into file");
+            pw.flush();
+
+        } finally {
+            try {
+                pw.close();
+                bw.close();
+                fw.close();
+            } catch (IOException io) {// can't do anything }
+            }
+
+        }
+
     }
 
+    /**
+     * Reads file of scores
+     * First line is score value 
+     * Second line is player's initials
+     * 
+     */
     public static void readFile(){
         try {
             File f = new File("src/macpan/score.data");
             Scanner s = new Scanner(f);
-            //int size = f.getLength;
-            for (int i = 0; i < 5; i++) {
-               int score = Integer.parseInt(s.nextLine());
-               String name = s.nextLine();
-               Score score_ = new Score(score, name);
-            }
-            //quickSortD(arr, 0, 4);
-            for (int i = 0; i < 5; i++) {
-                //System.out.println(arr[i]);
-            }
             while (s.hasNextLine()){
-                
+                int value = Integer.parseInt(s.nextLine());
+                String name = s.nextLine();
+                Score score = new Score(value, name);
+                scores.add(score);
             }
             
         } catch (FileNotFoundException e) {
@@ -77,7 +100,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
      * @param low - lowest index
      * @param high - highest index
      */
-    public static void quickSortD(Score[] arr, int low, int high) {
+    public static void quickSortD(ArrayList<Score> arr, int low, int high) {
         if (low < high) {
 
             // pi is partitioning index, arr[p]
@@ -99,10 +122,10 @@ public class HighscoreFrame extends javax.swing.JFrame {
      * @param high - highest index
      * @return - the index of the last pivot
      */
-    public static int partitionD(Score[] arr, int low, int high) {
+    public static int partitionD(ArrayList<Score> arr, int low, int high) {
         // sets pivot as last index
-        int pivot = arr[high].getValue();
-
+        Score pivot = arr.get(high);
+        int pivotScore = pivot.getValue();
         // Index of smaller element and
         // indicates the right position
         // of pivot found so far
@@ -111,7 +134,9 @@ public class HighscoreFrame extends javax.swing.JFrame {
         for (int j = low; j <= high - 1; j++) {
             // If current element is smaller
             // than the pivot
-            if (arr[j].getValue() > pivot) { //if greater than pivot
+            Score current = arr.get(j);
+            int currentScore = current.getValue();
+            if (currentScore > pivotScore) { //if greater than pivot
 
                 // Increment index of
                 // smaller element
@@ -129,11 +154,10 @@ public class HighscoreFrame extends javax.swing.JFrame {
      * @param i - lower index number
      * @param j - higher index number
      */
-    public static void swap(Score[] arr, int i, int j) {
-        Score temp = arr[i].clone();
-        arr[i] = arr[j]; // sets them to the same value
-        System.out.println("");
-        arr[j] = temp; // places the stored temporary value into higher index number
+    public static void swap(ArrayList<Score> arr, int i, int j) {
+        Score temp = arr.get(i).clone();
+        arr.set(i, arr.get(j)); // sets them to the same value
+        arr.set(j, temp); // places the stored temporary value into higher index number
     }
     
     /**
@@ -357,7 +381,6 @@ public class HighscoreFrame extends javax.swing.JFrame {
         this.setVisible(false); //HiScoreframe is not visible
         mainWindow.setVisible(true); //Main window is visible
     }//GEN-LAST:event_btnBackActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel HighScoreLabel;

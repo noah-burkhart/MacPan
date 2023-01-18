@@ -7,8 +7,6 @@ package macpan.characters;
 
 import java.awt.Image;
 
-
-
 public class Clyde extends AbstractGhost implements Ghost {
     /**
      * Clyde must be created with a sprite, a position, a direction, and whether or not they're in the spawn box
@@ -37,38 +35,45 @@ public class Clyde extends AbstractGhost implements Ghost {
         
     }
     
+//    public double distanceBetween(int pacmanX, int pacmanY) {
+//        double distance;
+//        distance = (Math.pow((getXPos() - pacmanX), 2)) + (Math.pow((getYPos() - pacmanY), 2));
+//        return distance;
+//    }
+//    
+//    public double angleTo(int pacmanX, int pacmanY) {
+//        double angle;
+//        double slope = (getYPos() - pacmanY)/(getXPos() - pacmanX);
+//        angle = Math.atan(slope);
+//        return angle;
+//    }
+//    
+//    public int chaseAlgorithmX(int pacmanX, int pacmanY) {
+//        if ((distanceBetween(pacmanX, pacmanY) * Math.cos(angleTo(pacmanX, pacmanY))) < (8 * 18) * Math.cos(angleTo(pacmanX, pacmanY))) {
+//            return scatterPointX();
+//        }
+//        return pacmanX;
+//    }
+//    
+//    public int chaseAlgorithmY(int pacmanY, int pacmanX) {
+//        if ((distanceBetween(pacmanX, pacmanY) * Math.cos(angleTo(pacmanX, pacmanY))) < (8 * 18) * Math.cos(angleTo(pacmanX, pacmanY))) {
+//            return scatterPointY();
+//        }
+//        return pacmanY;
+//    }
     
-    public double distanceBetween(int pacmanX, int pacmanY) {
-        double distance;
-        distance = (Math.pow((getXPos() - pacmanX), 2)) + (Math.pow((getYPos() - pacmanY), 2));
-        return distance;
-    }
-    
-    public double angleTo(int pacmanX, int pacmanY) {
-        double angle;
-        double slope = (getYPos() - pacmanY)/(getXPos() - pacmanX);
-        angle = Math.atan(slope);
-        return angle;
-    }
-    
-    public int chaseAlgorithmX(int pacmanX, int pacmanY) {
-        if ((distanceBetween(pacmanX, pacmanY) * Math.cos(angleTo(pacmanX, pacmanY))) < (8 * 18) * Math.cos(angleTo(pacmanX, pacmanY))) {
-            return scatterPointX();
-        }
-        return pacmanX;
-    }
-    
-    public int chaseAlgorithmY(int pacmanY, int pacmanX) {
-        if ((distanceBetween(pacmanX, pacmanY) * Math.cos(angleTo(pacmanX, pacmanY))) < (8 * 18) * Math.cos(angleTo(pacmanX, pacmanY))) {
-            return scatterPointY();
-        }
-        return pacmanY;
-    }
-    
+    /**
+     * target x coordinate for scatter mode
+     * @return - the coordinate clyde should go to 
+     */
     public int scatterPointX() {
         return 0;
     }
     
+    /**
+     * target y coordinate for scatter mode
+     * @return - the coordinate clyde should go to 
+     */
     public int scatterPointY() {
         return 800;
     }

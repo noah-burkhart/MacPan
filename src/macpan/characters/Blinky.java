@@ -36,22 +36,35 @@ public class Blinky extends AbstractGhost implements Ghost{
     }
     
     /**
-     * Find the x coordinate blinky should go to when
-     * @param pacmanX
-     * @return 
+     * Find the x coordinate blinky should go to 
+     * @param pacmanX - pacman's x coordinate
+     * @return - returns that x coordinate
      */
     public int chaseAlgorithmX(int pacmanX) {
         return pacmanX;
     }
     
+    /**
+     * Find the y coordinate blinky should go to 
+     * @param pacmanY - pacman's y coordinate
+     * @return - returns that y coordinate
+     */
     public int chaseAlgorithmY(int pacmanY) {
         return pacmanY;
     }
     
+    /**
+     * target x coordinate for scatter mode
+     * @return - the coordinate blinkly should go to 
+     */
     public int scatterPointX() {
         return 600;
     }
     
+    /**
+     * target y coordinate for scatter mode
+     * @return - the coordinate blinkly should go to 
+     */
     public int scatterPointY() {
         return 0;
     }

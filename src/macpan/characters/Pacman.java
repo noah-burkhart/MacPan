@@ -1,6 +1,7 @@
 /*
  * V. He
  * Jan 5th, 2023
+ * Pacman class 
  */
 package macpan.characters;
 
@@ -56,7 +57,6 @@ public class Pacman extends AbstractCharacter{
         this.setYSpeed(ySpeed);
         this.lives = lives; //sets the lives
         score = 0;
-        
     }
 
     /**
@@ -115,5 +115,4 @@ public class Pacman extends AbstractCharacter{
     public void setPowerPellet(boolean powerPellet) {
         this.powerPellet = powerPellet;
     }
-    
 }

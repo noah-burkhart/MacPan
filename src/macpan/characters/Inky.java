@@ -36,7 +36,6 @@ public class Inky extends AbstractGhost implements Ghost {
         
     }
     
-    
 //    public int chaseAlgorithmX(int pacmanX, Blinky b) {
 //        int pivotPointX = pacmanX;
 //        int targetX;
@@ -57,10 +56,18 @@ public class Inky extends AbstractGhost implements Ghost {
 //        return targetY;
 //    }
     
+    /**
+     * target x coordinate for scatter mode
+     * @return - the coordinate inky should go to 
+     */
     public int scatterPointX() {
         return 600;
     }
     
+    /**
+     * target y coordinate for scatter mode
+     * @return - the coordinate inky should go to 
+     */
     public int scatterPointY() {
         return 800;
     }
