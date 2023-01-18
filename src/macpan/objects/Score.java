@@ -94,12 +94,5 @@ public class Score {
         Score s = new Score(value, name);
         return s;
     }
-//
-//    /**
-//     * int to string for setText exception
-//     * @param string - a string
-//     */
-//    public void setText(String string) {
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-//    }
+
 }
