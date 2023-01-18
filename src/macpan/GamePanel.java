@@ -544,11 +544,9 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         } else if (inBlockY == 0 && b[xTop + 1][yTop] instanceof Block == false && oldPressed.equals("right")) { //If right key is pressed and pacman is in center of space with no block to the right
             pacman.moveRight(); //Move right
             pacmanTick += 3; //add 3 every time
-        } else if (inBlockY == 0 && b[xBottom - 1][yBottom] instanceof Block == false && oldPressed.equals("left")) { //If left key is pressed and pacman is in center of space with no block to the left
-            //System.out.println(b[xGrid - 1][yGrid] instanceof Block);
+        } else if (inBlockY == 0 && b[xBottom - 1][yBottom] instanceof Block == false && oldPressed.equals("left")) { //If left key is pressed and pacman is in center of space with no block to the left          
             pacman.moveLeft(); //move left
             pacmanTick += 3;
-            // System.out.println("done");
         }
         //resets pacmanTick
         if (pacmanTick >= 36) {
@@ -772,7 +770,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                 clyde.setSprite(imgEyesUp);
             }
             if (powerPelletTick > 0) { //While the powerpellet is active
-                System.out.println(powerPelletTick);
                 powerPelletTick--; //Make the time left decrease
                 if (numGhostEaten == 1 && !ghostEaten1) { //If total number of ghosts eaten is 1, and the 200 points haven't been scored yet
                     pacman.addScore(200); //Add 200 points
@@ -1309,7 +1306,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                 clydePossible += "left"; //Add "left" to clydePossible move
             }
 
-            // System.out.println(clydePossible);
             clydeChoice = makeChoice(clydePossible); //Make the clydeChoice for where to go
         }
 
