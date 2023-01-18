@@ -242,23 +242,23 @@ public class HighscoreFrame extends javax.swing.JFrame {
 
         name1.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         name1.setForeground(new java.awt.Color(255, 0, 51));
-        name1.setText("jLabel6");
+        name1.setText("ABC");
 
         name2.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         name2.setForeground(new java.awt.Color(255, 153, 255));
-        name2.setText("jLabel7");
+        name2.setText("ABC");
 
         name3.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         name3.setForeground(new java.awt.Color(102, 255, 255));
-        name3.setText("jLabel8");
+        name3.setText("ABC");
 
         name4.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         name4.setForeground(new java.awt.Color(255, 153, 51));
-        name4.setText("jLabel9");
+        name4.setText("ABC");
 
         name5.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         name5.setForeground(new java.awt.Color(255, 255, 255));
-        name5.setText("jLabel10");
+        name5.setText("ABC");
 
         score1.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         score1.setForeground(new java.awt.Color(255, 0, 51));
@@ -291,35 +291,32 @@ public class HighscoreFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(rank5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(RankLabel)
+                            .addComponent(rank1)
+                            .addComponent(rank2)
+                            .addComponent(rank3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(name1)
+                                    .addGap(13, 13, 13))
+                                .addComponent(name2)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(name5)
+                                    .addComponent(name3)
+                                    .addComponent(name4)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(rank4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(name4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(name1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(RankLabel)
-                                    .addComponent(rank1)
-                                    .addComponent(rank2)
-                                    .addComponent(rank3))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
-                                        .addComponent(NameLabel)
-                                        .addGap(8, 8, 8))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(name2, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(name3, javax.swing.GroupLayout.Alignment.TRAILING))))))
-                        .addGap(72, 72, 72)))
+                                .addComponent(NameLabel)
+                                .addGap(13, 13, 13))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rank5)
+                            .addComponent(rank4))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(80, 80, 80)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ScoreLabel)
                     .addComponent(score1)
@@ -330,9 +327,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
                 .addGap(40, 40, 40))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(name5)
-                    .addComponent(btnBack))
+                .addComponent(btnBack)
                 .addGap(164, 164, 164))
         );
         layout.setVerticalGroup(
