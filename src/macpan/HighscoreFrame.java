@@ -124,36 +124,38 @@ public class HighscoreFrame extends javax.swing.JFrame {
     public static void swap(int i, int j) {
         Score temp = (Score) scores.get(i);
         scores.set(i, scores.get(j)); // sets them to the same value
+        System.out.println(scores.get(i));
         scores.set(j, temp); // places the stored temporary value into higher index number
+        System.out.println(scores.get(j));
     }
     
     public void top5(){
         // displaying highest score
-        Score scoreOne = (Score) scores.get(1);
+        Score scoreOne = (Score) scores.get(0);
         int value = scoreOne.getValue();
         String name = scoreOne.getName();
         score1.setText("" + value);
         name1.setText(name);
         // displaying second highest score
-        Score scoreTwo = (Score) scores.get(2);
+        Score scoreTwo = (Score) scores.get(1);
         value = scoreTwo.getValue();
         name = scoreTwo.getName();
         score2.setText("" + value);
         name2.setText(name);
         // displaying third highest score
-        Score scoreThree = (Score) scores.get(3);
+        Score scoreThree = (Score) scores.get(2);
         value = scoreThree.getValue();
         name = scoreThree.getName();
         score3.setText("" + value);
         name3.setText(name);
         // displaying fourth highest score
-        Score scoreFour = (Score) scores.get(4);
+        Score scoreFour = (Score) scores.get(3);
         value = scoreFour.getValue();
         name = scoreFour.getName();
         score4.setText("" + value);
         name4.setText(name);
         // displaying fifth highest score
-        Score scoreFive = (Score) scores.get(5);
+        Score scoreFive = (Score) scores.get(4);
         value = scoreFive.getValue();
         name = scoreFive.getName();
         score5.setText("" + value);
