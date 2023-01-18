@@ -346,16 +346,11 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                     //game over conditions here
                     System.exit(0);
                 }
-                checkEaten(); //checks to see if pacman has eaten anything
-
-                foodTick++; //adds to the food tick
-                addFood(); //adds food items to the map
-
-                checkMapEmpty(); //checks if the user has cleared the board
             }
+            checkEaten();
             foodTick++; //adds to the food tick
             addFood(); //adds food items to the map
-            
+  
             checkMapEmpty(); //checks if the user has cleared the board
 
 
