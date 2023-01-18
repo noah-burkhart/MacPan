@@ -59,11 +59,12 @@ public class HighscoreFrame extends javax.swing.JFrame {
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("*.data", "data"));
         fileChooser.setAcceptAllFileFilterUsed(true);
         
-        fileChooser.showOpenDialog(null);
+        fileChooser.showOpenDialog(null); //shows the file opener
         
         try {
             File f = fileChooser.getSelectedFile();
             Scanner s = new Scanner(f);
+            
             while (s.hasNextLine()){
                 int value = Integer.parseInt(s.nextLine());
                 String name = s.nextLine();
