@@ -399,15 +399,22 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
         g2d.setColor(Color.white);
         g2d.setFont(new java.awt.Font("Monospaced", 1, 17));
-        g2d.drawString("HIGH-SCORE: " + 100000, 10, 28);             //display the highscore
-        g2d.drawString("" + pacman.getScore(), 550, 28);
-        // g2d.drawString("LIVES: ", 10, 615);
+        
+        g2d.drawString("" + 100000, 100, 40);             //display the highscore
+        g2d.drawString("" + pacman.getScore(), 550, 40); //display the score
+      
+        //draw the ghosts
         g2d.drawImage(blinky.getSprite(), blinky.getXPos() + BUFFER_X, blinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
         g2d.drawImage(pinky.getSprite(), pinky.getXPos() + BUFFER_X, pinky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
         g2d.drawImage(inky.getSprite(), inky.getXPos() + BUFFER_X, inky.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
         g2d.drawImage(clyde.getSprite(), clyde.getXPos() + BUFFER_X, clyde.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
+        
+        //draw pacman
         g2d.drawImage(pacman.getSprite(), pacman.getXPos() + BUFFER_X, pacman.getYPos() + BUFFER_Y, 25, 25, Color.black, this);
 
+        //draw pacman art at bottom
+        
+        
         //The Drawing of pacmans lives
         int num = pacman.getLives();
         for (int i = 1; i <= num; i++) { //runs for the number of lives pacman has
