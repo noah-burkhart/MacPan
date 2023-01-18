@@ -375,19 +375,17 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                         name = JOptionPane.showInputDialog("Enter your initials!(3 characters only)");
                     }
                     
-                    int ans = JOptionPane.showConfirmDialog(null, "Play again?");
-                    System.out.println(ans);
+                    int ans = JOptionPane.showConfirmDialog(null, "Play again?"); //prompts the user to play again
 
                     if (ans == 0) { //yes, play again
                         resetGame();
-                    } else if (ans == 1) { //no, dont play again
+                    } else if (ans >= 1) { //no, dont play again
                         resetGame();
-                        gameFrame.setVisible(false);
-                        mainWindow.setVisible(true);
+                        gameFrame.setVisible(false); //set the gameframe to invisible
+                        mainWindow.setVisible(true); //make the menu frame visible
                     }
                     appendFile(name);
                     pacDead = false;
-
                 }
             }
             if (!pacDeath) { //If pacman is not dead, keep running the game, if he is deadeverything stops until the characters are reset
