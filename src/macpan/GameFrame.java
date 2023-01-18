@@ -13,25 +13,23 @@ import javax.swing.JFrame;
 
 public class GameFrame extends javax.swing.JFrame {
 
-    MenuFrame mainWindow;
     JButton btnBack = new javax.swing.JButton();
     private Image icon  = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
     
     //constructor
     public GameFrame(MenuFrame m) {
         //create the User interface
-        initUI();
-        mainWindow = m;
+        initUI(m);
     }
 
     //create the custom JFrame
-    private void initUI() {        
+    private void initUI(MenuFrame m) {        
         //set title of the JFrame
         setTitle("MacPan");
         setIconImage(icon);
         
         //add a custom JPanel to draw on
-        add(new GamePanel());
+        add(new GamePanel(m, this));
         //set the size of the window
         setSize(700, 800);
         //tell the JFrame what to do when closed
