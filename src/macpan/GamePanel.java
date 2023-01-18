@@ -355,8 +355,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         beforeTime = System.currentTimeMillis();
 
         int oldScore = 0, currentScore; //used to control adding lives
-
         while (true) { //this loop runs once ever 25 ms (the DELAY)
+            
             num++;
             moveBlinky(); //Move ghosts
             movePinky();
@@ -380,7 +380,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                     while (name.length() < 3 || name.length() > 3) {
                         name = JOptionPane.showInputDialog("Enter your initials!(3 characters only)");
                     }
-                    
+                    appendFile(name);
                     int ans = JOptionPane.showConfirmDialog(null, "Play again?"); //prompts the user to play again
 
                     if (ans == 0) { //yes, play again
@@ -390,7 +390,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                         gameFrame.setVisible(false); //set the gameframe to invisible
                         mainWindow.setVisible(true); //make the menu frame visible
                     }
-                    appendFile(name);
+                    
                     pacDead = false;
                     resetGame();
                 }
