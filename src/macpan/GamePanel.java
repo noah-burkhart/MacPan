@@ -89,6 +89,17 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private Image imgCherry, imgStrawberry, imgOrange, imgApple, imgMelon, imgGalaxian, imgBell, imgKey;
 
+    /*
+     * ***************************************************************************************************
+     * LOADING AND RESETTING
+            Includes: 
+            - Loading images 
+            - loading the board  
+            - resetting positons and global variables 
+            - resetting the game
+     * ***************************************************************************************************
+     */
+    
     /**
      * Loads the images and stores them for use.
      */
@@ -279,6 +290,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         foodTick = 0;
 
         round = 1;
+        conditional = 10000;
+        pacDeath = false;
     }
 
     /*
@@ -347,13 +360,12 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                     System.exit(0);
                 }
             }
-            checkEaten();
+            checkEaten(); //checks to see if anything has been eaten
             foodTick++; //adds to the food tick
             addFood(); //adds food items to the map
   
             checkMapEmpty(); //checks if the user has cleared the board
-
-
+            
             repaint();
 
             //calculate how much time has passed since the last call
@@ -377,11 +389,13 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             }
             //get the new current time
             beforeTime = System.currentTimeMillis();
-
         }
     }
 
-    //does the actual drawing
+    /**
+     * Does the actual drawing.
+     * @param g - the graphics ob
+     */
     private void doDrawing(Graphics g) {
         //the Graphics2D class is the class that handles all the drawing
         //must be casted from older Graphics class in order to have access to some newer methods
@@ -885,6 +899,18 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
+    
+    /*
+     * ***************************************************************************************************
+     * CHECKING AND BACKGROUND CODE 
+            Includes: 
+            - adding food 
+            - finding round food 
+            - checking if the map is empty 
+            - adding lives
+     * ***************************************************************************************************
+     */
+    
     /**
      * Decides when to add a food to the board in order to score more points
      */
@@ -914,7 +940,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     /**
      * Will find what food item must be used given the round
      *
-     * @return
+     * @return - the food item for the round
      */
     public Food findRoundFood() {
         Food f; //set the spot to a piece of food;
