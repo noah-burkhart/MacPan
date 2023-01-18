@@ -335,9 +335,10 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         animator = new Thread(this);
         animator.start();
     }
-
     boolean pacDeath; //Boolean for if pacman is dead or not
     long num;
+
+    private boolean pacDead = true;
     
     //this method is called only once, when the Thread starts
     @Override
@@ -364,32 +365,10 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             checkGhostOnPacman();
             
             if (pacman.getLives() == 0) {
-                FileWriter fw = null;
-                BufferedWriter bw = null;
-                PrintWriter pw = null;
-
-                try {
-                    fw = new FileWriter("src/macpan/score.data", true);
-                    bw = new BufferedWriter(fw);
-                    pw = new PrintWriter(bw);
-
-                    pw.println("\n" + pacman.getScore());
-                    pw.println("Clyde is very cool"); // initials
-
-                    System.out.println("Data Successfully appended into file");
-                    pw.flush();
-
-                } catch (IOException ex) {
-                    Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    try {
-                        pw.close();
-                        bw.close();
-                        fw.close();
-                    } catch (IOException io) {// can't do anything }
-                    }
-
-                }
+                while (pacDead) {
+                    appendFile();
+                    pacDead = false;
+                } 
             }
             if (!pacDeath) { //If pacman is not dead, keep running the game, if he is deadeverything stops until the characters are reset
                 runPacman(); //Move pacman
@@ -903,7 +882,38 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             resetPositions();
         }
     }
+/**
+     * ------------------Append File Method------------------
+     * Will put in score and initials into the score file
+     */
+    public void appendFile() {
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+        PrintWriter pw = null;
 
+        try {
+            fw = new FileWriter("src/macpan/score.data", true);
+            bw = new BufferedWriter(fw);
+            pw = new PrintWriter(bw);
+
+            pw.println("\n" + pacman.getScore()); // adds score
+            pw.println("Clyde is very cool"); // and next line adds initials
+
+            //System.out.println("Data Successfully appended into file");
+            pw.flush();
+
+        } catch (IOException ex) {
+            Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                pw.close();
+                bw.close();
+                fw.close();
+            } catch (IOException io) {// can't do anything }
+            }
+
+        }
+    }
     /*
      POINT SCORING AND CONSUMABLES
      */

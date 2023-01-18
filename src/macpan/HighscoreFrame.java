@@ -20,7 +20,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
     // Main window variable
     MenuFrame mainWindow;
     // Cherry Icon
-    private Image icon  = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
+    private Image icon = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
     // Global arraylist for scores
     static ArrayList scores = new ArrayList();
     
@@ -37,8 +37,8 @@ public class HighscoreFrame extends javax.swing.JFrame {
         setIconImage(icon);
         getContentPane().setBackground(Color.BLACK);
         mainWindow = m;
-        //Score topScores[] = new Score[5];
-        //readFile();
+        readFile();
+        top5();
     }
     
     /**
@@ -69,17 +69,17 @@ public class HighscoreFrame extends javax.swing.JFrame {
      * @param low - lowest index
      * @param high - highest index
      */
-    public static void quickSortD(ArrayList<Score> arr, int low, int high) {
+    public static void quickSortD(int low, int high) {
         if (low < high) {
 
             // pi is partitioning index, arr[p]
             // is now at right place
-            int pi = partitionD(arr, low, high);
+            int pi = partitionD(low, high);
 
             // Separately sort elements before
             // partition and after partition
-            quickSortD(arr, low, pi - 1);
-            quickSortD(arr, pi + 1, high);
+            quickSortD(low, pi - 1);
+            quickSortD(pi + 1, high);
         }
     }
     
@@ -91,9 +91,9 @@ public class HighscoreFrame extends javax.swing.JFrame {
      * @param high - highest index
      * @return - the index of the last pivot
      */
-    public static int partitionD(ArrayList<Score> arr, int low, int high) {
+    public static int partitionD(int low, int high) {
         // sets pivot as last index
-        Score pivot = arr.get(high);
+        Score pivot = (Score) scores.get(high);
         int pivotScore = pivot.getValue();
         // Index of smaller element and
         // indicates the right position
@@ -103,17 +103,17 @@ public class HighscoreFrame extends javax.swing.JFrame {
         for (int j = low; j <= high - 1; j++) {
             // If current element is smaller
             // than the pivot
-            Score current = arr.get(j);
+            Score current = (Score) scores.get(j);
             int currentScore = current.getValue();
             if (currentScore > pivotScore) { //if greater than pivot
 
                 // Increment index of
                 // smaller element
                 i++;
-                swap(arr, i, j);
+                swap(i, j);
             }
         }
-        swap(arr, i + 1, high);
+        swap(i + 1, high);
         return (i + 1);
     }
     
@@ -123,10 +123,43 @@ public class HighscoreFrame extends javax.swing.JFrame {
      * @param i - lower index number
      * @param j - higher index number
      */
-    public static void swap(ArrayList<Score> arr, int i, int j) {
-        Score temp = arr.get(i).clone();
-        arr.set(i, arr.get(j)); // sets them to the same value
-        arr.set(j, temp); // places the stored temporary value into higher index number
+    public static void swap(int i, int j) {
+        Score temp = (Score) scores.get(i);
+        scores.set(i, scores.get(j)); // sets them to the same value
+        scores.set(j, temp); // places the stored temporary value into higher index number
+    }
+    
+    public void top5(){
+        // displaying highest score
+        Score scoreOne = (Score) scores.get(1);
+        int value = scoreOne.getValue();
+        String name = scoreOne.getName();
+        score1.setText("" + value);
+        name1.setText(name);
+        // displaying second highest score
+        Score scoreTwo = (Score) scores.get(2);
+        value = scoreTwo.getValue();
+        name = scoreTwo.getName();
+        score2.setText("" + value);
+        name2.setText(name);
+        // displaying third highest score
+        Score scoreThree = (Score) scores.get(3);
+        value = scoreThree.getValue();
+        name = scoreThree.getName();
+        score3.setText("" + value);
+        name3.setText(name);
+        // displaying fourth highest score
+        Score scoreFour = (Score) scores.get(4);
+        value = scoreFour.getValue();
+        name = scoreFour.getName();
+        score4.setText("" + value);
+        name4.setText(name);
+        // displaying fifth highest score
+        Score scoreFive = (Score) scores.get(5);
+        value = scoreFive.getValue();
+        name = scoreFive.getName();
+        score5.setText("" + value);
+        name5.setText(name);
     }
     
     /**
