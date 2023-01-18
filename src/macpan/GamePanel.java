@@ -759,6 +759,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             resetPositions();
         }
     }
+    
 /**
      * ------------------Append File Method------------------
      * Will put in score and initials into the score file
