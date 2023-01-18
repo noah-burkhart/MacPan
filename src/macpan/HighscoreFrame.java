@@ -15,6 +15,7 @@ import macpan.objects.Score;
 import java.io.IOException; 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class HighscoreFrame extends javax.swing.JFrame {
@@ -72,8 +73,8 @@ public class HighscoreFrame extends javax.swing.JFrame {
                 scores.add(score);
             }
             
-        } catch (FileNotFoundException e) {
-            System.out.println("Error: " + e);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: " + e);
         }
     }
     

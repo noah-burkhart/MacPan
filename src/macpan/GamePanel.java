@@ -27,8 +27,10 @@ import java.awt.Image;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -36,7 +38,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileSystemView;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import macpan.characters.Blinky;
 import macpan.characters.Clyde;
 import macpan.characters.Inky;
@@ -222,8 +224,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         String type = "";
 
         try {
-            File f = new File("src/macpan/Blocks.data");
-            Scanner s = new Scanner(f);  //tries to make a file and a scanner
+            InputStream in = GamePanel.class.getResourceAsStream("Blocks.data");
+            Scanner s = new Scanner(in);  //tries to make a file and a scanner
 
             for (int y = 0; y < 21; y++) { //Loops through the y axis of the 2D array
                 for (int x = 0; x < 23; x++) { //loops through the x
@@ -249,8 +251,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                     }
                 }
             }
-        } catch (FileNotFoundException e) { //cacthes file not found
-            System.out.println("Error: " + e);
+        } catch (Exception e) { //cacthes file not found
+            JOptionPane.showMessageDialog(null, "Error: " + e);
         }
     }
 
@@ -371,10 +373,10 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             checkAddLives(oldScore, currentScore); //checks if we need to add lives
             checkGhostOnPacman();
 
+            pacman.setLives(0);
+            
             if (pacman.getLives() == 0) {
                 while (pacDead) {
-                    
-                    
                     
                     String name = JOptionPane.showInputDialog("Enter your initials! (3 characters only)");
                     while (name.length() < 3 || name.length() > 3) {
@@ -791,15 +793,23 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         BufferedWriter bw = null;
         PrintWriter pw = null;
 
+        JFileChooser fileChooser = new JFileChooser("src/macpan"); //shows where to search when prompted
+        
+        //makes it so the user can only choose data files from score
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("*.data", "data"));
+        fileChooser.setAcceptAllFileFilterUsed(true);
+        
+        fileChooser.showSaveDialog(null); //shows the file opener
+        
         try {
-            fw = new FileWriter("src/macpan/score.data", true);
+            fw = new FileWriter(fileChooser.getSelectedFile(), true);
             bw = new BufferedWriter(fw);
             pw = new PrintWriter(bw);
 
             pw.println("\n" + pacman.getScore()); // adds score
             pw.print(name.toUpperCase()); // and next line adds initials
 
-            //System.out.println("Data Successfully appended into file");
             pw.flush();
 
         } catch (IOException ex) {
