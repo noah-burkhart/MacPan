@@ -366,6 +366,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             
             if (pacman.getLives() == 0) {
                 while (pacDead) {
+                    
                     appendFile();
                     pacDead = false;
                 } 

@@ -38,6 +38,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
         getContentPane().setBackground(Color.BLACK);
         mainWindow = m;
         readFile();
+        quickSortD(0, scores.size()-1);
         top5();
     }
     
@@ -65,7 +66,6 @@ public class HighscoreFrame extends javax.swing.JFrame {
     
     /**
      * Quick Sort Descending
-     * @param arr - the unsorted array
      * @param low - lowest index
      * @param high - highest index
      */
@@ -86,7 +86,6 @@ public class HighscoreFrame extends javax.swing.JFrame {
     /**
      * Picks the pivot index puts all smaller values to its left and larger
      * values to its right
-     * @param arr - the unsorted array
      * @param low - lowest index
      * @param high - highest index
      * @return - the index of the last pivot
@@ -119,7 +118,6 @@ public class HighscoreFrame extends javax.swing.JFrame {
     
     /**
      * Swap function for quick sort
-     * @param arr - the array it is sorting
      * @param i - lower index number
      * @param j - higher index number
      */
