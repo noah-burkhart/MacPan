@@ -345,6 +345,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     private boolean pacDead = true;
 
 //this method is called only once, when the Thread starts
+    //this method is called only once, when the Thread starts
     @Override
     public void run() {
         long beforeTime, timeDiff, sleep;
@@ -386,6 +387,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                     }
                     appendFile(name);
                     pacDead = false;
+                    resetGame();
                 }
             }
             if (!pacDeath) { //If pacman is not dead, keep running the game, if he is deadeverything stops until the characters are reset
@@ -790,7 +792,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             pw = new PrintWriter(bw);
 
             pw.println("\n" + pacman.getScore()); // adds score
-            pw.print(name); // and next line adds initials
+            pw.print(name.toUpperCase()); // and next line adds initials
 
             //System.out.println("Data Successfully appended into file");
             pw.flush();
@@ -807,6 +809,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
         }
     }
+
     /*
      POINT SCORING AND CONSUMABLES
      */
