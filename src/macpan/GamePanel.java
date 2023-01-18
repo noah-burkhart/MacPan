@@ -35,6 +35,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileSystemView;
 import macpan.characters.Blinky;
 import macpan.characters.Clyde;
 import macpan.characters.Inky;
@@ -371,6 +373,9 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
             if (pacman.getLives() == 0) {
                 while (pacDead) {
+                    
+                    
+                    
                     String name = JOptionPane.showInputDialog("Enter your initials! (3 characters only)");
                     while (name.length() < 3 || name.length() > 3) {
                         name = JOptionPane.showInputDialog("Enter your initials!(3 characters only)");
