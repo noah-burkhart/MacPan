@@ -796,11 +796,11 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         BufferedWriter bw = null;
         PrintWriter pw = null;
 
-        JFileChooser fileChooser = new JFileChooser("src/macpan/score"); //shows where to search when prompted
+        JFileChooser fileChooser = new JFileChooser("/macpan/score"); //shows where to search when prompted
 
         //makes it so the user can only choose data files from score
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("*.data", "data"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("*.data", "data", "*.txt", "txt"));
         fileChooser.setAcceptAllFileFilterUsed(true);
 
         fileChooser.showSaveDialog(null); //shows the file opener

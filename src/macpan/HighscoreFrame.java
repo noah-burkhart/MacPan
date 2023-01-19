@@ -51,7 +51,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
      */
     public static void readFile(){
         
-        JFileChooser fileChooser = new JFileChooser("src/macpan/score"); //prompt starts where selection begins
+        JFileChooser fileChooser = new JFileChooser("/macpan/score"); //prompt starts where selection begins
         
         //makes it so the user can only choose data files from score
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); 
