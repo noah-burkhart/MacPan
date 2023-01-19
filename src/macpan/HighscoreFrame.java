@@ -25,7 +25,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
     // Cherry Icon
     private Image icon = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
     // Global arraylist for scores
-    static ArrayList scores = new ArrayList();
+    private static ArrayList scores = new ArrayList();
     
     /**
      * Creates the high score frame with gui builder
@@ -53,12 +53,12 @@ public class HighscoreFrame extends javax.swing.JFrame {
      */
     public static void readFile(){
         
-        JFileChooser fileChooser = new JFileChooser("src/macpan"); //prompt doesn't matter
+        JFileChooser fileChooser = new JFileChooser("src/macpan"); //prompt starts where selection begins
         
         //makes it so the user can only choose data files from score
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("*.data", "data"));
-        fileChooser.setAcceptAllFileFilterUsed(true);
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); 
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("*.data", "data", "*.txt", "txt")); //allows for a user to pick a file to save score in
+        fileChooser.setAcceptAllFileFilterUsed(true); //allows for it to filter
         
         fileChooser.showOpenDialog(null); //shows the file opener
         

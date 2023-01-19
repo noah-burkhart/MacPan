@@ -373,8 +373,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             checkAddLives(oldScore, currentScore); //checks if we need to add lives
             checkGhostOnPacman();
 
-            pacman.setLives(0);
-            
             if (pacman.getLives() == 0) {
                 while (pacDead) {
                     
