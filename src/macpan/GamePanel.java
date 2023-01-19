@@ -125,95 +125,100 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      */
     public void loadImage() {
 
-        imgBlock = getToolkit().getImage(getClass().getResource("/macpan/images/JFrames/box.png"));
-
-        imgEmpty = getToolkit().getImage(getClass().getResource("/macpan/images/JFrames/empty.png"));
+        var tk = getToolkit(); //represents the toolkit
         
-        imgPellet = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/smallPellet.png"));
-        imgPowerPellet = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/powerPellet.png"));
-        imgFood = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/cherry.png"));
+        imgBlock = tk.createImage(getClass().getResource("/macpan/images/JFrames/box.png"));
 
-        imgCherry = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/cherry.png"));
-        imgStrawberry = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/strawberry.png"));
-        imgOrange = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/orange.png"));
-        imgApple = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/apples.png"));
-        imgMelon = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/melon.png")); //loads the food images in
-        imgGalaxian = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/galaga.png"));
-        imgBell = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/bell.png"));
-        imgKey = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/key.png"));
+        imgEmpty = tk.createImage(getClass().getResource("/macpan/images/JFrames/empty.png"));
+        
+        imgPellet = tk.createImage(ClassLoader.getSystemResource("macpan/images/Consumables/smallPellet.png"));
+        imgPowerPellet = tk.createImage(ClassLoader.getSystemResource("macpan/images/Consumables/powerPellet.png"));
 
-        imgBlinkyUp1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinkyUp1.png"));
-        imgBlinkyUp2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinkyUp2.png"));
-        imgBlinkyDown1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinkyDown1.png"));
-        imgBlinkyDown2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinkyDown2.png"));
-        imgBlinkyLeft1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinkyBack1.png"));
-        imgBlinkyLeft2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinkyBack2.png"));
-        imgBlinkyRight1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinky1.png"));
-        imgBlinkyRight2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinky2.png"));
+        //consumable images
+        imgCherry = tk.createImage(ClassLoader.getSystemResource("macpan/images/Consumables/cherry.png"));
+        imgStrawberry = tk.createImage(ClassLoader.getSystemResource("macpan/images/Consumables/strawberry.png"));
+        imgOrange = tk.createImage(ClassLoader.getSystemResource("macpan/images/Consumables/orange.png"));
+        imgApple = tk.createImage(ClassLoader.getSystemResource("macpan/images/Consumables/apples.png"));
+        imgMelon = tk.createImage(ClassLoader.getSystemResource("macpan/images/Consumables/melon.png")); //loads the food images in
+        imgGalaxian = tk.createImage(ClassLoader.getSystemResource("macpan/images/Consumables/galaga.png"));
+        imgBell = tk.createImage(ClassLoader.getSystemResource("macpan/images/Consumables/bell.png"));
+        imgKey = tk.createImage(ClassLoader.getSystemResource("macpan/images/Consumables/key.png"));
 
-        imgPinkyUp1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinkyUp1.png"));
-        imgPinkyUp2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinkyUp2.png"));
-        imgPinkyDown1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinkyDown1.png"));
-        imgPinkyDown2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinkyDown2.png"));
-        imgPinkyLeft1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinkyBack1.png"));
-        imgPinkyLeft2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinkyBack2.png"));
-        imgPinkyRight1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinky1.png"));
-        imgPinkyRight2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinky2.png"));
+        //blinky images
+        imgBlinkyUp1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinkyUp1.png"));
+        imgBlinkyUp2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinkyUp2.png"));
+        imgBlinkyDown1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinkyDown1.png"));
+        imgBlinkyDown2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinkyDown2.png"));
+        imgBlinkyLeft1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinkyBack1.png"));
+        imgBlinkyLeft2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinkyBack2.png"));
+        imgBlinkyRight1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinky1.png"));
+        imgBlinkyRight2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinky2.png"));
 
-        imgInkyUp1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inkyUp1.png"));
-        imgInkyUp2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inkyUp2.png"));
-        imgInkyDown1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inkyDown1.png"));
-        imgInkyDown2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inkyDown2.png"));
-        imgInkyLeft1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inkyBack1.png"));
-        imgInkyLeft2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inkyBack2.png"));
-        imgInkyRight1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inky1.png"));
-        imgInkyRight2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inky2.png"));
+        //pinky images
+        imgPinkyUp1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinkyUp1.png"));
+        imgPinkyUp2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinkyUp2.png"));
+        imgPinkyDown1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinkyDown1.png"));
+        imgPinkyDown2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinkyDown2.png"));
+        imgPinkyLeft1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinkyBack1.png"));
+        imgPinkyLeft2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinkyBack2.png"));
+        imgPinkyRight1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinky1.png"));
+        imgPinkyRight2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinky2.png"));
 
-        imgClydeUp1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clydeUp1.png"));
-        imgClydeUp2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clydeUp2.png"));
-        imgClydeDown1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clydeDown1.png"));
-        imgClydeDown2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clydeDown2.png"));
-        imgClydeLeft1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clydeBack1.png"));
-        imgClydeLeft2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clydeBack2.png"));
-        imgClydeRight1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clyde1.png"));
-        imgClydeRight2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clyde2.png"));
+        //inky images
+        imgInkyUp1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inkyUp1.png"));
+        imgInkyUp2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inkyUp2.png"));
+        imgInkyDown1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inkyDown1.png"));
+        imgInkyDown2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inkyDown2.png"));
+        imgInkyLeft1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inkyBack1.png"));
+        imgInkyLeft2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inkyBack2.png"));
+        imgInkyRight1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inky1.png"));
+        imgInkyRight2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inky2.png"));
 
+        //clyde images
+        imgClydeUp1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clydeUp1.png"));
+        imgClydeUp2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clydeUp2.png"));
+        imgClydeDown1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clydeDown1.png"));
+        imgClydeDown2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clydeDown2.png"));
+        imgClydeLeft1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clydeBack1.png"));
+        imgClydeLeft2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clydeBack2.png"));
+        imgClydeRight1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clyde1.png"));
+        imgClydeRight2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clyde2.png"));
         
         //Ghost scared images
-        imgScared1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/scared1.png"));
-        imgScared2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/scared2.png"));
-        imgScared3 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/scared3.png"));
-        imgScared4 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/scared4.png"));
+        imgScared1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/scared1.png"));
+        imgScared2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/scared2.png"));
+        imgScared3 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/scared3.png"));
+        imgScared4 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/scared4.png"));
 
         //Ghost dead images
-        imgEyesUp = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/eyesUp.png"));
-        imgEyesDown = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/eyesDown.png"));
-        imgEyesRight = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/eyes.png"));
-        imgEyesLeft = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/eyesBack.png"));
+        imgEyesUp = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/eyesUp.png"));
+        imgEyesDown = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/eyesDown.png"));
+        imgEyesRight = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/eyes.png"));
+        imgEyesLeft = tk.createImage(ClassLoader.getSystemResource("macpan/images/Ghosts/eyesBack.png"));
 
         //pacman images
-        imgPacWhole = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacmanWhole.png"));
-        imgPacUp1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacUp1.png"));
-        imgPacUp2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacUp2.png"));
-        imgPacDown1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacDown1.png"));
-        imgPacDown2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacDown2.png"));
-        imgPacLeft1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacBack1.png"));
-        imgPacLeft2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacBack2.png"));
-        imgPacRight1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacman1.png"));
-        imgPacRight2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacman2.png"));
+        imgPacWhole = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacmanWhole.png"));
+        imgPacUp1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacUp1.png"));
+        imgPacUp2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacUp2.png"));
+        imgPacDown1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacDown1.png"));
+        imgPacDown2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacDown2.png"));
+        imgPacLeft1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacBack1.png"));
+        imgPacLeft2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacBack2.png"));
+        imgPacRight1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacman1.png"));
+        imgPacRight2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacman2.png"));
 
         //pacman death
-        imgPacDeath1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die1.png"));
-        imgPacDeath2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die2.png"));
-        imgPacDeath3 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die3.png"));
-        imgPacDeath4 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die4.png"));
-        imgPacDeath5 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die5.png"));
-        imgPacDeath6 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die6.png"));
-        imgPacDeath7 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die7.png"));
-        imgPacDeath8 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die8.png"));
-        imgPacDeath9 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die9.png"));
-        imgPacDeath10 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die10.png"));
-        imgPacDeath11 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die11.png"));
+        imgPacDeath1 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/die1.png"));
+        imgPacDeath2 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/die2.png"));
+        imgPacDeath3 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/die3.png"));
+        imgPacDeath4 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/die4.png"));
+        imgPacDeath5 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/die5.png"));
+        imgPacDeath6 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/die6.png"));
+        imgPacDeath7 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/die7.png"));
+        imgPacDeath8 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/die8.png"));
+        imgPacDeath9 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/die9.png"));
+        imgPacDeath10 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/die10.png"));
+        imgPacDeath11 = tk.createImage(ClassLoader.getSystemResource("macpan/images/Pacman/die11.png"));
     }
 
     /**
@@ -244,7 +249,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                         pelletCount++; //adds to the pellet counter
 
                     } else if (type.equals("food")) { //if it is a Food object 
-                        b[x][y] = new Food(imgFood, x * px, y * px);  //set to Food
+                        b[x][y] = new Food(findRoundFood().getSprite(), x * px, y * px);  //set to Food
 
                     } else { //if not food, it is empty
                         b[x][y] = new Empty(imgEmpty, x * px, y * px);
