@@ -7,14 +7,13 @@ package macpan;
 
 import java.awt.Color;
 import java.awt.Image;
-import javax.swing.ImageIcon;
 
 public class InstructionsFrame extends javax.swing.JFrame {
 
     //Main window variable
     MenuFrame mainWindow;
 
-    private Image icon = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
+    private Image icon = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/cherry.png"));
 
     /**
      * Creates the instructions frame with gui builder

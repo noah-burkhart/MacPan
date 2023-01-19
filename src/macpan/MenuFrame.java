@@ -10,17 +10,17 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.Image;
-import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class MenuFrame extends javax.swing.JFrame {
 
     //Variables for the other two frames that will be switched to
-    private GameFrame firstWindow;
-    private InstructionsFrame secondWindow;
-    private HighscoreFrame thirdWindow;
-    
-    private Image icon  = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
-    
+    private GameFrame gameWindow;
+    private InstructionsFrame instructionsWindow;
+    private HighscoreFrame highscoreWindow;
+
+    private Image icon = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/cherry.png"));
+
     /**
      * Creates the menu frame with the gui builder
      */
@@ -101,37 +101,40 @@ public class MenuFrame extends javax.swing.JFrame {
 
     private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayActionPerformed
         //If play button is clicked...
-        if (firstWindow == null) {
-            firstWindow = new GameFrame(this);
+        if (gameWindow == null) {
+            gameWindow = new GameFrame(this);
         }
-        this.setVisible(false);
-        firstWindow.setVisible(true);
+        this.setVisible(false); //Set main window to not visible
+        gameWindow.setVisible(true); //Set instructions window to visible
+       // JOptionPane.showMessageDialog(null, "here2");
+        //this.setVisible(false);
+       // gameWindow.setVisible(true);
     }//GEN-LAST:event_btnPlayActionPerformed
 
     private void btnInstructionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInstructionsActionPerformed
         //If instructions button is clicked...
         //Open instructions frame
         //Making sure there is actually an instructions frame
-        if (secondWindow == null) {
-            secondWindow = new InstructionsFrame(this);
+        if (instructionsWindow == null) {
+            instructionsWindow = new InstructionsFrame(this);
         }
         this.setVisible(false); //Set main window to not visible
-        secondWindow.setVisible(true); //Set instructions window to visible
+        instructionsWindow.setVisible(true); //Set instructions window to visible
     }//GEN-LAST:event_btnInstructionsActionPerformed
 
     private void btnHighscoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHighscoreActionPerformed
         //If high score button is clicked...
         //Open high score frame
         //Making sure there is actually an high score frame
-        if (thirdWindow == null) {
+        if (highscoreWindow == null) {
             try {
-                thirdWindow = new HighscoreFrame(this);
+                highscoreWindow = new HighscoreFrame(this);
             } catch (IOException ex) {
                 Logger.getLogger(MenuFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         this.setVisible(false); //Set main window to not visible
-        thirdWindow.setVisible(true); //Set high score window to visible
+        highscoreWindow.setVisible(true); //Set high score window to visible
     }//GEN-LAST:event_btnHighscoreActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed

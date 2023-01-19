@@ -8,12 +8,10 @@ package macpan;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import macpan.objects.Score;
 import java.io.IOException; 
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -23,7 +21,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
     // Main window variable
     MenuFrame mainWindow;
     // Cherry Icon
-    private Image icon = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
+    private Image icon = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/cherry.png"));
     // Global arraylist for scores
     private static ArrayList scores = new ArrayList();
     
@@ -53,7 +51,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
      */
     public static void readFile(){
         
-        JFileChooser fileChooser = new JFileChooser("src/macpan"); //prompt starts where selection begins
+        JFileChooser fileChooser = new JFileChooser("src/macpan/score"); //prompt starts where selection begins
         
         //makes it so the user can only choose data files from score
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); 
@@ -138,9 +136,7 @@ public class HighscoreFrame extends javax.swing.JFrame {
     public static void swap(int i, int j) {
         Score temp = (Score) scores.get(i);
         scores.set(i, scores.get(j)); // sets them to the same value
-        System.out.println(scores.get(i));
         scores.set(j, temp); // places the stored temporary value into higher index number
-        System.out.println(scores.get(j));
     }
     
     public void top5(){

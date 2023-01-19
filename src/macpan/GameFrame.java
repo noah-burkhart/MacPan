@@ -6,7 +6,6 @@
 package macpan;
 
 import java.awt.Image;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -14,7 +13,7 @@ import javax.swing.JFrame;
 public class GameFrame extends javax.swing.JFrame {
 
     JButton btnBack = new javax.swing.JButton();
-    private Image icon  = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
+    private Image icon = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/cherry.png"));
     
     //constructor
     public GameFrame(MenuFrame m) {

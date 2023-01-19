@@ -25,9 +25,6 @@ import java.awt.Color;
 import java.awt.event.*;
 import java.awt.Image;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +32,6 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -60,20 +56,23 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
     JButton btnBack = new javax.swing.JButton(); //the back button
 
-    MenuFrame mainWindow;
-    GameFrame gameFrame;
+    MenuFrame menuWindow;
+    GameFrame gameWindow; //stores the game frame and menu frame variables so we can go back to old frames.
 
     /**
      * The default constructor for the game panel
+     *
+     * @param m - the menu frame getting pulled
+     * @param g - the game frame getting pulled
      */
     public GamePanel(MenuFrame m, GameFrame g) {
         loadImage(); //loads the images and the board
         loadBoard();
         setBackground(Color.black);
 
-        mainWindow = m;
-        gameFrame = g;
-        
+        menuWindow = m;
+        gameWindow = g;
+
         pacman = new Pacman(3, imgPacUp1, px * 11, px * 11, 2, 2, "right");
 
         blinky = new Blinky(imgBlinkyUp1, px * 3, px * 1, 2, 2, "right");
@@ -109,7 +108,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
     private Image imgPacWhole, imgPacUp1, imgPacUp2, imgPacDown1, imgPacDown2, imgPacLeft1, imgPacLeft2, imgPacRight1, imgPacRight2;
     private Image imgPacDeath1, imgPacDeath2, imgPacDeath3, imgPacDeath4, imgPacDeath5, imgPacDeath6, imgPacDeath7, imgPacDeath8, imgPacDeath9, imgPacDeath10, imgPacDeath11;
     private Image imgScared1, imgScared2, imgScared3, imgScared4, imgEyesUp, imgEyesDown, imgEyesRight, imgEyesLeft;
-
     private Image imgCherry, imgStrawberry, imgOrange, imgApple, imgMelon, imgGalaxian, imgBell, imgKey;
 
     /*
@@ -126,94 +124,96 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
      * Loads the images and stores them for use.
      */
     public void loadImage() {
-        //loads images that are unchanging
-        imgBlock = new ImageIcon("src/macpan/images/JFrames/box.png").getImage();
-        imgEmpty = new ImageIcon("src/macpan/images/JFrames/empty.png").getImage();
-        imgPellet = new ImageIcon("src/macpan/images/Consumables/smallPellet.png").getImage();
-        imgPowerPellet = new ImageIcon("src/macpan/images/Consumables/powerPellet.png").getImage();
-        imgFood = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
 
-        imgCherry = new ImageIcon("src/macpan/images/Consumables/cherry.png").getImage();
-        imgStrawberry = new ImageIcon("src/macpan/images/Consumables/strawberry.png").getImage();
-        imgOrange = new ImageIcon("src/macpan/images/Consumables/orange.png").getImage();
-        imgApple = new ImageIcon("src/macpan/images/Consumables/apples.png").getImage();
-        imgMelon = new ImageIcon("src/macpan/images/Consumables/melon.png").getImage(); //loads the food images in
-        imgGalaxian = new ImageIcon("src/macpan/images/Consumables/galaga.png").getImage();
-        imgBell = new ImageIcon("src/macpan/images/Consumables/bell.png").getImage();
-        imgKey = new ImageIcon("src/macpan/images/Consumables/key.png").getImage();
+        imgBlock = getToolkit().getImage(getClass().getResource("/macpan/images/JFrames/box.png"));
 
-        imgBlinkyUp1 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyUp1.png").getImage();
-        imgBlinkyUp2 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyUp2.png").getImage();
-        imgBlinkyDown1 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyDown1.png").getImage();
-        imgBlinkyDown2 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyDown2.png").getImage();
-        imgBlinkyLeft1 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyBack1.png").getImage();
-        imgBlinkyLeft2 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinkyBack2.png").getImage();
-        imgBlinkyRight1 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinky1.png").getImage();
-        imgBlinkyRight2 = new ImageIcon("src/macpan/images/Ghosts/Blinky/blinky2.png").getImage();
+        imgEmpty = getToolkit().getImage(getClass().getResource("/macpan/images/JFrames/empty.png"));
+        
+        imgPellet = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/smallPellet.png"));
+        imgPowerPellet = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/powerPellet.png"));
+        imgFood = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/cherry.png"));
 
-        imgPinkyUp1 = new ImageIcon("src/macpan/images/Ghosts/Pinky/pinkyUp1.png").getImage();
-        imgPinkyUp2 = new ImageIcon("src/macpan/images/Ghosts/Pinky/pinkyUp2.png").getImage();
-        imgPinkyDown1 = new ImageIcon("src/macpan/images/Ghosts/Pinky/pinkyDown1.png").getImage();
-        imgPinkyDown2 = new ImageIcon("src/macpan/images/Ghosts/Pinky/pinkyDown2.png").getImage();
-        imgPinkyLeft1 = new ImageIcon("src/macpan/images/Ghosts/Pinky/pinkyBack1.png").getImage();
-        imgPinkyLeft2 = new ImageIcon("src/macpan/images/Ghosts/Pinky/pinkyBack2.png").getImage();
-        imgPinkyRight1 = new ImageIcon("src/macpan/images/Ghosts/Pinky/pinky1.png").getImage();
-        imgPinkyRight2 = new ImageIcon("src/macpan/images/Ghosts/Pinky/pinky2.png").getImage();
+        imgCherry = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/cherry.png"));
+        imgStrawberry = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/strawberry.png"));
+        imgOrange = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/orange.png"));
+        imgApple = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/apples.png"));
+        imgMelon = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/melon.png")); //loads the food images in
+        imgGalaxian = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/galaga.png"));
+        imgBell = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/bell.png"));
+        imgKey = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Consumables/key.png"));
 
-        imgInkyUp1 = new ImageIcon("src/macpan/images/Ghosts/Inky/inkyUp1.png").getImage();
-        imgInkyUp2 = new ImageIcon("src/macpan/images/Ghosts/Inky/inkyUp2.png").getImage();
-        imgInkyDown1 = new ImageIcon("src/macpan/images/Ghosts/Inky/inkyDown1.png").getImage();
-        imgInkyDown2 = new ImageIcon("src/macpan/images/Ghosts/Inky/inkyDown2.png").getImage();
-        imgInkyLeft1 = new ImageIcon("src/macpan/images/Ghosts/Inky/inkyBack1.png").getImage();
-        imgInkyLeft2 = new ImageIcon("src/macpan/images/Ghosts/Inky/inkyBack2.png").getImage();
-        imgInkyRight1 = new ImageIcon("src/macpan/images/Ghosts/Inky/inky1.png").getImage();
-        imgInkyRight2 = new ImageIcon("src/macpan/images/Ghosts/Inky/inky2.png").getImage();
+        imgBlinkyUp1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinkyUp1.png"));
+        imgBlinkyUp2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinkyUp2.png"));
+        imgBlinkyDown1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinkyDown1.png"));
+        imgBlinkyDown2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinkyDown2.png"));
+        imgBlinkyLeft1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinkyBack1.png"));
+        imgBlinkyLeft2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinkyBack2.png"));
+        imgBlinkyRight1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinky1.png"));
+        imgBlinkyRight2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Blinky/blinky2.png"));
 
-        imgClydeUp1 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clydeUp1.png").getImage();
-        imgClydeUp2 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clydeUp2.png").getImage();
-        imgClydeDown1 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clydeDown1.png").getImage();
-        imgClydeDown2 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clydeDown2.png").getImage();
-        imgClydeLeft1 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clydeBack1.png").getImage();
-        imgClydeLeft2 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clydeBack2.png").getImage();
-        imgClydeRight1 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clyde1.png").getImage();
-        imgClydeRight2 = new ImageIcon("src/macpan/images/Ghosts/Clyde/clyde2.png").getImage();
+        imgPinkyUp1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinkyUp1.png"));
+        imgPinkyUp2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinkyUp2.png"));
+        imgPinkyDown1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinkyDown1.png"));
+        imgPinkyDown2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinkyDown2.png"));
+        imgPinkyLeft1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinkyBack1.png"));
+        imgPinkyLeft2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinkyBack2.png"));
+        imgPinkyRight1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinky1.png"));
+        imgPinkyRight2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Pinky/pinky2.png"));
 
+        imgInkyUp1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inkyUp1.png"));
+        imgInkyUp2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inkyUp2.png"));
+        imgInkyDown1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inkyDown1.png"));
+        imgInkyDown2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inkyDown2.png"));
+        imgInkyLeft1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inkyBack1.png"));
+        imgInkyLeft2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inkyBack2.png"));
+        imgInkyRight1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inky1.png"));
+        imgInkyRight2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Inky/inky2.png"));
+
+        imgClydeUp1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clydeUp1.png"));
+        imgClydeUp2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clydeUp2.png"));
+        imgClydeDown1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clydeDown1.png"));
+        imgClydeDown2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clydeDown2.png"));
+        imgClydeLeft1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clydeBack1.png"));
+        imgClydeLeft2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clydeBack2.png"));
+        imgClydeRight1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clyde1.png"));
+        imgClydeRight2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/Clyde/clyde2.png"));
+
+        
         //Ghost scared images
-        imgScared1 = new ImageIcon("src/macpan/images/Ghosts/scared1.png").getImage();
-        imgScared2 = new ImageIcon("src/macpan/images/Ghosts/scared2.png").getImage();
-        imgScared3 = new ImageIcon("src/macpan/images/Ghosts/scared3.png").getImage();
-        imgScared4 = new ImageIcon("src/macpan/images/Ghosts/scared4.png").getImage();
+        imgScared1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/scared1.png"));
+        imgScared2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/scared2.png"));
+        imgScared3 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/scared3.png"));
+        imgScared4 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/scared4.png"));
 
         //Ghost dead images
-        imgEyesUp = new ImageIcon("src/macpan/images/Ghosts/eyesUp.png").getImage();
-        imgEyesDown = new ImageIcon("src/macpan/images/Ghosts/eyesDown.png").getImage();
-        imgEyesRight = new ImageIcon("src/macpan/images/Ghosts/eyes.png").getImage();
-        imgEyesLeft = new ImageIcon("src/macpan/images/Ghosts/eyesBack.png").getImage();
+        imgEyesUp = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/eyesUp.png"));
+        imgEyesDown = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/eyesDown.png"));
+        imgEyesRight = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/eyes.png"));
+        imgEyesLeft = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Ghosts/eyesBack.png"));
 
         //pacman images
-        imgPacWhole = new ImageIcon("src/macpan/images/Pacman/pacmanWhole.png").getImage();
-        imgPacUp1 = new ImageIcon("src/macpan/images/Pacman/pacUp1.png").getImage();
-        imgPacUp2 = new ImageIcon("src/macpan/images/Pacman/pacUp2.png").getImage();
-        imgPacDown1 = new ImageIcon("src/macpan/images/Pacman/pacDown1.png").getImage();
-        imgPacDown2 = new ImageIcon("src/macpan/images/Pacman/pacDown2.png").getImage();
-        imgPacLeft1 = new ImageIcon("src/macpan/images/Pacman/pacBack1.png").getImage();
-        imgPacLeft2 = new ImageIcon("src/macpan/images/Pacman/pacBack2.png").getImage();
-        imgPacRight1 = new ImageIcon("src/macpan/images/Pacman/pacman1.png").getImage();
-        imgPacRight2 = new ImageIcon("src/macpan/images/Pacman/pacman2.png").getImage();
+        imgPacWhole = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacmanWhole.png"));
+        imgPacUp1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacUp1.png"));
+        imgPacUp2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacUp2.png"));
+        imgPacDown1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacDown1.png"));
+        imgPacDown2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacDown2.png"));
+        imgPacLeft1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacBack1.png"));
+        imgPacLeft2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacBack2.png"));
+        imgPacRight1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacman1.png"));
+        imgPacRight2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/pacman2.png"));
 
         //pacman death
-        imgPacDeath1 = new ImageIcon("src/macpan/images/Pacman/die1.png").getImage();
-        imgPacDeath2 = new ImageIcon("src/macpan/images/Pacman/die2.png").getImage();
-        imgPacDeath3 = new ImageIcon("src/macpan/images/Pacman/die3.png").getImage();
-        imgPacDeath4 = new ImageIcon("src/macpan/images/Pacman/die4.png").getImage();
-        imgPacDeath5 = new ImageIcon("src/macpan/images/Pacman/die5.png").getImage();
-        imgPacDeath6 = new ImageIcon("src/macpan/images/Pacman/die6.png").getImage();
-        imgPacDeath7 = new ImageIcon("src/macpan/images/Pacman/die7.png").getImage();
-        imgPacDeath8 = new ImageIcon("src/macpan/images/Pacman/die8.png").getImage();
-        imgPacDeath9 = new ImageIcon("src/macpan/images/Pacman/die9.png").getImage();
-        imgPacDeath10 = new ImageIcon("src/macpan/images/Pacman/die10.png").getImage();
-        imgPacDeath11 = new ImageIcon("src/macpan/images/Pacman/die11.png").getImage();
-
+        imgPacDeath1 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die1.png"));
+        imgPacDeath2 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die2.png"));
+        imgPacDeath3 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die3.png"));
+        imgPacDeath4 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die4.png"));
+        imgPacDeath5 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die5.png"));
+        imgPacDeath6 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die6.png"));
+        imgPacDeath7 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die7.png"));
+        imgPacDeath8 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die8.png"));
+        imgPacDeath9 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die9.png"));
+        imgPacDeath10 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die10.png"));
+        imgPacDeath11 = getToolkit().getImage(ClassLoader.getSystemResource("macpan/images/Pacman/die11.png"));
     }
 
     /**
@@ -358,7 +358,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
 
         int oldScore = 0, currentScore; //used to control adding lives
         while (true) { //this loop runs once ever 25 ms (the DELAY)
-            
+
             num++;
             moveBlinky(); //Move ghosts
             movePinky();
@@ -374,8 +374,8 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
             checkGhostOnPacman();
 
             if (pacman.getLives() == 0) {
+                pacDead = true;
                 while (pacDead) {
-                    
                     String name = JOptionPane.showInputDialog("Enter your initials! (3 characters only)");
                     while (name.length() < 3 || name.length() > 3) {
                         name = JOptionPane.showInputDialog("Enter your initials!(3 characters only)");
@@ -387,10 +387,10 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
                         resetGame();
                     } else if (ans >= 1) { //no, dont play again
                         resetGame();
-                        gameFrame.setVisible(false); //set the gameframe to invisible
-                        mainWindow.setVisible(true); //make the menu frame visible
+                        gameWindow.setVisible(false); //set the gameframe to invisible
+                        menuWindow.setVisible(true); //make the menu frame visible
                     }
-                    
+
                     pacDead = false;
                     resetGame();
                 }
@@ -452,7 +452,7 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         g2d.setColor(Color.white);
         g2d.setFont(new java.awt.Font("Monospaced", 1, 17));
 
-        g2d.drawString("" + 100000, 100, 40);             //display the highscore
+        g2d.drawString("MAC-PAN", 100, 40);             //display the highscore
         g2d.drawString("" + pacman.getScore(), 550, 40); //display the score
 
         //draw the ghosts
@@ -791,15 +791,15 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         BufferedWriter bw = null;
         PrintWriter pw = null;
 
-        JFileChooser fileChooser = new JFileChooser("src/macpan"); //shows where to search when prompted
-        
+        JFileChooser fileChooser = new JFileChooser("src/macpan/score"); //shows where to search when prompted
+
         //makes it so the user can only choose data files from score
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("*.data", "data"));
         fileChooser.setAcceptAllFileFilterUsed(true);
-        
+
         fileChooser.showSaveDialog(null); //shows the file opener
-        
+
         try {
             fw = new FileWriter(fileChooser.getSelectedFile(), true);
             bw = new BufferedWriter(fw);
