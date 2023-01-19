@@ -69,8 +69,6 @@ public final class GamePanel extends JPanel implements Runnable, KeyListener {
         loadImage(); //loads the images and the board
         loadBoard();
         setBackground(Color.black);
-
-        resetGame(); //resets the game when the frame is made so all is ready
         
         menuWindow = m;
         gameWindow = g;
