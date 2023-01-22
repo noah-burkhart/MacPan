@@ -139,6 +139,9 @@ public class HighscoreFrame extends javax.swing.JFrame {
         scores.set(j, temp); // places the stored temporary value into higher index number
     }
     
+    /**
+     * Displays the top 5 scores into the frame
+     */
     public void top5(){
         // displaying highest score
         Score scoreOne = (Score) scores.get(0);
